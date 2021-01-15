@@ -1,0 +1,331 @@
+{
+	"info": {
+		"_postman_id": "9579c5ca-0614-4c48-931c-b34bc26a8cf6",
+		"name": "ABOCA_clienti",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Clienti GET",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer 5fe227fad0b7db341402cc4c227bd438511b49a5a15e9dbec3fee73c"
+					}
+				],
+				"url": {
+					"raw": "http://tyk4-test.aboca.dom:8080/api-c/clienti",
+					"protocol": "http",
+					"host": [
+						"tyk4-test",
+						"aboca",
+						"dom"
+					],
+					"port": "8080",
+					"path": [
+						"api-c",
+						"clienti"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ClientiTAB GET",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer 5fe227fad0b7db341402cc4cc6eb8d739735493d99460fae0468236a"
+					}
+				],
+				"url": {
+					"raw": "http://tyk4-test.aboca.dom:8080/api-c/clienti/tab",
+					"protocol": "http",
+					"host": [
+						"tyk4-test",
+						"aboca",
+						"dom"
+					],
+					"port": "8080",
+					"path": [
+						"api-c",
+						"clienti",
+						"tab"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Clienti TOKEN Request",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Basic NjhmN2VmYzEzNjdhNGUwNzg0MGMxMjBhMDQ3NDRlZjc6T1daaE16a3hPR0l0WTJVM1pDMDBNVFJoTFdFMFpUUXRaRFUwWWpoaFl6WmhNMkl5"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "68f7efc1367a4e07840c120a04744ef7",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "OWZhMzkxOGItY2U3ZC00MTRhLWE0ZTQtZDU0YjhhYzZhM2Iy",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://tyk4-test.aboca.dom:8080/api-c/clienti/oauth/token",
+					"protocol": "http",
+					"host": [
+						"tyk4-test",
+						"aboca",
+						"dom"
+					],
+					"port": "8080",
+					"path": [
+						"api-c",
+						"clienti",
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Clienti DELETE",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJvcmciOiI1Zjk4MjNiNGVlNGZkYzAwMDE0NzU5ZGYiLCJpZCI6IjU1ZTVkY2FiZWU0ODQ4Zjk5Y2FmMzJmMmYzZDdmNGQ1IiwiaCI6Im11cm11cjY0In0=",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://tyk4-test.aboca.dom:8080/api-c/clienti/S2/C007",
+					"protocol": "http",
+					"host": [
+						"tyk4-test",
+						"aboca",
+						"dom"
+					],
+					"port": "8080",
+					"path": [
+						"api-c",
+						"clienti",
+						"S2",
+						"C007"
+					],
+					"query": [
+						{
+							"key": "setcolumns",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Clienti POST",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Clienti PUT",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 5fe227fad0b7db341402cc4c7d413c13b0ad470bbac5233b602a4bbf",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"ragionecliente\"        : \"rg\",\n    \"indirizzocliente\"      : \"addr\",\n    \"capcliente\"            : \"000\",\n    \"cittacliente\"          : \"roma\",\n    \"provinciacliente\"      : \"RO\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://tyk4-test.aboca.dom:8080/api-c/clienti/S1/C105/typ3",
+					"protocol": "http",
+					"host": [
+						"tyk4-test",
+						"aboca",
+						"dom"
+					],
+					"port": "8080",
+					"path": [
+						"api-c",
+						"clienti",
+						"S1",
+						"C105",
+						"typ3"
+					],
+					"query": [
+						{
+							"key": "chiave",
+							"value": "partitaiva",
+							"disabled": true
+						},
+						{
+							"key": "partitaivacliente",
+							"value": "qwerty",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Clienti POST",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJvcmciOiI1Zjk4MjNiNGVlNGZkYzAwMDE0NzU5ZGYiLCJpZCI6ImUzZDBmMzNjMTMxMjQ3OTE5YzVlNWZjMDQ5ZTI3NjdhIiwiaCI6Im11cm11cjY0In0=",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"tipocodicecliente\": \"t3\",\n    \"tipocodicepdc\": \"typ3\",\n    \"partitaivacliente\": \"fddk\",\n    \"attivocliente\": -1,\n\t\"codicefiscalecliente\": \"cccc\",\n\t\"ragionebrevecliente\": \"rag\",\n\t\"ragionecliente\": \"ragione\",\n\t\"indirizzocliente\": \"via roma\",\n\t\"capcliente\": \"00000\",\n\t\"cittacliente\": \"Roma\",\n\t\"provinciacliente\": \"RO\",\n\t\"telefonocliente\": \"123456\",\n\t\"faxcliente\": \"54321\",\n\t\"cellularecliente\": \"3331234\",\n\t\"telefono2cliente\": \"11112222\",\n\t\"mailcliente\": \"mail@mail.mail\"\n}\n\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://tyk4-test.aboca.dom:8080/api-c/clienti/S1/C105/typ3",
+					"protocol": "http",
+					"host": [
+						"tyk4-test",
+						"aboca",
+						"dom"
+					],
+					"port": "8080",
+					"path": [
+						"api-c",
+						"clienti",
+						"S1",
+						"C105",
+						"typ3"
+					],
+					"query": [
+						{
+							"key": "tipocodicecliente",
+							"value": "t3",
+							"disabled": true
+						},
+						{
+							"key": "codicepdc",
+							"value": "aba",
+							"disabled": true
+						},
+						{
+							"key": "partitaivacliente",
+							"value": "kfxaxorw",
+							"disabled": true
+						},
+						{
+							"key": "attivocliente",
+							"value": "-1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Clienti/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 5fe227fad0b7db341402cc4c7d413c13b0ad470bbac5233b602a4bbf",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://tyk4-test.aboca.dom:8080/api-c/clienti/?descrizionegruppocliente=GRUPPO%20NON%20DEFINITO",
+					"protocol": "http",
+					"host": [
+						"tyk4-test",
+						"aboca",
+						"dom"
+					],
+					"port": "8080",
+					"path": [
+						"api-c",
+						"clienti",
+						""
+					],
+					"query": [
+						{
+							"key": "descrizionegruppocliente",
+							"value": "GRUPPO%20NON%20DEFINITO"
+						},
+						{
+							"key": "q",
+							"value": "{\"\"CittaCliente\"\": \"MITRY-MORY\", \"\"DescrizioneGruppoCliente\"\": \"GRUPPO%20NON%20DEFINITO\"}",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
