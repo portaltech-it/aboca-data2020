@@ -1,0 +1,1033 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "Clienti",
+    "description": ""
+  },
+  "host": "192.168.136.21:8080",
+  "basePath": "/api-c",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "TokenRequestBasicAuth": {
+      "type": "basic",
+      "description": "Authentication for the OAuth 2 token request. Use client ID as the username and client secret as the password."
+    }
+  },
+  "paths": {
+    "/clienti/oauth/token": {
+      "post": {
+        "summary": "Request Access Token",
+        "description": "Token request must be authenticated using Basic authentication, with the client ID as the username and client secret as the password. That is, the token request must include the following header:\n\n    Authorization: Basic base64(client_id:client_secret)\n\n**When testing the API call in Swagger UI, click the lock icon to specify the client ID and secret for authentication.**",
+        "security": [
+          {
+            "TokenRequestBasicAuth": []
+          }
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "grant_type",
+            "x-go-name": "grant_type",
+            "format": "base64",
+            "in": "formData",
+            "description": "Value MUST be set to \"client_credentials\"",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "client_credentials"
+            ]
+          },
+          {
+            "name": "client_id",
+            "format": "base64",
+            "x-go-name": "client_id",
+            "in": "formData",
+            "description": "The code received in the query string when redirected from authorization page",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "client_secret",
+            "x-go-name": "ClientSecret",
+            "format": "base64",
+            "in": "formData",
+            "description": "The code received in the query string when redirected from authorization page",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "access_token": {
+                  "$ref": "#/definitions/VARCHAR2"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clienti": {
+      "get": {
+        "summary": "Returns all records from CLIENTI table",
+        "description": "Returns all records from CLIENTI table",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Records shown",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "ABBCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "ABICLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "AREACLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "AREAMANAGERTECNICO": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "ATTIVAZIONECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "ATTIVOCLIENTE": {
+                        "$ref": "#/definitions/NUMBER"
+                      },
+                      "ATTIVOPDC": {
+                        "$ref": "#/definitions/NUMBER"
+                      },
+                      "CABCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CAPCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CBBCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CCBCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CCCCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CELLULARECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CESSIONECREDITO": {
+                        "$ref": "#/definitions/NUMBER"
+                      },
+                      "CITTÃ€CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODCLIESTERNO": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEAGENTE2CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEAGENTE3CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEAGENTE4CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEAGENTECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEAGENTEPDC": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICECATEGORIACLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICECATEGORIAPDC": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEFISCALECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEGRUPPOCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICELINGUACLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICENAZIONECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEPAGAMENTOCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEPDC": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICETRASPORTOCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEVETTORECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODKAM": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "DESCRIZIONECATEGORIACLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "DESCRIZIONECATEGORIAPDC": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "DESCRIZIONEGRUPPOCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "DISDETTACLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "FAXCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "INDIRIZZOCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "LATITUDINE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "LONGITUDINE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "MAIL2CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "MAILCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "MICROAREA": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "MICROBRICK": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "NUOVOCODICECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "PARTITAIVACLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "PROGRESSIVO2AGENTECLIENTE": {
+                        "$ref": "#/definitions/NUMBER"
+                      },
+                      "PROGRESSIVO3AGENTECLIENTE": {
+                        "$ref": "#/definitions/NUMBER"
+                      },
+                      "PROGRESSIVO4AGENTECLIENTE": {
+                        "$ref": "#/definitions/NUMBER"
+                      },
+                      "PROGRESSIVOAGENTECLIENTE": {
+                        "$ref": "#/definitions/NUMBER"
+                      },
+                      "PROVINCIACLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "RAGIONEBREVECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "RAGIONECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "SOCIETÃ€": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "TELEFONO2CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "TELEFONOCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "TIPOAGENTE2CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "TIPOAGENTE3CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "TIPOAGENTE4CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "TIPOAGENTECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "TIPOCODICECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "TIPOCODICEPDC": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "UNCODCLI": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "VECCHIOCODICECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "ZONACLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Authorization field missing"
+          },
+          "401": {
+            "description": "Authorization issues."
+          },
+          "403": {
+            "description": "Key not authorised"
+          }
+        },
+        "parameters": []
+      }
+    },
+    "/clienti/": {
+      "get": {
+        "summary": "Returns a record from CLIENTI table given few fields",
+        "description": "Returns a record from CLIENTI table given few fields",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Record shown",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "ABBCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "ABICLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "AREACLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "AREAMANAGERTECNICO": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "ATTIVAZIONECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "ATTIVOCLIENTE": {
+                        "$ref": "#/definitions/NUMBER"
+                      },
+                      "ATTIVOPDC": {
+                        "$ref": "#/definitions/NUMBER"
+                      },
+                      "CABCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CAPCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CBBCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CCBCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CCCCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CELLULARECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CESSIONECREDITO": {
+                        "$ref": "#/definitions/NUMBER"
+                      },
+                      "CITTÃ€CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODCLIESTERNO": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEAGENTE2CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEAGENTE3CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEAGENTE4CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEAGENTECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEAGENTEPDC": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICECATEGORIACLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICECATEGORIAPDC": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEFISCALECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEGRUPPOCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICELINGUACLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICENAZIONECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEPAGAMENTOCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEPDC": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICETRASPORTOCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEVETTORECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODKAM": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "DESCRIZIONECATEGORIACLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "DESCRIZIONECATEGORIAPDC": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "DESCRIZIONEGRUPPOCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "DISDETTACLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "FAXCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "INDIRIZZOCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "LATITUDINE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "LONGITUDINE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "MAIL2CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "MAILCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "MICROAREA": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "MICROBRICK": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "NUOVOCODICECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "PARTITAIVACLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "PROGRESSIVO2AGENTECLIENTE": {
+                        "$ref": "#/definitions/NUMBER"
+                      },
+                      "PROGRESSIVO3AGENTECLIENTE": {
+                        "$ref": "#/definitions/NUMBER"
+                      },
+                      "PROGRESSIVO4AGENTECLIENTE": {
+                        "$ref": "#/definitions/NUMBER"
+                      },
+                      "PROGRESSIVOAGENTECLIENTE": {
+                        "$ref": "#/definitions/NUMBER"
+                      },
+                      "PROVINCIACLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "RAGIONEBREVECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "RAGIONECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "SOCIETÃ€": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "TELEFONO2CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "TELEFONOCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "TIPOAGENTE2CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "TIPOAGENTE3CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "TIPOAGENTE4CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "TIPOAGENTECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "TIPOCODICECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "TIPOCODICEPDC": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "UNCODCLI": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "VECCHIOCODICECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "ZONACLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Authorization field missing"
+          },
+          "401": {
+            "description": "Authorization issues."
+          },
+          "403": {
+            "description": "Key not authorised"
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "cittacliente",
+            "type": "string",
+            "required": true,
+            "description": "City of the client"
+          },
+          {
+            "in": "query",
+            "name": "descrizionegruppocliente",
+            "type": "string",
+            "required": true,
+            "description": "Description of the client's group"
+          }
+        ]
+      }
+    },
+    "/clienti/{societa}/{codicecliente}/{codicepdc}": {
+      "get": {
+        "summary": "Returns a record from CLIENTI table given a primary key",
+        "description": "Return a record from CLIENTI table given a primary key",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Record shown",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "ABBCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "ABICLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "AREACLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "AREAMANAGERTECNICO": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "ATTIVAZIONECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "ATTIVOCLIENTE": {
+                        "$ref": "#/definitions/NUMBER"
+                      },
+                      "ATTIVOPDC": {
+                        "$ref": "#/definitions/NUMBER"
+                      },
+                      "CABCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CAPCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CBBCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CCBCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CCCCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CELLULARECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CESSIONECREDITO": {
+                        "$ref": "#/definitions/NUMBER"
+                      },
+                      "CITTÃ€CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODCLIESTERNO": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEAGENTE2CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEAGENTE3CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEAGENTE4CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEAGENTECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEAGENTEPDC": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICECATEGORIACLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICECATEGORIAPDC": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEFISCALECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEGRUPPOCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICELINGUACLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICENAZIONECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEPAGAMENTOCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEPDC": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICETRASPORTOCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODICEVETTORECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "CODKAM": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "DESCRIZIONECATEGORIACLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "DESCRIZIONECATEGORIAPDC": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "DESCRIZIONEGRUPPOCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "DISDETTACLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "FAXCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "INDIRIZZOCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "LATITUDINE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "LONGITUDINE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "MAIL2CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "MAILCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "MICROAREA": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "MICROBRICK": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "NUOVOCODICECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "PARTITAIVACLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "PROGRESSIVO2AGENTECLIENTE": {
+                        "$ref": "#/definitions/NUMBER"
+                      },
+                      "PROGRESSIVO3AGENTECLIENTE": {
+                        "$ref": "#/definitions/NUMBER"
+                      },
+                      "PROGRESSIVO4AGENTECLIENTE": {
+                        "$ref": "#/definitions/NUMBER"
+                      },
+                      "PROGRESSIVOAGENTECLIENTE": {
+                        "$ref": "#/definitions/NUMBER"
+                      },
+                      "PROVINCIACLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "RAGIONEBREVECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "RAGIONECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "SOCIETÃ€": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "TELEFONO2CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "TELEFONOCLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "TIPOAGENTE2CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "TIPOAGENTE3CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "TIPOAGENTE4CLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "TIPOAGENTECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "TIPOCODICECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "TIPOCODICEPDC": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "UNCODCLI": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "VECCHIOCODICECLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "ZONACLIENTE": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Authorization field missing"
+          },
+          "401": {
+            "description": "Authorization issues."
+          },
+          "403": {
+            "description": "Key not authorised"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "societa",
+            "type": "string",
+            "required": true,
+            "description": "Society code of client"
+          },
+          {
+            "in": "path",
+            "name": "codicecliente",
+            "type": "string",
+            "required": true,
+            "description": "Client code of client"
+          },
+          {
+            "in": "path",
+            "name": "codicepdc",
+            "type": "string",
+            "required": true,
+            "description": "Client code of client"
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete a record from CLIENTI table",
+        "description": "Delete a record from CLIENTI table",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Record deleted"
+          },
+          "400": {
+            "description": "Authorization field missing"
+          },
+          "401": {
+            "description": "Authorization issues."
+          },
+          "403": {
+            "description": "Key not authorised"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "societa",
+            "type": "string",
+            "required": true,
+            "description": "Society code of client"
+          },
+          {
+            "in": "path",
+            "name": "codicecliente",
+            "type": "string",
+            "required": true,
+            "description": "Client code of client"
+          },
+          {
+            "in": "path",
+            "name": "codicepdc",
+            "type": "string",
+            "required": true,
+            "description": "Client code of client"
+          }
+        ]
+      },
+      "post": {
+        "summary": "Add a record in CLIENTI table",
+        "description": "Add a record in CLIENTI table",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Record added"
+          },
+          "400": {
+            "description": "Authorization field missing"
+          },
+          "401": {
+            "description": "Authorization issues."
+          },
+          "403": {
+            "description": "Key not authorised"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "societa",
+            "type": "string",
+            "required": true,
+            "description": "Society code of client"
+          },
+          {
+            "in": "path",
+            "name": "codicecliente",
+            "type": "string",
+            "required": true,
+            "description": "Client code of client"
+          },
+          {
+            "in": "path",
+            "name": "codicepdc",
+            "type": "string",
+            "required": true,
+            "description": "Client code of client"
+          },
+          {
+            "in": "body",
+            "name": "cliente",
+            "description": "Create a new client",
+            "schema": {
+              "type": "object",
+              "required": [
+                "tipocodicecliente",
+                "tipocodicepdc",
+                "codicepdc",
+                "partitaiva",
+                "attivocliente"
+              ],
+              "properties": {
+                "tipocodicecliente": {
+                  "type": "string"
+                },
+                "tipocodicepdc": {
+                  "type": "string"
+                },
+                "codicepdc": {
+                  "type": "string"
+                },
+                "partitaiva": {
+                  "type": "string"
+                },
+                "attivocliente": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "put": {
+        "summary": "Update a record in CLIENTI table",
+        "description": "Update a record in CLIENTI table",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Record updated"
+          },
+          "400": {
+            "description": "Authorization field missing"
+          },
+          "401": {
+            "description": "Authorization issues."
+          },
+          "403": {
+            "description": "Key not authorised"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "societa",
+            "type": "string",
+            "required": true,
+            "description": "Society code of client"
+          },
+          {
+            "in": "path",
+            "name": "codicecliente",
+            "type": "string",
+            "required": true,
+            "description": "Client code of client"
+          },
+          {
+            "in": "path",
+            "name": "codicepdc",
+            "type": "string",
+            "required": true,
+            "description": "Client code of client"
+          },
+          {
+            "in": "body",
+            "name": "cliente",
+            "description": "Create a new client",
+            "schema": {
+              "type": "object",
+              "required": [
+                "tipocodicecliente",
+                "tipocodicepdc",
+                "codicepdc",
+                "partitaiva",
+                "attivocliente"
+              ],
+              "properties": {
+                "tipocodicecliente": {
+                  "type": "string"
+                },
+                "tipocodicepdc": {
+                  "type": "string"
+                },
+                "codicepdc": {
+                  "type": "string"
+                },
+                "partitaiva": {
+                  "type": "string"
+                },
+                "attivocliente": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "VARCHAR2": {
+      "type": "string"
+    },
+    "NUMBER": {
+      "type": "integer"
+    }
+  }
+}
