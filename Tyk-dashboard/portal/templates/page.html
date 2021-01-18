@@ -1,0 +1,51 @@
+{{ define "portalPage" }}
+
+
+{{ template "header" .}}
+
+
+  <body>
+  
+  	{{ template "navigation" . }}
+
+    <div>
+    	
+    	<div class="container" style="margin-top: 80px;">
+    		<div class="row">
+    			<div class="col-md-10">
+    				<h1>{{ .Page.Title }}</h1>
+    			
+    				{{ .Page.Fields.MainBody | markDown }}
+    			</div>
+    			
+    			<div class="col-md-2">
+
+                    {{ template "secondaryNav" . }}
+                
+					{{if .IsProtected }}
+						{{ template "portalMemberNavigation" . }}
+					{{ end }}
+				</div>
+				
+    		</div>    		
+
+               
+    		
+    		
+    		
+    	</div>
+    	
+    </div>
+
+	  {{ template "footer" .}}
+      
+    </div> <!-- /container -->
+
+
+    {{ template "scripts" .}}
+  </body>
+</html>
+
+
+
+{{ end }}

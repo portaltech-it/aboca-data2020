@@ -1,0 +1,33 @@
+{{ define "bluePrintPage" }}
+
+
+{{ template "header" .}}
+
+
+  <body>
+  
+  	{{ template "navigation" . }}
+
+    <div>
+    	
+    	<div class="container" style="margin-top: 80px;">
+    		<div class="row">
+    			{{ .Page.Documentation | b64 }}
+    		</div>    		
+    		
+    	</div>
+    	
+    </div>
+
+	  {{ template "footer" .}}
+      
+    </div> <!-- /container -->
+
+
+    {{ template "scripts" .}}
+  </body>
+</html>
+
+
+
+{{ end }}

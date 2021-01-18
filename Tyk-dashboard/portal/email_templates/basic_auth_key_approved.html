@@ -1,0 +1,21 @@
+{{ define "BasicAuthKeyApproved" }}
+
+{{ template "emailStyles" . }}
+
+<h2>Your Username and Password</h2>
+
+
+<p>Your credentials are below - please keep this safe, as it will be unrecoverable later, if you lose it, please speak to your
+	portal administrator to have it reset.
+</p>
+
+<ul>
+	<li>Username: {{.Data.Username}}</li>
+	<li>Password: {{.Data.Password}}</li>
+</ul>
+
+<p>
+	Cheers,<br/>
+	The Tyk.io Team
+</p>
+{{ end }}

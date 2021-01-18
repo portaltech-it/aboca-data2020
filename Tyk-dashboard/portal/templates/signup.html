@@ -1,0 +1,86 @@
+{{ define "signupPage" }}
+{{ $page := .}}
+
+
+{{ template "header" .}}
+
+
+	<body>
+
+	{{ template "navigation" . }}
+
+	<div>
+
+		<div class="container" style="margin-top: 80px;">
+			<div class="row">
+
+					{{ if .Error  }}
+					<div class="col-md-7 center" id="register-panel-error">
+						<div class="panel panel-danger">
+							<div class="panel-body">
+								{{.Error}}
+							</div>
+						</div>
+					</div>
+					{{ end }}
+
+					{{ if .PortalConfig.DisableSignup }}
+						<div class="col-md-7 center" id="register-panel-disabled">
+							<p><em>Signup has been disabled</em></p>
+						</div>
+					{{ else }}
+					<div class="col-md-7 center" id="register-panel">
+							<div class="panel panel-default">
+							  <div class="panel-heading">
+							    <h3 class="panel-title">Register</h3>
+							  </div>
+							  <div class="panel-body">
+								<form action="" method="POST">
+									<input type="hidden" name="csrf_token" value="{{ .Token }}">
+									<div class="form-group">
+										<label for="username">Email address</label>
+										<input type="email" class="form-control" id="username" name="username" placeholder="Enter email">
+									</div>
+									<div class="form-group">
+										<label for="password">Password</label>
+										<input type="password" class="form-control" id="password" name="password" placeholder="Password" autocomplete="off">
+									</div>
+									<div class="form-group">
+										<label for="password_confirm">Confirm Password</label>
+										<input type="password" class="form-control" id="password_confirm" name="password_confirm" placeholder="Password confirmation" autocomplete="off">
+									</div>
+
+									{{ if .PortalConfig.SignUpFields }}
+									<!-- You can set these in the portal admin, then add the relevant form fields in here -->
+										{{range $fieldname := .PortalConfig.SignUpFields}}
+											<div class="form-group">
+												<label for="Name">{{$fieldname}}</label>
+												<input type="text" class="form-control" id="{{$fieldname}}" name="{{$fieldname}}" placeholder="">
+											</div>
+										{{ end }}
+
+									{{ end }}
+
+									<input type="submit" class="btn btn-success" value="Sign up"></button>
+								</form>
+								{{ end }}
+							</div>
+						</div>
+						{{ if not .PortalConfig.DisableLogin }}
+							<p>Already registered ? <strong> <a href="{{ $page.PortalRoot }}login/">Log in </a> </strong> to your account</p>
+						{{end}}
+					</div>
+			</div>
+		</div>
+	</div>
+
+	{{ template "footer" .}}
+
+	</div> <!-- /container -->
+
+
+	{{ template "scripts" .}}
+	</body>
+</html>
+
+{{ end }}

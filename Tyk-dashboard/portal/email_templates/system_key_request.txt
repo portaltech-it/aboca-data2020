@@ -1,0 +1,13 @@
+{{ define "KeyRequestEventNotification" }}
+
+We have detected the following event: {{ .Event}}
+
+Details of the Key Request {{ .Data.Id.Hex}}:
+
+ - List of APIs:
+ {{ range $key, $value := .Data.APIs }}
+	{{ $key }} with auth-type {{ $value }}
+ {{ end }}
+ - Developer ID: {{ .Data.DevID}}
+
+{{ end }}

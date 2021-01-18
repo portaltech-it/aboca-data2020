@@ -1,0 +1,31 @@
+{{ define "welcomeEmail" }}
+
+{{ if .EmailCopy.Enabled }}
+
+	{{ .EmailCopy.EmailBody }}
+	
+{{ else }}
+
+Thanks for signing up!
+
+This email confirms that you have just signed up for our developer portal.
+
+{{ end}}
+
+Date joined: {{ .DateCreated }}
+
+{{ if .EmailCopy.Enabled }}
+
+{{ .EmailCopy.EmailSignoff }}
+	
+{{ else }}
+
+You can find out more about Tyk, or the <a href="https://tyk.io">Tyk API Gateway here</a>
+
+Cheers,
+ - The Tyk.io team
+
+{{ end}}
+
+
+{{ end }}

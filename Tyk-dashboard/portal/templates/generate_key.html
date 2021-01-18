@@ -1,0 +1,61 @@
+{{ define "generateKey" }}
+	{{ template "header" .}}
+	<body>
+	<div>
+		<div class="page-header">
+			<div class="page-header-container">
+				<div class="title text-center">
+					<h1>Key Approved</h1>
+				</div>
+			</div>
+		</div>
+		<div class="container content-wrapper key-request-flow-wrapper">
+
+			{{ if .Error  }}
+				<div class="col-md-7 center" id="register-panel-error">
+					<div class="panel panel-danger">
+						<div class="panel-body">
+							{{ .Error }}
+						</div>
+					</div>
+				</div>
+			{{ else}}
+
+				<div class="row">
+				<div class="col-lg-7 col-lg-offset-3 success-page requires-approval">
+					<h3 class="text-center">Congratulations! Your key request has been approved!</h3>
+					<div class="text-center">
+						<p class="text-center">
+							{{ if not .isBA }}
+								<span><strong>Your new key is:</strong></span>
+								<span class="break-word">{{.NewKey}}</span>
+							{{ else}}
+								<span><strong>Your new credentails are:</strong></span>
+								<span><strong>Username</strong>: {{.username}}</span>
+								<span><strong>Password</strong>: {{.password}}</span>
+							{{ end}}
+							{{ if .HMACSecret }}
+								<span><strong>HMAC secret</strong>: {{.HMACSecret}}</span>
+							{{ end }}
+						</p>
+						<div class="alert alert-warning">
+							<strong>
+								Important: You will not be able to retrieve this username and password later, please take note of it
+								and keep it safe.
+							</strong>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{{ end }}
+
+		</div>
+	</div>
+	{{ template "navigation" . }}
+	{{ template "footer" .}}
+	<!-- /container -->
+	{{ template "scripts" .}}
+	</body>
+	</html>
+{{ end }}

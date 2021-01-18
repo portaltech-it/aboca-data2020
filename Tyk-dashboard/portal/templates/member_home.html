@@ -1,0 +1,245 @@
+{{ define "portalMemberHome" }}
+
+
+{{ template "header" .}}
+
+
+  <body>
+
+  	{{ template "navigation" . }}
+  	{{ $config := .PortalConfig }}
+
+    <div>
+
+			<div class="container page-member" style="margin-top: 80px; margin-bottom: 80px;">
+    		<div class="row">
+    			<div class="col-md-10">
+    				<h1>Developer dashboard</h1>
+
+    				<p>
+    					This is your developer dashboard, here you can view the API usage and limits for your API keys over the past 7 days.
+    				</p>
+    				<p>
+
+    					You can enroll for access by visiting <a href="{{ .PortalRoot }}apis/">the API Catalogue</a> page
+
+    				</p>
+
+    				<h2>Your API Subscriptions</h2>
+    				{{ if .Keys }}
+	    				{{ range $key, $catalogues := .Keys}}
+	    				  {{ $oauth := false }}
+	    				  {{ range $idx, $apiData := $catalogues}}
+	    					{{ if eq $apiData.AuthType "oauth"}}
+	    						{{ $oauth = true }}
+	    					{{ end }}
+	    				  {{ end }}
+	    				<div class="panel panel-default">
+	    				  <div class="well">
+	    				  	{{ if $config.HashKeys }}
+					    	<strong>API Key Hash: </strong>
+					      	{{ else }}
+					    	<strong>API Key: </strong>
+					      {{ end }}
+					      	{{if $config.EnableMultiSelection}}
+					      	  {{if $oauth }}
+					      	  <span style="font-family: monospace;">{{ $key }}</span>
+					      	  {{else}}
+					      	  <span style="font-family: monospace;"><a href="keys/{{$key}}">{{ $key }}</a></span>
+					      	  {{end}}
+					      	{{else}}
+					      	<span style="font-family: monospace;">{{ $key }}</span>
+					      	{{end}}
+					      </div>
+						  <div class="panel-body">
+						    <div class="well">
+			    				{{ range $idx, $apiData := $catalogues}}
+						    	<h3 class="panel-title">{{ $apiData.Name }}</h3>
+						    	<p> {{ $apiData.ShortDescription }} </p>
+						    	<strong>Key Allowances:</strong>
+						    	<ul>
+						    		<li><strong>Rate limit:</strong> {{$apiData.PolicyData.Rate}} requests per {{$apiData.PolicyData.Per}} second</li>
+						    		<li><strong>Quota</strong>: {{$apiData.PolicyData.QuotaMax}} requests renews every {{$apiData.PolicyData.QuotaRenewalRate}} seconds</li>
+						    	</ul>
+						    	</br>
+								{{ end }}
+						    </div>
+
+						    <div class="well">
+							    <h4>API usage for last 7 days: </h4>
+	 	    					<canvas id="{{$key}}"></canvas>
+						    </div>
+						  </div>
+						</div>
+	    				{{ end }}
+	    			{{ else }}
+
+	    				<em>You have not enrolled into any services, why not check out the <a href="{{ .PortalRoot }}apis/">API catalogue</a> to see the description and documentation for the various APIs that are on offer?</em>
+
+    				{{ end }}
+
+    			</div>
+    			<div class="col-md-2">
+    				{{ template "portalMemberNavigation" . }}
+    			</div>
+
+
+
+
+    		</div>
+
+    	</div>
+
+    </div>
+
+	  {{ template "footer" .}}
+
+    </div> <!-- /container -->
+
+
+    {{ template "scripts" .}}
+    <script src="/portal-assets/js/Chart.min.js"></script>
+
+
+
+	<script>
+
+		function sortByKey(array, key) {
+			return array.sort(function(a, b) {
+			    var x = a[key]; var y = b[key];
+			    return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+			});
+		}
+
+		var chartOptions = {
+		    ///Boolean - Whether grid lines are shown across the chart
+		    scaleShowGridLines : true,
+
+		    //String - Colour of the grid lines
+		    scaleGridLineColor : "rgba(0,0,0,.05)",
+
+		    //Number - Width of the grid lines
+		    scaleGridLineWidth : 1,
+
+		    //Boolean - Whether to show horizontal lines (except X axis)
+		    scaleShowHorizontalLines: true,
+
+		    //Boolean - Whether to show vertical lines (except Y axis)
+		    scaleShowVerticalLines: true,
+
+		    //Boolean - Whether the line is curved between points
+		    bezierCurve : true,
+
+		    //Number - Tension of the bezier curve between points
+		    bezierCurveTension : 0.4,
+
+		    //Boolean - Whether to show a dot for each point
+		    pointDot : true,
+
+		    //Number - Radius of each point dot in pixels
+		    pointDotRadius : 4,
+
+		    //Number - Pixel width of point dot stroke
+		    pointDotStrokeWidth : 1,
+
+		    //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+		    pointHitDetectionRadius : 20,
+
+		    //Boolean - Whether to show a stroke for datasets
+		    datasetStroke : true,
+
+		    //Number - Pixel width of dataset stroke
+		    datasetStrokeWidth : 2,
+
+		    //Boolean - Whether to fill the dataset with a colour
+		    datasetFill : true,
+
+		    //String - A legend template
+		    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+
+			multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>"
+
+		};
+
+		var generateChartForKey = function(keyId) {
+			var now = new Date();
+			now.setDate(now.getDate() + 1);
+			var fixedNowMonth = now.getMonth() + 1
+
+			var then = new Date();
+			then.setDate(then.getDate() - 7);
+			var fixedThenMonth = then.getMonth() + 1
+
+			var url = "/api/public/activity/me/{{.OrgId}}/"+ keyId +"/"+ then.getDate() + "/"+ fixedThenMonth +"/"+ then.getFullYear() +"/"+ now.getDate() +"/"+ fixedNowMonth +"/"+ now.getFullYear() +"/?p=-1&res=day"
+			$.get(url, function(data) {
+
+			var cData = {
+			    labels: [],
+			    datasets: [
+			    	{
+				    	label: "Requests",
+				        fillColor: "rgba(30,191,227,0.2)",
+				        strokeColor: "rgba(30,191,227,1)",
+				        pointColor: "rgba(30,191,227,1)",
+				        pointStrokeColor: "#fff",
+				        pointHighlightFill: "#fff",
+				        pointHighlightStroke: "rgba(30,191,227,1)",
+				        data: []
+			    	},
+			    	{
+			            label: "Errors",
+			            fillColor: "rgba(237,14,77,0.2)",
+			            strokeColor: "rgba(237,14,77,1)",
+			            pointColor: "rgba(237,14,77,1)",
+			            pointStrokeColor: "#fff",
+			            pointHighlightFill: "#fff",
+			            pointHighlightStroke: "rgba(237,14,77,1)",
+			            data: []
+			        }
+			    ]
+			};
+
+			var jsonData = JSON.parse(data);
+
+			var sortMe = []
+			for (var i in jsonData.data) {
+				var thisDate = new Date(jsonData.data[i].id.year, jsonData.data[i].id.month, jsonData.data[i].id.day)
+				var l = jsonData.data[i].id.day + "/" + jsonData.data[i].id.month + "/" + jsonData.data[i].id.year
+				var hits = jsonData.data[i].hits
+				var errors = jsonData.data[i].error
+
+				var obj = {
+					d: thisDate,
+					label: l,
+					hits: hits,
+					errors: errors
+				}
+
+				sortMe.push(obj)
+			}
+
+			fixedData = sortByKey(sortMe, "d")
+
+			for (var i in fixedData) {
+				cData.labels.push(fixedData[i].label)
+				cData.datasets[0].data.push(fixedData[i].hits)
+				cData.datasets[1].data.push(fixedData[i].errors)
+			}
+
+			var ctx = $("[id^=" + keyId.replace(/=/g, '') + "]").get(0).getContext("2d");
+			var myNewChart = new Chart(ctx).Line(cData, chartOptions);
+			});
+		}
+
+		{{ range $key, $catalogues := .Keys}}
+			generateChartForKey({{$key}});
+		{{ end }}
+
+
+	</script>
+  </body>
+</html>
+
+
+
+{{ end }}

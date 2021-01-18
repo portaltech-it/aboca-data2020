@@ -1,0 +1,54 @@
+{{ define "generateOauthClient" }}
+	{{ template "header" .}}
+	{{ $page := .}}
+	<body>
+	<div>
+		<div class="page-header">
+			<div class="page-header-container">
+				<div class="title text-center">
+					<h1>OAuth Client Approved</h1>
+				</div>
+			</div>
+		</div>
+		<div class="container content-wrapper key-request-flow-wrapper">
+
+			{{ if .Error  }}
+				<div class="col-md-7 center" id="register-panel-error">
+					<div class="panel panel-danger">
+						<div class="panel-body">
+							{{ .Error }}
+						</div>
+					</div>
+				</div>
+			{{ else}}
+				<div class="row">
+					{{ if .Client }}
+						<div class="col-lg-8 col-lg-offset-2 success-page inessential-approval">
+							<h3>Great! You've successfully created an OAuth client.</h3>
+							<div class="alert alert-info text-center col-lg-8 col-lg-offset-2">
+								Make sure to save the Client Secret somewhere safe, as you won't be able to access it after leaving this screen.
+							</div>
+							<div class="text-center pull-left">
+								<p class="success-details">
+									<strong>Client ID:</strong> <span id="client-id">{{ .Client.ClientID }}</span>
+									<button data-toggle="tooltip" data-placement="top" title="Copy to clipboard" class="copyToClipboard" data-value-to-copy="{{ .Client.ClientID }}" type="button"><span class="fa fa-copy" aria-hidden="true"></span></button><br />
+									<strong>Client Secret:</strong> <span id="client-secret">{{ .Client.ClientSecret }}</span>
+									<button class="copyToClipboard"  data-toggle="tooltip" data-placement="top" title="Copy to clipboard" class="copyToClipboard" data-value-to-copy="{{ .Client.ClientSecret }}" type="button"><span class="fa fa-copy" aria-hidden="true"></span></button>
+								</p>
+								<a href="{{ $page.PortalRoot }}oauth-clients/" class="btn btn-success outline">Back to Oauth Clients list</a>
+							</div>
+						</div>
+					{{ end }}
+			</div>
+
+			{{ end }}
+
+		</div>
+	</div>
+	{{ template "navigation" . }}
+	{{ template "footer" .}}
+	<!-- /container -->
+	{{ template "scripts" .}}
+	</body>
+	</html>
+{{ end }}

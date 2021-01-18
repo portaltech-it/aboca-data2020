@@ -1,0 +1,45 @@
+{{ define "APIKeyAccepted" }}
+
+{{ template "emailStyles" . }}
+
+
+{{ if .Data.EmailCopy.Enabled }}
+
+	{{ .Data.EmailCopy.EmailBody | markDown }}
+	
+{{ else }}
+
+<h2>Your API Key</h2>
+
+
+<p>
+	Your API key request has been accepted. Please use the below link to retrieve your token.
+</p>
+
+{{ end}}
+
+<ul>
+	<li>API Name: {{range $i, $cat := .Data.Catalogues}}{{$cat.Name}} {{end}}</li>
+
+	<li><a href="{{ .Data.KeyRequestUrl }}">Generate Key</a></li>
+</ul>
+
+
+{{ if .Data.EmailCopy.Enabled }}
+
+{{ .Data.EmailCopy.EmailSignoff | markDown }}
+	
+{{ else }}
+
+<p>
+	You can find out more about Tyk, or the <a href="https://tyk.io">Tyk API Gateway here</a>
+</p>
+
+<p>
+	Cheers,<br/>
+	The Tyk.io team
+</p>
+
+{{ end}}
+
+{{ end}}

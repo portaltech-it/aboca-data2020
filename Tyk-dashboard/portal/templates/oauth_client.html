@@ -1,0 +1,170 @@
+{{ define "oauthClient" }} {{ $org_id := .OrgId}} {{ template "header" .}}
+{{ $page := .}}
+
+<script>
+	var baseURL = {{.PortalRoot }};
+</script>
+
+<body>
+
+	{{ template "navigation" . }}
+	<div class="tab-content">
+		<div class="tab-pane active" role="tabpanel" id="choose-api">
+			<div class="page-header">
+				<div class="page-header-container">
+					<div class="title text-center">
+						<h1>Select an API</h1>
+					</div>
+				</div>
+			</div>
+			<div class="container content-wrapper">
+				<div class="row text-center">
+					<div class="col-lg-12 text-center">
+						<ol class="breadcrumb">
+							<li class="cogs {{ if not .LastStep }} active {{ end }}"><a href="#choose-api" data-toggle="tab"
+									aria-controls="choose-api" role="tab" title="Select API">Select API</a></li>
+							<li class="info disabled"><a href="#details" data-toggle="tab" aria-controls="details" role="tab"
+									title="Enter details">Enter details</a></li>
+							<li class="check {{ if and .LastStep }} active {{ end }}"><a href="#complete" data-toggle="tab"
+									aria-controls="complete" role="tab" title="Complete">Final step</a></li>
+						</ol>
+					</div>
+				</div>
+
+				{{ if not .LastStep }}
+				<em>
+					You can only connect one API to an OAuth client. <br />
+				</em>
+				<div class="choose-api-wrapper text-center">
+					<div class="selectable-list-component oauth-clients">
+						<h3 class="selected-items-title text-left">Connected API</h3>
+						<ol class="selected-items items-list list-group">
+						</ol>
+						<h3 class="text-left">Available APIs to connect</h3>
+						<ol class="selectable-list items-list list-group">
+						</ol>
+					</div>
+				</div>
+				<ul class="list-inline">
+					<li><a href="{{ $page.PortalRoot }}oauth-clients/" class="btn btn-success outline">Back to Oauth Clients list</a></li>
+					<li class="pull-right"><button type="button" class="btn btn-success next-step choose-api-oauth-step-btn" disabled>Save and continue</button></li>
+				</ul>
+				{{ end }}
+			</div>
+		</div>
+
+		{{ if .LastStep }}
+		<div class="tab-pane active" role="tabpanel" id="complete">
+			<div class="container content-wrapper">
+				<div class="row f-17">
+					{{ if .RequiresApproval }}
+					<div class="col-lg-7 col-lg-offset-3 success-page requires-approval">
+						<h3 class="text-center">Great! We've got your request for an OAuth client.</h3>
+						<div class="text-center">
+							<p class="success-details">
+								We'll let you know via email <strong>{{ .DeveloperEmail }}</strong>, once your request has been approved.
+								Please check your email regularly for updates.
+							</p>
+						</div>
+					</div>
+					{{ end }}
+					{{ if .Client }}
+					<div class="col-lg-8 col-lg-offset-2 success-page inessential-approval">
+						<h3>Great! You've successfully created an OAuth client.</h3>
+						<div class="alert alert-info text-center col-lg-8 col-lg-offset-2">
+							Make sure to save the Client Secret somewhere safe, as you won't be able to access it after leaving this screen.
+						</div>
+						<div class="text-center pull-left">
+							<p class="success-details">
+								<strong>Client ID:</strong> <span id="client-id">{{ .Client.ClientID }}</span>
+								<button data-toggle="tooltip" data-placement="top" title="Copy to clipboard" class="copyToClipboard" data-value-to-copy="{{ .Client.ClientID }}" type="button"><span class="fa fa-copy" aria-hidden="true"></span></button><br />
+								<strong>Client Secret:</strong> <span id="client-secret">{{ .Client.ClientSecret }}</span>
+								<button class="copyToClipboard"  data-toggle="tooltip" data-placement="top" title="Copy to clipboard" class="copyToClipboard" data-value-to-copy="{{ .Client.ClientSecret }}" type="button"><span class="fa fa-copy" aria-hidden="true"></span></button>
+							</p>
+							<a href="{{ $page.PortalRoot }}oauth-clients/" class="btn btn-success outline">Back to Oauth Clients list</a>
+						</div>
+					</div>
+					{{ end }}
+					{{ if .Error }}
+					<div class="text-center">
+						<div class="alert alert-danger text-center col-lg-8 col-lg-offset-2 success-page error">
+							<h3>{{ .Error }}</h3>
+						</div>
+						<a href="{{ $page.PortalRoot }}oauth-clients/" class="btn btn-success outline">Back to Oauth Clients list</a>
+					</div>
+					{{ end }}
+				</div>
+			</div>
+		</div>
+
+		{{ else }}
+
+		<div class="tab-pane" role="tabpanel" id="details">
+			<div class="page-header">
+				<div class="page-header-container">
+					<div class="title text-center">
+						<h1>Add application details</h1>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="container content-wrapper">
+					<div class="row text-center">
+						<div class="col-lg-12 text-center">
+							<ol class="breadcrumb">
+								<li class="cogs active"><a href="#choose-api" data-toggle="tab" aria-controls="choose-api" role="tab"
+										title="Select API">Select API</a></li>
+								<li class="info disabled"><a href="#details" data-toggle="tab" aria-controls="details" role="tab"
+										title="Enter details">Enter details</a></li>
+								<li class="check disabled"><a href="#complete" data-toggle="tab" aria-controls="complete" role="tab"
+										title="Complete">Final step</a></li>
+							</ol>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-8 col-lg-offset-2 app-details">
+							<form id="oauth_form" method="post">
+								<div class="form-group">
+									<label for="appDescription">App description:</label>
+									<textarea class="form-control" name="appDescription" id="appDescription"
+										rows="5">{{ .Client.AppDescription }}</textarea>
+								</div>
+								<div class="dynamic-inputs">
+									<label>
+										Redirect URL(s)
+									</label>
+									<button type="button" class="btn btn-default add-url-btn">
+										<span class="fa fa-plus"></span> Add redirect URL
+									</button>
+								</div>
+								<div id="key_request_fields" class="form-group">
+								</div>
+								<input type="hidden" name="csrf_token" value="{{ .Token }}">
+								<input type="hidden" id="oauth_client_id" name="client_id" value="{{ .Client.ClientID }}" />
+								<input type="hidden" id="oauth_policy_id" name="policy_id" value="" />
+								<ul class="list-inline">
+									<li><a href="{{ $page.PortalRoot }}oauth-clients/" class="btn btn-success outline">Back to Oauth Clients list</a></li>
+									<li class="pull-right"><button type="submit" class="btn btn-success next-step app-details-step-btn" id="submit">Create</button></li>
+									<li class="pull-right"><button type="button" class="btn btn-default prev-step">Previous</button></li>
+								</ul>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{{ end }}
+
+		{{ template "footer" .}}
+
+	</div>
+	<!-- /container -->
+
+	{{ template "scripts" .}}
+</body>
+
+</html>
+
+
+
+{{ end }}

@@ -1,0 +1,36 @@
+{{ define "APIKeyApproved" }}
+
+{{ if .EmailCopy.Enabled }}
+
+	{{ .EmailCopy.EmailBody }}
+	
+{{ else }}
+
+Your API key is below - please keep this safe, as it will be unrecoverable later, if you lose it, please speak to your portal administrator to have it reset.
+
+{{ end}}
+
+{{ if .EmailCopy.HideTokenData }} 
+{{ else }}
+API Name: {{range $i, $cat := .Catalogues}}{{$cat.Name}} {{end}}
+API Key: {{.Key}}
+{{ if .HmacSecret }}
+HMAC Secret: {{.HmacSecret}}
+{{ end }}
+{{ end }}
+
+{{ if .EmailCopy.Enabled }}
+
+{{ .EmailCopy.EmailSignoff }}
+	
+{{ else }}
+
+You can find out more about Tyk, or the <a href="https://tyk.io">Tyk API Gateway here</a>
+
+Cheers,
+ - The Tyk.io team
+
+{{ end}}
+
+
+{{ end }}

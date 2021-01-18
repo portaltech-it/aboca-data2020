@@ -1,0 +1,16 @@
+{{ define "KeyChangeNotification" }}
+
+<p>
+	We have detected the following event: <strong>{{.Data.Event}}</strong>
+</p>
+
+<p>
+	Details are as follows: 
+	<ul>
+	{{ range $key , $value := .Data.Data }}
+	<li><strong>{{ $key }}: {{ $value }}</strong></li>
+	{{ end }}
+	</ul>
+</p>
+
+{{ end }}

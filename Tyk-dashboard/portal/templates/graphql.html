@@ -1,0 +1,24 @@
+{{ define "graphqlPage" }}
+{{ template "header" .}}
+
+<body>
+  <link href="/portal-assets/css/graphql.min.css" rel="stylesheet" />
+  {{ template "navigation" . }}
+  <div class="container">
+    <div id="tyk-graphql"></div>
+  </div>
+  {{ template "footer" .}}
+  {{ template "scripts" .}}
+  <script src="/portal-assets/js/vendors.min.js"> </script>
+  <script src="/portal-assets/js/graphiql-init.min.js"> </script>
+  <script>
+    const schemaUrls = {{.URL}};
+    const schema = "{{.Schema}}";
+    const GraphiQlInitInstance = new window.GraphiqlInit({
+      containerId: 'tyk-graphql',
+      schema,
+      schemaUrls
+    });
+  </script>
+</body>
+{{ end }}

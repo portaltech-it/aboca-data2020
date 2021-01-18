@@ -1,0 +1,8 @@
+{{ define "APIChangeNotification" }}
+
+
+We have detected the following event: {{.Event}}
+For the following API: {{ .Data.Name}}
+
+
+{{ end }}

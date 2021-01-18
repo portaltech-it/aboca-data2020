@@ -1,0 +1,46 @@
+{{ define "OAuthClientApproved" }}
+
+{{ template "emailStyles" . }}
+
+
+{{ if .Data.EmailCopy.Enabled }}
+
+	{{ .Data.EmailCopy.EmailBody | markDown }}
+
+{{ else }}
+
+<h2>Your OAuth client data</h2>
+
+
+<p>Your OAuth client data is below - please keep this safe, as it will be unrecoverable later. If you lose it, please speak to your portal administrator to have it reset.
+</p>
+
+{{ end}}
+
+{{ if .Data.EmailCopy.HideTokenData }}
+{{ else }}
+<ul>
+    <li>API Name: {{range $i, $cat := .Data.Catalogues}}{{$cat.Name}} {{end}}</li>
+    <li>OAuth client ID: {{.Data.OauthClientID}}</li>
+    <li>OAuth client Secret: {{.Data.OauthClientSecret}}</li>
+</ul>
+{{ end }}
+
+{{ if .Data.EmailCopy.Enabled }}
+
+{{ .Data.EmailCopy.EmailSignoff | markDown }}
+
+{{ else }}
+
+<p>
+    You can find out more about Tyk, or the <a href="https://tyk.io">Tyk API Gateway here</a>
+</p>
+
+<p>
+    Cheers,<br/>
+    The Tyk.io team
+</p>
+
+{{ end}}
+
+{{ end }}

@@ -1,0 +1,63 @@
+{{ define "cataloguePage" }} {{ $org_id := .OrgId}} {{ template "header" .}}
+{{ $page := .}}
+<body>
+  {{ template "navigation" . }}
+  <div>
+    <!-- Main content here -->
+    <div class="container" style="margin-top:80px;">
+      <div class="row">
+        <h1>API Catalogue</h1>
+      </div>
+      {{ if .Error }}
+      <div class="row">
+        <div class="col-md-7 center">
+          <div class="alert alert-danger text-center col-lg-8 col-lg-offset-2 success-page error">Error while loading data</div>
+        </div>
+      </div>
+      {{ end }}
+      <div class="row catalogues-list">
+        {{ if .Data.APIS }} {{ range $index, $apiDetail := .Data.APIS}} {{ if $apiDetail.Show }}
+        <div class="col-md-4">
+          <h2>
+            <span>{{$apiDetail.Name}}</span>
+            <span class="badge badge-primary">{{$apiDetail.AuthType}}</span>
+          </h2>
+          <p>{{$apiDetail.LongDescription | markDown}}</p>
+          {{ if $apiDetail.Documentation }}
+          <a href="{{ $page.PortalRoot }}apis/{{$apiDetail.Documentation}}/documentation/" class="btn btn-info catalogue">
+          <span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp; View documentation
+          </a>
+          <br/>
+          {{ end }}
+          {{if eq $apiDetail.Version "" }}
+          {{if eq $apiDetail.IsKeyless false}}
+          <a href="{{if $page.PortalConfig.EnableMultiSelection}}{{ $page.PortalRoot }}member/apis/request?policy_id={{$apiDetail.APIID}}{{else}}{{ $page.PortalRoot }}member/apis/{{$apiDetail.APIID}}/request{{end}}" class="btn btn-success catalogue">
+          <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>&nbsp; Request an API key
+          </a>
+          {{ end }}
+          {{ else }}
+          {{if eq $apiDetail.IsKeyless false}}
+          <a href="{{if $page.PortalConfig.EnableMultiSelection}}{{ $page.PortalRoot }}member/policies/request?policy_id={{$apiDetail.PolicyID}}{{else}}{{ $page.PortalRoot }}member/policies/{{$apiDetail.PolicyID}}/request{{end}}" class="btn btn-success catalogue">
+          <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>&nbsp; Request an API key
+          </a>
+          {{ end }}
+          {{ end }}
+        </div>
+        {{ end }} {{ end }}
+      </div>
+      {{ else }}
+      <div class="row">
+        <p>
+          <em>It looks like there are no APIs in the Catalogue.</em>
+        </p>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+  {{ template "footer" .}}
+  </div>
+  <!-- /container -->
+  {{ template "scripts" .}}
+</body>
+</html>
+{{ end }}

@@ -1,0 +1,39 @@
+@import '~swagger-ui/dist/swagger-ui.css';
+
+.swagger-host-manager {
+  margin: 0 -20px;
+}
+
+.version {
+  padding: 2px 4px;
+  border-radius: 57px;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.nostyle {
+  font-weight: bold;
+}
+
+pre {
+  background-color: transparent;
+  border: none;
+}
+
+.swagger-ui section.models h4 span {
+  font-weight: bold;
+}
+
+.custom-url {
+  width: 50%;
+}
+
+.servers-wrapper {
+  flex-wrap: wrap;
+}
+
+.swagger-message {
+  width: 100%;
+}

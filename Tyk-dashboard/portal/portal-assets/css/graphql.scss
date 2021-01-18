@@ -1,0 +1,30 @@
+@import "./graphiql.min.css"; // default graphiql styling
+
+#tyk-graphql {
+  margin-top: 80px;
+}
+
+.graphiql-container {
+  height: calc(100vh - 189px) !important;
+  margin: 0;
+  overflow: hidden;
+}
+
+.doc-explorer-title {
+  padding: 0px !important;
+}
+
+.blur {
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+  width: 100vh;
+  height: calc(100vh - 189px) !important;
+  background-color: #ccc;
+}
+
+.history-title {
+  overflow: unset !important;
+}
