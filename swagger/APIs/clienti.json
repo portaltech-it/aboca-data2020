@@ -101,121 +101,124 @@
                   "items": {
                     "type": "object",
                     "properties": {
-                      "ABBCLIENTE": {
+                      "ABB_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "ABICLIENTE": {
+                      "ABI_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "AREACLIENTE": {
+                      "AREA_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "AREAMANAGERTECNICO": {
+                      "ATTIVAZIONE_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "ATTIVAZIONECLIENTE": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "ATTIVOCLIENTE": {
+                      "ATTIVO_CLI": {
                         "$ref": "#/definitions/NUMBER"
                       },
-                      "ATTIVOPDC": {
+                      "ATTIVO_PDC": {
                         "$ref": "#/definitions/NUMBER"
                       },
-                      "CABCLIENTE": {
+                      "CAB_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CAPCLIENTE": {
+                      "CAP_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CBBCLIENTE": {
+                      "CBB_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CCBCLIENTE": {
+                      "CCB_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CCCCLIENTE": {
+                      "CCC_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CELLULARECLIENTE": {
+                      "CELLULARE_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CESSIONECREDITO": {
+                      "CESSIONE_CREDITO": {
                         "$ref": "#/definitions/NUMBER"
                       },
-                      "CITTÃ€CLIENTE": {
+                      "CITTA_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODCLIESTERNO": {
+                      "COD_AGN2_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEAGENTE2CLIENTE": {
+                      "COD_AGN3_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEAGENTE3CLIENTE": {
+                      "COD_AGN4_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEAGENTE4CLIENTE": {
+                      "COD_AGN_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEAGENTECLIENTE": {
+                      "COD_AGN_PDC": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEAGENTEPDC": {
+                      "COD_AMT": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICECATEGORIACLIENTE": {
+                      "COD_CAT_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICECATEGORIAPDC": {
+                      "COD_CAT_PDC": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICECLIENTE": {
+                      "COD_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEFISCALECLIENTE": {
+                      "COD_CLI_ESTERNO": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEGRUPPOCLIENTE": {
+                      "COD_CLI_UNICO": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICELINGUACLIENTE": {
+                      "COD_FISCALE_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICENAZIONECLIENTE": {
+                      "COD_GRUPPO_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEPAGAMENTOCLIENTE": {
+                      "COD_KAM": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEPDC": {
+                      "COD_LINGUA_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICETRASPORTOCLIENTE": {
+                      "COD_NAZIONE_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEVETTORECLIENTE": {
+                      "COD_PAGAMENTO_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODKAM": {
+                      "COD_PDC": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "DESCRIZIONECATEGORIACLIENTE": {
+                      "COD_TRASPORTO_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "DESCRIZIONECATEGORIAPDC": {
+                      "COD_VETTORE_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "DESCRIZIONEGRUPPOCLIENTE": {
+                      "DESC_CAT_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "DISDETTACLIENTE": {
+                      "DESC_CAT_PDC": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "FAXCLIENTE": {
+                      "DESC_GRUPPO_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "INDIRIZZOCLIENTE": {
+                      "DISDETTA_CLI": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "FAX_CLI": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "INDIRIZZO_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
                       "LATITUDINE": {
@@ -224,10 +227,10 @@
                       "LONGITUDINE": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "MAIL2CLIENTE": {
+                      "MAIL2_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "MAILCLIENTE": {
+                      "MAIL_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
                       "MICROAREA": {
@@ -236,67 +239,64 @@
                       "MICROBRICK": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "NUOVOCODICECLIENTE": {
+                      "NUOVO_COD_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "PARTITAIVACLIENTE": {
+                      "PARTITA_IVA_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "PROGRESSIVO2AGENTECLIENTE": {
+                      "PROG_AGN2_CLI": {
                         "$ref": "#/definitions/NUMBER"
                       },
-                      "PROGRESSIVO3AGENTECLIENTE": {
+                      "PROG_AGN3_CLI": {
                         "$ref": "#/definitions/NUMBER"
                       },
-                      "PROGRESSIVO4AGENTECLIENTE": {
+                      "PROG_AGN4_CLI": {
                         "$ref": "#/definitions/NUMBER"
                       },
-                      "PROGRESSIVOAGENTECLIENTE": {
+                      "PROG_AGN_CLI": {
                         "$ref": "#/definitions/NUMBER"
                       },
-                      "PROVINCIACLIENTE": {
+                      "PROVINCIA_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "RAGIONEBREVECLIENTE": {
+                      "RGS_BREVE_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "RAGIONECLIENTE": {
+                      "RGS_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "SOCIETÃ€": {
+                      "SOCIETA": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "TELEFONO2CLIENTE": {
+                      "TELEFONO2_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "TELEFONOCLIENTE": {
+                      "TELEFONO_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "TIPOAGENTE2CLIENTE": {
+                      "TIPO_AGN2_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "TIPOAGENTE3CLIENTE": {
+                      "TIPO_AGN3_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "TIPOAGENTE4CLIENTE": {
+                      "TIPO_AGN4_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "TIPOAGENTECLIENTE": {
+                      "TIPO_AGN_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "TIPOCODICECLIENTE": {
+                      "TIPO_COD_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "TIPOCODICEPDC": {
+                      "TIPO_COD_PDC": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "UNCODCLI": {
+                      "VECCHIO_COD_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "VECCHIOCODICECLIENTE": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "ZONACLIENTE": {
+                      "ZONA_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       }
                     }
@@ -336,121 +336,124 @@
                   "items": {
                     "type": "object",
                     "properties": {
-                      "ABBCLIENTE": {
+                      "ABB_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "ABICLIENTE": {
+                      "ABI_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "AREACLIENTE": {
+                      "AREA_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "AREAMANAGERTECNICO": {
+                      "ATTIVAZIONE_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "ATTIVAZIONECLIENTE": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "ATTIVOCLIENTE": {
+                      "ATTIVO_CLI": {
                         "$ref": "#/definitions/NUMBER"
                       },
-                      "ATTIVOPDC": {
+                      "ATTIVO_PDC": {
                         "$ref": "#/definitions/NUMBER"
                       },
-                      "CABCLIENTE": {
+                      "CAB_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CAPCLIENTE": {
+                      "CAP_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CBBCLIENTE": {
+                      "CBB_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CCBCLIENTE": {
+                      "CCB_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CCCCLIENTE": {
+                      "CCC_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CELLULARECLIENTE": {
+                      "CELLULARE_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CESSIONECREDITO": {
+                      "CESSIONE_CREDITO": {
                         "$ref": "#/definitions/NUMBER"
                       },
-                      "CITTÃ€CLIENTE": {
+                      "CITTA_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODCLIESTERNO": {
+                      "COD_AGN2_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEAGENTE2CLIENTE": {
+                      "COD_AGN3_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEAGENTE3CLIENTE": {
+                      "COD_AGN4_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEAGENTE4CLIENTE": {
+                      "COD_AGN_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEAGENTECLIENTE": {
+                      "COD_AGN_PDC": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEAGENTEPDC": {
+                      "COD_AMT": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICECATEGORIACLIENTE": {
+                      "COD_CAT_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICECATEGORIAPDC": {
+                      "COD_CAT_PDC": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICECLIENTE": {
+                      "COD_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEFISCALECLIENTE": {
+                      "COD_CLI_ESTERNO": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEGRUPPOCLIENTE": {
+                      "COD_CLI_UNICO": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICELINGUACLIENTE": {
+                      "COD_FISCALE_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICENAZIONECLIENTE": {
+                      "COD_GRUPPO_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEPAGAMENTOCLIENTE": {
+                      "COD_KAM": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEPDC": {
+                      "COD_LINGUA_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICETRASPORTOCLIENTE": {
+                      "COD_NAZIONE_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEVETTORECLIENTE": {
+                      "COD_PAGAMENTO_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODKAM": {
+                      "COD_PDC": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "DESCRIZIONECATEGORIACLIENTE": {
+                      "COD_TRASPORTO_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "DESCRIZIONECATEGORIAPDC": {
+                      "COD_VETTORE_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "DESCRIZIONEGRUPPOCLIENTE": {
+                      "DESC_CAT_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "DISDETTACLIENTE": {
+                      "DESC_CAT_PDC": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "FAXCLIENTE": {
+                      "DESC_GRUPPO_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "INDIRIZZOCLIENTE": {
+                      "DISDETTA_CLI": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "FAX_CLI": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "INDIRIZZO_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
                       "LATITUDINE": {
@@ -459,10 +462,10 @@
                       "LONGITUDINE": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "MAIL2CLIENTE": {
+                      "MAIL2_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "MAILCLIENTE": {
+                      "MAIL_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
                       "MICROAREA": {
@@ -471,67 +474,64 @@
                       "MICROBRICK": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "NUOVOCODICECLIENTE": {
+                      "NUOVO_COD_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "PARTITAIVACLIENTE": {
+                      "PARTITA_IVA_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "PROGRESSIVO2AGENTECLIENTE": {
+                      "PROG_AGN2_CLI": {
                         "$ref": "#/definitions/NUMBER"
                       },
-                      "PROGRESSIVO3AGENTECLIENTE": {
+                      "PROG_AGN3_CLI": {
                         "$ref": "#/definitions/NUMBER"
                       },
-                      "PROGRESSIVO4AGENTECLIENTE": {
+                      "PROG_AGN4_CLI": {
                         "$ref": "#/definitions/NUMBER"
                       },
-                      "PROGRESSIVOAGENTECLIENTE": {
+                      "PROG_AGN_CLI": {
                         "$ref": "#/definitions/NUMBER"
                       },
-                      "PROVINCIACLIENTE": {
+                      "PROVINCIA_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "RAGIONEBREVECLIENTE": {
+                      "RGS_BREVE_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "RAGIONECLIENTE": {
+                      "RGS_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "SOCIETÃ€": {
+                      "SOCIETA": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "TELEFONO2CLIENTE": {
+                      "TELEFONO2_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "TELEFONOCLIENTE": {
+                      "TELEFONO_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "TIPOAGENTE2CLIENTE": {
+                      "TIPO_AGN2_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "TIPOAGENTE3CLIENTE": {
+                      "TIPO_AGN3_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "TIPOAGENTE4CLIENTE": {
+                      "TIPO_AGN4_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "TIPOAGENTECLIENTE": {
+                      "TIPO_AGN_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "TIPOCODICECLIENTE": {
+                      "TIPO_COD_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "TIPOCODICEPDC": {
+                      "TIPO_COD_PDC": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "UNCODCLI": {
+                      "VECCHIO_COD_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "VECCHIOCODICECLIENTE": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "ZONACLIENTE": {
+                      "ZONA_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       }
                     }
@@ -586,121 +586,124 @@
                   "items": {
                     "type": "object",
                     "properties": {
-                      "ABBCLIENTE": {
+                      "ABB_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "ABICLIENTE": {
+                      "ABI_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "AREACLIENTE": {
+                      "AREA_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "AREAMANAGERTECNICO": {
+                      "ATTIVAZIONE_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "ATTIVAZIONECLIENTE": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "ATTIVOCLIENTE": {
+                      "ATTIVO_CLI": {
                         "$ref": "#/definitions/NUMBER"
                       },
-                      "ATTIVOPDC": {
+                      "ATTIVO_PDC": {
                         "$ref": "#/definitions/NUMBER"
                       },
-                      "CABCLIENTE": {
+                      "CAB_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CAPCLIENTE": {
+                      "CAP_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CBBCLIENTE": {
+                      "CBB_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CCBCLIENTE": {
+                      "CCB_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CCCCLIENTE": {
+                      "CCC_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CELLULARECLIENTE": {
+                      "CELLULARE_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CESSIONECREDITO": {
+                      "CESSIONE_CREDITO": {
                         "$ref": "#/definitions/NUMBER"
                       },
-                      "CITTÃ€CLIENTE": {
+                      "CITTA_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODCLIESTERNO": {
+                      "COD_AGN2_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEAGENTE2CLIENTE": {
+                      "COD_AGN3_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEAGENTE3CLIENTE": {
+                      "COD_AGN4_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEAGENTE4CLIENTE": {
+                      "COD_AGN_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEAGENTECLIENTE": {
+                      "COD_AGN_PDC": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEAGENTEPDC": {
+                      "COD_AMT": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICECATEGORIACLIENTE": {
+                      "COD_CAT_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICECATEGORIAPDC": {
+                      "COD_CAT_PDC": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICECLIENTE": {
+                      "COD_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEFISCALECLIENTE": {
+                      "COD_CLI_ESTERNO": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEGRUPPOCLIENTE": {
+                      "COD_CLI_UNICO": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICELINGUACLIENTE": {
+                      "COD_FISCALE_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICENAZIONECLIENTE": {
+                      "COD_GRUPPO_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEPAGAMENTOCLIENTE": {
+                      "COD_KAM": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEPDC": {
+                      "COD_LINGUA_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICETRASPORTOCLIENTE": {
+                      "COD_NAZIONE_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODICEVETTORECLIENTE": {
+                      "COD_PAGAMENTO_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "CODKAM": {
+                      "COD_PDC": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "DESCRIZIONECATEGORIACLIENTE": {
+                      "COD_TRASPORTO_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "DESCRIZIONECATEGORIAPDC": {
+                      "COD_VETTORE_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "DESCRIZIONEGRUPPOCLIENTE": {
+                      "DESC_CAT_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "DISDETTACLIENTE": {
+                      "DESC_CAT_PDC": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "FAXCLIENTE": {
+                      "DESC_GRUPPO_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "INDIRIZZOCLIENTE": {
+                      "DISDETTA_CLI": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "FAX_CLI": {
+                        "$ref": "#/definitions/VARCHAR2"
+                      },
+                      "INDIRIZZO_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
                       "LATITUDINE": {
@@ -709,10 +712,10 @@
                       "LONGITUDINE": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "MAIL2CLIENTE": {
+                      "MAIL2_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "MAILCLIENTE": {
+                      "MAIL_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
                       "MICROAREA": {
@@ -721,67 +724,64 @@
                       "MICROBRICK": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "NUOVOCODICECLIENTE": {
+                      "NUOVO_COD_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "PARTITAIVACLIENTE": {
+                      "PARTITA_IVA_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "PROGRESSIVO2AGENTECLIENTE": {
+                      "PROG_AGN2_CLI": {
                         "$ref": "#/definitions/NUMBER"
                       },
-                      "PROGRESSIVO3AGENTECLIENTE": {
+                      "PROG_AGN3_CLI": {
                         "$ref": "#/definitions/NUMBER"
                       },
-                      "PROGRESSIVO4AGENTECLIENTE": {
+                      "PROG_AGN4_CLI": {
                         "$ref": "#/definitions/NUMBER"
                       },
-                      "PROGRESSIVOAGENTECLIENTE": {
+                      "PROG_AGN_CLI": {
                         "$ref": "#/definitions/NUMBER"
                       },
-                      "PROVINCIACLIENTE": {
+                      "PROVINCIA_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "RAGIONEBREVECLIENTE": {
+                      "RGS_BREVE_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "RAGIONECLIENTE": {
+                      "RGS_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "SOCIETÃ€": {
+                      "SOCIETA": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "TELEFONO2CLIENTE": {
+                      "TELEFONO2_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "TELEFONOCLIENTE": {
+                      "TELEFONO_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "TIPOAGENTE2CLIENTE": {
+                      "TIPO_AGN2_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "TIPOAGENTE3CLIENTE": {
+                      "TIPO_AGN3_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "TIPOAGENTE4CLIENTE": {
+                      "TIPO_AGN4_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "TIPOAGENTECLIENTE": {
+                      "TIPO_AGN_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "TIPOCODICECLIENTE": {
+                      "TIPO_COD_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "TIPOCODICEPDC": {
+                      "TIPO_COD_PDC": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "UNCODCLI": {
+                      "VECCHIO_COD_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       },
-                      "VECCHIOCODICECLIENTE": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "ZONACLIENTE": {
+                      "ZONA_CLI": {
                         "$ref": "#/definitions/VARCHAR2"
                       }
                     }
