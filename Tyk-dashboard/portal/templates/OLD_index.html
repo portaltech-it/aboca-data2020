@@ -1,0 +1,85 @@
+{{ define "indexPage" }}
+
+
+{{ template "header" .}}
+
+
+  <body>
+
+  	{{ template "navigation" . }}
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+
+	<div>
+
+		<div class="jumbotron" id="home-jumbotron">
+			<div class="container">
+				<h1 id="jumbo-title">{{.Page.Fields.JumboCTATitle}}</h1>
+				<p id="jumbo-subheader">
+					{{.Page.Fields.SubHeading}}
+
+				</p>
+					<p id="jumbo-cta">
+					<a class="btn btn-primary btn-lg"
+					href="{{.Page.Fields.JumboCTALink}}"
+					role="button">{{.Page.Fields.JumboCTALinkTitle}} &raquo;</a>
+					</p>
+			</div>
+		</div>
+
+		<div class="container" id="welcome-panels-container">
+			<div class="row">
+				<div class="col-md-4" id="welcome-panel-1">
+					<h2>{{.Page.Fields.PanelOneTitle}}</h2>
+
+					{{.Page.Fields.PanelOneContent | markDown }}
+
+
+
+					<p><a class="btn btn-default" href="{{.Page.Fields.PanelOneLink}}" role="button">{{.Page.Fields.PanelOneLinkTitle}}</a>
+					</p>
+				</div>
+				<div class="col-md-4" id="welcome-panel-2">
+					<h2>{{.Page.Fields.PanelTwoTitle}}</h2>
+					{{.Page.Fields.PanelTwoContent | markDown }}
+
+					<p><a class="btn btn-default" href="{{.Page.Fields.PanelTwoLink}}" role="button">{{.Page.Fields.PanelTwoLinkTitle}}</a>
+					</p>
+				</div>
+				<div class="col-md-4" id="welcome-panel-3">
+					<h2>{{.Page.Fields.PanelThreeTitle}}</h2>
+					{{.Page.Fields.PanelThreeContent | markDown }}
+
+					<p>
+						<a class="btn btn-default" href="{{.Page.Fields.PanelThreeLink}}" role="button">{{.Page.Fields.PanelThreeLinkTitle}}</a>
+					</p>
+				</div>
+			</div>
+		</div>
+
+	<hr>
+
+	</div>
+
+	  {{ template "footer" .}}
+
+    </div> <!-- /container -->
+
+
+    {{ template "scripts" .}}
+    <!--[if lt IE 9]>
+      <script type="text/javascript">
+        if (self === top) {
+           var antiClickjack = document.getElementById("antiClickjack");
+           antiClickjack.parentNode.removeChild(antiClickjack);
+        } else {
+           top.location = self.location;
+        }
+      </script>
+    <![endif]-->
+  </body>
+</html>
+
+
+
+{{ end }}
