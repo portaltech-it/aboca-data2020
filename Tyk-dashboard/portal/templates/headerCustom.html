@@ -1,0 +1,41 @@
+{{define "headerCustom"}}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<!-- SEO Meta Tags -->
+	<meta name="description" content="Aboca Developer Portal">
+	<meta name="author" content="Reply Portaltech">
+
+    <!-- Website Title -->
+	<title>{{ if .Title }}{{.Title}} {{else}} API Developer portal {{end}}</title>
+
+	<!-- Styles -->
+	<!--<link href="/portal-assets/css/bootstrap.min.css" rel="stylesheet">-->
+
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:500,700&display=swap&subset=latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600&display=swap&subset=latin-ext" rel="stylesheet">
+    <link href="/portal-assets/custom/css/bootstrap.css" rel="stylesheet">
+    <link href="/portal-assets/custom/css/fontawesome-all.css" rel="stylesheet">
+    <link href="/portal-assets/custom/css/swiper.css" rel="stylesheet">
+	<link href="/portal-assets/custom/css/magnific-popup.css" rel="stylesheet">
+	<link href="/portal-assets/custom/css/styles.css" rel="stylesheet">
+
+	<link rel="icon" type="image/png" href="/portal-assets/images/favicon-32x32.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="/portal-assets/images/favicon-16x16.png" sizes="16x16" />
+	<link rel="shortcut icon" href="/portal-assets/images/favicon.ico" />
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+      <script src="/portal-assets/js/html5shiv.min.js"></script>
+      <script src="/portal-assets/js/respond.min.js"></script>
+      <style id="antiClickjack">body{display:none !important;}</style>
+  <![endif]-->
+</head>
+
+{{ end }}
