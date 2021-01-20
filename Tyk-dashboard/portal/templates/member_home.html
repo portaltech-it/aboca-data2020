@@ -1,12 +1,12 @@
 {{ define "portalMemberHome" }}
 
 
-{{ template "header" .}}
+{{ template "headerCustom" .}}
 
 
   <body>
 
-  	{{ template "navigation" . }}
+  	{{ template "navigationCustomCollapsed" . }}
   	{{ $config := .PortalConfig }}
 
     <div>
@@ -80,7 +80,7 @@
 
     			</div>
     			<div class="col-md-2">
-    				{{ template "portalMemberNavigation" . }}
+    				{{ template "navigationCustomCollapsed" . }}
     			</div>
 
 
@@ -92,14 +92,71 @@
 
     </div>
 
-	  {{ template "footer" .}}
+	<!-- Footer -->
+	<div class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="text-container about">
+						<h4>Qualche parola su Aboca</h4>
+						<p class="white">Il nostro impegno a generare un impatto positivo sulle persone e sull'ambiente è sancito dal nostro statuto di società benefit e valutato e misurato secondo standard internazionali con la certificazione B Corp. Per il Bene Comune, il Bene di tutti.</p>
+					</div> <!-- end of text-container -->
+				</div> <!-- end of col -->
+				<div class="col-md-2">
+					<div class="text-container">
+						<h4>Links</h4>
+						<ul class="list-unstyled li-space-lg white">
+							<li>
+								<a class="white" href="https://www.aboca.com/it/">www.aboca.com</a>
+							</li>
+							<li>
+								<a class="white" href="https://www.aboca.com/it/privacy-policy/">Privacy Policy</a>
+							</li>
+						</ul>
+					</div> <!-- end of text-container -->
+				</div> <!-- end of col -->
+				<div class="col-md-2">
+					<div class="text-container">
+						<h4>Tools</h4>
+						<ul class="list-unstyled li-space-lg">
+							<li>
+								<a class="white" href="#your-link">businessgrowth.com</a>
+							</li>
+							<li>
+							<a class="white" href="#your-link">influencers.com</a>
+							</li>
+							<li class="media">
+								<a class="white" href="#your-link">optimizer.net</a>
+							</li>
+						</ul>
+					</div> <!-- end of text-container -->
+				</div> <!-- end of col -->
+				<div class="col-md-2">
+					<div class="text-container">
+						<h4>Partners</h4>
+						<ul class="list-unstyled li-space-lg">
+							<li>
+								<a class="white" href="#your-link">unicorns.com</a>
+							</li>
+							<li>
+								<a class="white" href="#your-link">staffmanager.com</a>
+							</li>
+							<li>
+								<a class="white" href="#your-link">association.gov</a>
+							</li>
+						</ul>
+					</div> <!-- end of text-container -->
+				</div> <!-- end of col -->
+			</div> <!-- end of row -->
+		</div> <!-- end of container -->
+	</div> <!-- end of footer -->  
+	<!-- end of footer -->
 
     </div> <!-- /container -->
 
 
     {{ template "scripts" .}}
     <script src="/portal-assets/js/Chart.min.js"></script>
-
 
 
 	<script>
