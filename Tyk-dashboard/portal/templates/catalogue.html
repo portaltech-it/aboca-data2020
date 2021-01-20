@@ -4,25 +4,27 @@
 
 <body>
   <!-- Preloader -->
-	{{ template "preloader" .}}
+  {{ template "preloader" .}}
   <!-- end of preloader -->
 
   {{ template "navigationCustomCollapsed" . }}
-  <div class="form-2">
-    <!-- Main content here -->
-    <div class="container">
-      <div class="row">
-        <h1>API Catalogue</h1>
-      </div>
-      {{ if .Error }}
-      <div class="row">
-        <div class="col-md-7 center">
-          <div class="alert alert-danger text-center col-lg-8 col-lg-offset-2 success-page error">Error while loading data</div>
+  <div class="main-wrapper" style="margin-bottom:15%">
+    <div class="form-2">
+      <!-- Main content here -->
+      <div class="container">
+        <div class="row">
+          <h2>Catalogo APIs</h2>
         </div>
-      </div>
-      {{ end }}
-      <div class="row catalogues-list">
-        {{ if .Data.APIS }} {{ range $index, $apiDetail := .Data.APIS}} 
+        {{ if .Error }}
+        <div class="row">
+          <div class="col-md-7 center">
+            <div class="alert alert-danger text-center col-lg-8 col-lg-offset-2 success-page error">Errore nel
+              caricamento dei dati.</div>
+          </div>
+        </div>
+        {{ end }}
+        <div class="row catalogues-list">
+          {{ if .Data.APIS }} {{ range $index, $apiDetail := .Data.APIS}}
           {{ if $apiDetail.Show }}
           <div class="col-md-4">
             <h2>
@@ -31,22 +33,24 @@
             </h2>
             <p>{{$apiDetail.LongDescription | markDown}}</p>
             {{ if $apiDetail.Documentation }}
-            <a href="{{ $page.PortalRoot }}apis/{{$apiDetail.Documentation}}/documentation/" class="btn btn-solid-lg page-scroll">
-            <span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp; View documentation
+            <a href="{{ $page.PortalRoot }}apis/{{$apiDetail.Documentation}}/documentation/"
+              class="btn btn-solid-lg page-scroll" style="width: 100%; text-decoration: none;">
+              <span class="far fa-newspaper" aria-hidden="true"></span>&nbsp; Documentazione
             </a>
-            <br/>
+            <br />
             {{ end }}
           </div>
-          {{ end }} 
+          {{ end }}
+          {{ end }}
+        </div>
+        {{ else }}
+        <div class="row">
+          <p>
+            <em>Non sono presenti APIs nel catalogo.</em>
+          </p>
+        </div>
         {{ end }}
       </div>
-      {{ else }}
-      <div class="row">
-        <p>
-          <em>It looks like there are no APIs in the Catalogue.</em>
-        </p>
-      </div>
-      {{ end }}
     </div>
   </div>
 
@@ -55,6 +59,7 @@
   <!-- /container -->
   {{ template "scripts" .}}
 </body>
+
 </html>
 
 
