@@ -3,11 +3,10 @@
 {{ $org_id := .OrgId}}
 {{ $page := .}}
 <nav class="navbar navbar-expand-md navbar-dark navbar-custom fixed-top">
-    <div class="container">
-        <!-- Image Logo -->
-        <a class="navbar-brand logo-image" href="{{ $page.PortalRoot }}" img src="/portal-assets/images/logo2.svg"
-            alt="alternative"></a>
+     <!-- Image Logo -->
+     <a class="navbar-brand logo-image" href="{{ $page.PortalRoot }}"><img src="/portal-assets/images/logo-group.png"alt="alternative"></a>
 
+    <div class="container">
         <!-- Mobile Menu Toggle Button -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
             aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,55 +16,71 @@
 
 
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link page-scroll" href="#intro">INTRO</a>
-            </li>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link page-scroll" href="#intro">INTRO</a>
+                </li>
 
-            {{ if .PortalConfig.CatalogueLoginOnly }}
-            {{ if .UserData }}
-            <li class="nav-item">
-                <a class="nav-link page-scroll" href="{{ $page.PortalRoot }}apis/">CATALOGO</a>
-            </li>
-            {{ end }}
-            {{ else }}
-            <li class="nav-item"><a class="nav-link page-scroll" href="{{ $page.PortalRoot }}apis/">CATALOGO</a></li>
-            {{ end }}
-
-            {{ if .OAuthEnabled }}
-            <li class="nav-item"><a class="nav-link page-scroll" href="{{ $page.PortalRoot }}oauth-clients/">OAUTH CLIENTS</a></li>
-            {{ end }}
-
-            {{ if not .PortalConfig.DisableSignup }}
-                {{ if not .UserData }}
-                <li class="nav-item"><a class="nav-link page-scroll" href="{{ $page.PortalRoot }}register/">REGISTER</a></li>
+                {{ if .PortalConfig.CatalogueLoginOnly }}
+                    {{ if .UserData }}
+                    <li class="nav-item">
+                        <a class="nav-link page-scroll" href="{{ $page.PortalRoot }}apis/">CATALOGO</a>
+                    </li>
+                    {{ end }}
+                {{ else }}
+                <li class="nav-item"><a class="nav-link page-scroll" href="{{ $page.PortalRoot }}apis/">CATALOGO</a>
+                </li>
                 {{ end }}
-            {{ end }}
-            {{ if not .PortalConfig.DisableLogin }}
-                {{ if not .UserData }}
-                <li class="nav-item"><a class="nav-link page-scroll" href="{{ $page.PortalRoot }}login/">LOGIN</a></li>
+
+                {{ if .OAuthEnabled }}
+                <li class="nav-item"><a class="nav-link page-scroll" href="{{ $page.PortalRoot }}oauth-clients/">OAUTH
+                        CLIENTS</a></li>
                 {{ end }}
-            {{ end }}
 
-             <!-- Dropdown Menu -->
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle page-scroll" href="#about" id="navbarDropdown" role="button"
-                    aria-haspopup="true" aria-expanded="false">ABOUT</a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#"><span class="item-text">TERMS CONDITIONS</span></a>
-                    <div class="dropdown-items-divide-hr"></div>
-                    <a class="dropdown-item" href="#"><span class="item-text">PRIVACY POLICY</span></a>
-                </div>
-            </li>
-            <!-- end of dropdown menu -->
+                {{ if not .PortalConfig.DisableSignup }}
+                    {{ if not .UserData }}
+                    <li class="nav-item"><a class="nav-link page-scroll" href="{{ $page.PortalRoot }}register/">REGISTER</a>
+                    </li>
+                    {{ end }}
+                {{ end }}
+                {{ if not .PortalConfig.DisableLogin }}
+                    {{ if not .UserData }}
+                    <li class="nav-item"><a class="nav-link page-scroll" href="{{ $page.PortalRoot }}loginpage/">LOGIN</a></li>
+                    {{ end }}
+                {{ end }}
 
-            <li class="nav-item">
-                <a class="nav-link page-scroll" href="#contact">CONTATTACI</a>
-            </li>
+                {{ if .UserData }}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle page-scroll" href="#" id="navbarDropdown" role="button"
+                    aria-haspopup="true" aria-expanded="false">ACCOUNT</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ .PortalRoot }}member/"><span class="item-text">API Dashboard</span></a>
+                        <div class="dropdown-items-divide-hr"></div>
+                        <a class="dropdown-item" href="{{ .PortalRoot }}member/profile/"><span class="item-text">Edit profile</span></a>
+                        <div class="dropdown-items-divide-hr"></div>
+                        <a class="dropdown-item" href="{{ .PortalRoot }}logout/"><span class="item-text">Log out</span></a>
+                    </div>
+                </li>
+                {{ end }}
+                
+                <!-- Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle page-scroll" href="#about" id="navbarDropdown" role="button"
+                        aria-haspopup="true" aria-expanded="false">ABOUT</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#"><span class="item-text">TERMS CONDITIONS</span></a>
+                        <div class="dropdown-items-divide-hr"></div>
+                        <a class="dropdown-item" href="#"><span class="item-text">PRIVACY POLICY</span></a>
+                    </div>
+                </li>
+                <!-- end of dropdown menu -->
+                <li class="nav-item">
+                    <a class="nav-link page-scroll" href="#contact">CONTATTACI</a>
+                </li>
 
-        </ul>
-    </div>
-</d iv>
+            </ul>
+        </div>
+        </div>
 </nav>
 
 {{ end }}
