@@ -17,7 +17,9 @@
 
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav ml-auto">
-               
+                <li class="nav-item">
+                    <a class="nav-link page-scroll" href="{{ $page.PortalRoot }}/">HOME</a>
+                </li>
                 {{ if .PortalConfig.CatalogueLoginOnly }}
                     {{ if .UserData }}
                     <li class="nav-item">
