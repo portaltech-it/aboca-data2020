@@ -13,7 +13,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "Bearer 5fe227fad0b7db341402cc4c227bd438511b49a5a15e9dbec3fee73c"
+						"value": "Bearer 5fe227fad0b7db341402cc4cd16ac3724abe4b17a647f51ee2c892fa"
 					}
 				],
 				"url": {
@@ -41,11 +41,11 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "Bearer 5fe227fad0b7db341402cc4cc6eb8d739735493d99460fae0468236a"
+						"value": "Bearer 5fe227fad0b7db341402cc4c485520c030af4960b1711ee64e6ac37a"
 					}
 				],
 				"url": {
-					"raw": "http://tyk4-test.aboca.dom:8080/api-c/clienti/tab",
+					"raw": "http://tyk4-test.aboca.dom:8080/api-c/clientiTAB/S5/C555/FIT",
 					"protocol": "http",
 					"host": [
 						"tyk4-test",
@@ -55,8 +55,10 @@
 					"port": "8080",
 					"path": [
 						"api-c",
-						"clienti",
-						"tab"
+						"clientiTAB",
+						"S5",
+						"C555",
+						"FIT"
 					]
 				}
 			},
@@ -122,12 +124,12 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJvcmciOiI1Zjk4MjNiNGVlNGZkYzAwMDE0NzU5ZGYiLCJpZCI6IjU1ZTVkY2FiZWU0ODQ4Zjk5Y2FmMzJmMmYzZDdmNGQ1IiwiaCI6Im11cm11cjY0In0=",
+						"value": "Bearer 5fe227fad0b7db341402cc4c485520c030af4960b1711ee64e6ac37a",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://tyk4-test.aboca.dom:8080/api-c/clienti/S2/C007",
+					"raw": "http://tyk4-test.aboca.dom:8080/api-c/clienti/S5/C555/FIT",
 					"protocol": "http",
 					"host": [
 						"tyk4-test",
@@ -138,8 +140,9 @@
 					"path": [
 						"api-c",
 						"clienti",
-						"S2",
-						"C007"
+						"S5",
+						"C555",
+						"FIT"
 					],
 					"query": [
 						{
@@ -173,13 +176,13 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer 5fe227fad0b7db341402cc4c7d413c13b0ad470bbac5233b602a4bbf",
+						"value": "Bearer 5fe227fad0b7db341402cc4c485520c030af4960b1711ee64e6ac37a",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"ragionecliente\"        : \"rg\",\n    \"indirizzocliente\"      : \"addr\",\n    \"capcliente\"            : \"000\",\n    \"cittacliente\"          : \"roma\",\n    \"provinciacliente\"      : \"RO\"\n}",
+					"raw": "{\n    \"ragionecliente\"        : \"EURODEP -ENTREPOT DE LAG ZAC DU PARC DU COMPANS\",\n    \"indirizzocliente\"      : \"via roma 22\",\n    \"capcliente\"            : \"70809\",\n    \"cittacliente\"          : \"Roma\",\n    \"provinciacliente\"      : \"RO\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -187,7 +190,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://tyk4-test.aboca.dom:8080/api-c/clienti/S1/C105/typ3",
+					"raw": "http://tyk4-test.aboca.dom:8080/api-c/clienti/S5/C555/FIT",
 					"protocol": "http",
 					"host": [
 						"tyk4-test",
@@ -198,9 +201,9 @@
 					"path": [
 						"api-c",
 						"clienti",
-						"S1",
-						"C105",
-						"typ3"
+						"S5",
+						"C555",
+						"FIT"
 					],
 					"query": [
 						{
@@ -231,14 +234,13 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJvcmciOiI1Zjk4MjNiNGVlNGZkYzAwMDE0NzU5ZGYiLCJpZCI6ImUzZDBmMzNjMTMxMjQ3OTE5YzVlNWZjMDQ5ZTI3NjdhIiwiaCI6Im11cm11cjY0In0=",
-						"type": "text",
-						"disabled": true
+						"value": "Bearer 5fe227fad0b7db341402cc4c485520c030af4960b1711ee64e6ac37a",
+						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"tipocodicecliente\": \"t3\",\n    \"tipocodicepdc\": \"typ3\",\n    \"partitaivacliente\": \"fddk\",\n    \"attivocliente\": -1,\n\t\"codicefiscalecliente\": \"cccc\",\n\t\"ragionebrevecliente\": \"rag\",\n\t\"ragionecliente\": \"ragione\",\n\t\"indirizzocliente\": \"via roma\",\n\t\"capcliente\": \"00000\",\n\t\"cittacliente\": \"Roma\",\n\t\"provinciacliente\": \"RO\",\n\t\"telefonocliente\": \"123456\",\n\t\"faxcliente\": \"54321\",\n\t\"cellularecliente\": \"3331234\",\n\t\"telefono2cliente\": \"11112222\",\n\t\"mailcliente\": \"mail@mail.mail\"\n}\n\n",
+					"raw": "{\n    \"tipocodicecliente\": \"t3\",\n    \"tipocodicepdc\": \"typ3\",\n    \"partitaivacliente\": \"fddk\",\n    \"attivocliente\": -1,\n\t\"codicefiscalecliente\": \"cccc\",\n\t\"ragionebrevecliente\": \"EURODEP\",\n\t\"ragionecliente\": \"EURODEP -ENTREPOT DE LAG ZAC DU PARC DU COMPANS\",\n\t\"indirizzocliente\": \"via roma\",\n\t\"capcliente\": \"00000\",\n\t\"cittacliente\": \"Roma\",\n\t\"provinciacliente\": \"RO\",\n\t\"telefonocliente\": \"123456\",\n\t\"faxcliente\": \"54321\",\n\t\"cellularecliente\": \"3331234\",\n\t\"telefono2cliente\": \"11112222\",\n\t\"mailcliente\": \"mail@mail.mail\"\n}\n\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -246,7 +248,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://tyk4-test.aboca.dom:8080/api-c/clienti/S1/C105/typ3",
+					"raw": "http://tyk4-test.aboca.dom:8080/api-c/clienti/S5/000002/FIT",
 					"protocol": "http",
 					"host": [
 						"tyk4-test",
@@ -257,9 +259,9 @@
 					"path": [
 						"api-c",
 						"clienti",
-						"S1",
-						"C105",
-						"typ3"
+						"S5",
+						"000002",
+						"FIT"
 					],
 					"query": [
 						{
@@ -294,12 +296,12 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer 5fe227fad0b7db341402cc4c7d413c13b0ad470bbac5233b602a4bbf",
+						"value": "Bearer 5fe227fad0b7db341402cc4c929c11f6fef546babaa3e0d280ce2d1d",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://tyk4-test.aboca.dom:8080/api-c/clienti/?descrizionegruppocliente=GRUPPO%20NON%20DEFINITO",
+					"raw": "http://tyk4-test.aboca.dom:8080/api-c/clienti/S3/C133/FIT",
 					"protocol": "http",
 					"host": [
 						"tyk4-test",
@@ -310,13 +312,11 @@
 					"path": [
 						"api-c",
 						"clienti",
-						""
+						"S3",
+						"C133",
+						"FIT"
 					],
 					"query": [
-						{
-							"key": "descrizionegruppocliente",
-							"value": "GRUPPO%20NON%20DEFINITO"
-						},
 						{
 							"key": "q",
 							"value": "{\"\"CittaCliente\"\": \"MITRY-MORY\", \"\"DescrizioneGruppoCliente\"\": \"GRUPPO%20NON%20DEFINITO\"}",
