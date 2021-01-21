@@ -23,6 +23,9 @@
   "paths": {
     "/clienti/oauth/token": {
       "post": {
+        "tags": [
+          "Token Request"
+        ],
         "summary": "Request Access Token",
         "description": "Token request must be authenticated using Basic authentication, with the client ID as the username and client secret as the password. That is, the token request must include the following header:\n\n    Authorization: Basic base64(client_id:client_secret)\n\n**When testing the API call in Swagger UI, click the lock icon to specify the client ID and secret for authentication.**",
         "security": [
@@ -72,12 +75,7 @@
           "403": {
             "description": "Forbidden",
             "schema": {
-              "type": "object",
-              "properties": {
-                "access_token": {
-                  "$ref": "#/definitions/VARCHAR2"
-                }
-              }
+              "$ref": "#/definitions/Cliente"
             }
           }
         }
@@ -85,6 +83,9 @@
     },
     "/clienti": {
       "get": {
+        "tags": [
+          "APIs Clienti"
+        ],
         "summary": "Returns all records from CLIENTI table",
         "description": "Returns all records from CLIENTI table",
         "produces": [
@@ -94,215 +95,7 @@
           "200": {
             "description": "Records shown",
             "schema": {
-              "type": "object",
-              "properties": {
-                "items": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "ABB_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "ABI_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "AREA_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "ATTIVAZIONE_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "ATTIVO_CLI": {
-                        "$ref": "#/definitions/NUMBER"
-                      },
-                      "ATTIVO_PDC": {
-                        "$ref": "#/definitions/NUMBER"
-                      },
-                      "CAB_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "CAP_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "CBB_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "CCB_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "CCC_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "CELLULARE_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "CESSIONE_CREDITO": {
-                        "$ref": "#/definitions/NUMBER"
-                      },
-                      "CITTA_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_AGN2_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_AGN3_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_AGN4_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_AGN_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_AGN_PDC": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_AMT": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_CAT_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_CAT_PDC": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_CLI_ESTERNO": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_CLI_UNICO": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_FISCALE_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_GRUPPO_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_KAM": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_LINGUA_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_NAZIONE_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_PAGAMENTO_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_PDC": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_TRASPORTO_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_VETTORE_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "DESC_CAT_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "DESC_CAT_PDC": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "DESC_GRUPPO_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "DISDETTA_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "FAX_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "INDIRIZZO_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "LATITUDINE": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "LONGITUDINE": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "MAIL2_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "MAIL_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "MICROAREA": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "MICROBRICK": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "NUOVO_COD_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "PARTITA_IVA_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "PROG_AGN2_CLI": {
-                        "$ref": "#/definitions/NUMBER"
-                      },
-                      "PROG_AGN3_CLI": {
-                        "$ref": "#/definitions/NUMBER"
-                      },
-                      "PROG_AGN4_CLI": {
-                        "$ref": "#/definitions/NUMBER"
-                      },
-                      "PROG_AGN_CLI": {
-                        "$ref": "#/definitions/NUMBER"
-                      },
-                      "PROVINCIA_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "RGS_BREVE_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "RGS_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "SOCIETA": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "TELEFONO2_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "TELEFONO_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "TIPO_AGN2_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "TIPO_AGN3_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "TIPO_AGN4_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "TIPO_AGN_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "TIPO_COD_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "TIPO_COD_PDC": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "VECCHIO_COD_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "ZONA_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      }
-                    }
-                  }
-                }
-              }
+              "$ref": "#/definitions/Cliente"
             }
           },
           "400": {
@@ -320,6 +113,9 @@
     },
     "/clienti/": {
       "get": {
+        "tags": [
+          "APIs Clienti"
+        ],
         "summary": "Returns a record from CLIENTI table given few fields",
         "description": "Returns a record from CLIENTI table given few fields",
         "produces": [
@@ -329,215 +125,7 @@
           "200": {
             "description": "Record shown",
             "schema": {
-              "type": "object",
-              "properties": {
-                "items": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "ABB_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "ABI_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "AREA_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "ATTIVAZIONE_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "ATTIVO_CLI": {
-                        "$ref": "#/definitions/NUMBER"
-                      },
-                      "ATTIVO_PDC": {
-                        "$ref": "#/definitions/NUMBER"
-                      },
-                      "CAB_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "CAP_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "CBB_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "CCB_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "CCC_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "CELLULARE_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "CESSIONE_CREDITO": {
-                        "$ref": "#/definitions/NUMBER"
-                      },
-                      "CITTA_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_AGN2_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_AGN3_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_AGN4_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_AGN_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_AGN_PDC": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_AMT": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_CAT_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_CAT_PDC": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_CLI_ESTERNO": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_CLI_UNICO": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_FISCALE_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_GRUPPO_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_KAM": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_LINGUA_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_NAZIONE_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_PAGAMENTO_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_PDC": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_TRASPORTO_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_VETTORE_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "DESC_CAT_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "DESC_CAT_PDC": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "DESC_GRUPPO_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "DISDETTA_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "FAX_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "INDIRIZZO_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "LATITUDINE": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "LONGITUDINE": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "MAIL2_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "MAIL_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "MICROAREA": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "MICROBRICK": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "NUOVO_COD_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "PARTITA_IVA_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "PROG_AGN2_CLI": {
-                        "$ref": "#/definitions/NUMBER"
-                      },
-                      "PROG_AGN3_CLI": {
-                        "$ref": "#/definitions/NUMBER"
-                      },
-                      "PROG_AGN4_CLI": {
-                        "$ref": "#/definitions/NUMBER"
-                      },
-                      "PROG_AGN_CLI": {
-                        "$ref": "#/definitions/NUMBER"
-                      },
-                      "PROVINCIA_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "RGS_BREVE_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "RGS_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "SOCIETA": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "TELEFONO2_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "TELEFONO_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "TIPO_AGN2_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "TIPO_AGN3_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "TIPO_AGN4_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "TIPO_AGN_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "TIPO_COD_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "TIPO_COD_PDC": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "VECCHIO_COD_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "ZONA_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      }
-                    }
-                  }
-                }
-              }
+              "$ref": "#/definitions/Cliente"
             }
           },
           "400": {
@@ -570,6 +158,9 @@
     },
     "/clienti/{societa}/{codicecliente}/{codicepdc}": {
       "get": {
+        "tags": [
+          "APIs Clienti"
+        ],
         "summary": "Returns a record from CLIENTI table given a primary key",
         "description": "Return a record from CLIENTI table given a primary key",
         "produces": [
@@ -579,215 +170,7 @@
           "200": {
             "description": "Record shown",
             "schema": {
-              "type": "object",
-              "properties": {
-                "items": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "ABB_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "ABI_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "AREA_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "ATTIVAZIONE_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "ATTIVO_CLI": {
-                        "$ref": "#/definitions/NUMBER"
-                      },
-                      "ATTIVO_PDC": {
-                        "$ref": "#/definitions/NUMBER"
-                      },
-                      "CAB_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "CAP_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "CBB_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "CCB_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "CCC_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "CELLULARE_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "CESSIONE_CREDITO": {
-                        "$ref": "#/definitions/NUMBER"
-                      },
-                      "CITTA_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_AGN2_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_AGN3_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_AGN4_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_AGN_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_AGN_PDC": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_AMT": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_CAT_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_CAT_PDC": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_CLI_ESTERNO": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_CLI_UNICO": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_FISCALE_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_GRUPPO_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_KAM": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_LINGUA_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_NAZIONE_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_PAGAMENTO_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_PDC": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_TRASPORTO_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "COD_VETTORE_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "DESC_CAT_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "DESC_CAT_PDC": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "DESC_GRUPPO_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "DISDETTA_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "FAX_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "INDIRIZZO_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "LATITUDINE": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "LONGITUDINE": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "MAIL2_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "MAIL_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "MICROAREA": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "MICROBRICK": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "NUOVO_COD_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "PARTITA_IVA_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "PROG_AGN2_CLI": {
-                        "$ref": "#/definitions/NUMBER"
-                      },
-                      "PROG_AGN3_CLI": {
-                        "$ref": "#/definitions/NUMBER"
-                      },
-                      "PROG_AGN4_CLI": {
-                        "$ref": "#/definitions/NUMBER"
-                      },
-                      "PROG_AGN_CLI": {
-                        "$ref": "#/definitions/NUMBER"
-                      },
-                      "PROVINCIA_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "RGS_BREVE_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "RGS_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "SOCIETA": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "TELEFONO2_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "TELEFONO_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "TIPO_AGN2_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "TIPO_AGN3_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "TIPO_AGN4_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "TIPO_AGN_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "TIPO_COD_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "TIPO_COD_PDC": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "VECCHIO_COD_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      },
-                      "ZONA_CLI": {
-                        "$ref": "#/definitions/VARCHAR2"
-                      }
-                    }
-                  }
-                }
-              }
+              "$ref": "#/definitions/Cliente"
             }
           },
           "400": {
@@ -825,6 +208,9 @@
         ]
       },
       "delete": {
+        "tags": [
+          "APIs Clienti"
+        ],
         "summary": "Delete a record from CLIENTI table",
         "description": "Delete a record from CLIENTI table",
         "produces": [
@@ -869,6 +255,9 @@
         ]
       },
       "post": {
+        "tags": [
+          "APIs Clienti"
+        ],
         "summary": "Add a record in CLIENTI table",
         "description": "Add a record in CLIENTI table",
         "produces": [
@@ -945,6 +334,9 @@
         ]
       },
       "put": {
+        "tags": [
+          "APIs Clienti"
+        ],
         "summary": "Update a record in CLIENTI table",
         "description": "Update a record in CLIENTI table",
         "produces": [
@@ -1023,11 +415,207 @@
     }
   },
   "definitions": {
-    "VARCHAR2": {
-      "type": "string"
-    },
-    "NUMBER": {
-      "type": "integer"
+    "Cliente": {
+      "properties": {
+        "ABB_CLI": {
+          "type": "string"
+        },
+        "ABI_CLI": {
+          "type": "string"
+        },
+        "AREA_CLI": {
+          "type": "string"
+        },
+        "ATTIVAZIONE_CLI": {
+          "type": "string"
+        },
+        "ATTIVO_CLI": {
+          "type": "integer"
+        },
+        "ATTIVO_PDC": {
+          "type": "integer"
+        },
+        "CAB_CLI": {
+          "type": "string"
+        },
+        "CAP_CLI": {
+          "type": "string"
+        },
+        "CBB_CLI": {
+          "type": "string"
+        },
+        "CCB_CLI": {
+          "type": "string"
+        },
+        "CCC_CLI": {
+          "type": "string"
+        },
+        "CELLULARE_CLI": {
+          "type": "string"
+        },
+        "CESSIONE_CREDITO": {
+          "type": "integer"
+        },
+        "CITTA_CLI": {
+          "type": "string"
+        },
+        "COD_AGN2_CLI": {
+          "type": "string"
+        },
+        "COD_AGN3_CLI": {
+          "type": "string"
+        },
+        "COD_AGN4_CLI": {
+          "type": "string"
+        },
+        "COD_AGN_CLI": {
+          "type": "string"
+        },
+        "COD_AGN_PDC": {
+          "type": "string"
+        },
+        "COD_AMT": {
+          "type": "string"
+        },
+        "COD_CAT_CLI": {
+          "type": "string"
+        },
+        "COD_CAT_PDC": {
+          "type": "string"
+        },
+        "COD_CLI": {
+          "type": "string"
+        },
+        "COD_CLI_ESTERNO": {
+          "type": "string"
+        },
+        "COD_CLI_UNICO": {
+          "type": "string"
+        },
+        "COD_FISCALE_CLI": {
+          "type": "string"
+        },
+        "COD_GRUPPO_CLI": {
+          "type": "string"
+        },
+        "COD_KAM": {
+          "type": "string"
+        },
+        "COD_LINGUA_CLI": {
+          "type": "string"
+        },
+        "COD_NAZIONE_CLI": {
+          "type": "string"
+        },
+        "COD_PAGAMENTO_CLI": {
+          "type": "string"
+        },
+        "COD_PDC": {
+          "type": "string"
+        },
+        "COD_TRASPORTO_CLI": {
+          "type": "string"
+        },
+        "COD_VETTORE_CLI": {
+          "type": "string"
+        },
+        "DESC_CAT_CLI": {
+          "type": "string"
+        },
+        "DESC_CAT_PDC": {
+          "type": "string"
+        },
+        "DESC_GRUPPO_CLI": {
+          "type": "string"
+        },
+        "DISDETTA_CLI": {
+          "type": "string"
+        },
+        "FAX_CLI": {
+          "type": "string"
+        },
+        "INDIRIZZO_CLI": {
+          "type": "string"
+        },
+        "LATITUDINE": {
+          "type": "string"
+        },
+        "LONGITUDINE": {
+          "type": "string"
+        },
+        "MAIL2_CLI": {
+          "type": "string"
+        },
+        "MAIL_CLI": {
+          "type": "string"
+        },
+        "MICROAREA": {
+          "type": "string"
+        },
+        "MICROBRICK": {
+          "type": "string"
+        },
+        "NUOVO_COD_CLI": {
+          "type": "string"
+        },
+        "PARTITA_IVA_CLI": {
+          "type": "string"
+        },
+        "PROG_AGN2_CLI": {
+          "type": "integer"
+        },
+        "PROG_AGN3_CLI": {
+          "type": "integer"
+        },
+        "PROG_AGN4_CLI": {
+          "type": "integer"
+        },
+        "PROG_AGN_CLI": {
+          "type": "integer"
+        },
+        "PROVINCIA_CLI": {
+          "type": "string"
+        },
+        "RGS_BREVE_CLI": {
+          "type": "string"
+        },
+        "RGS_CLI": {
+          "type": "string"
+        },
+        "SOCIETA": {
+          "type": "string"
+        },
+        "TELEFONO2_CLI": {
+          "type": "string"
+        },
+        "TELEFONO_CLI": {
+          "type": "string"
+        },
+        "TIPO_AGN2_CLI": {
+          "type": "string"
+        },
+        "TIPO_AGN3_CLI": {
+          "type": "string"
+        },
+        "TIPO_AGN4_CLI": {
+          "type": "string"
+        },
+        "TIPO_AGN_CLI": {
+          "type": "string"
+        },
+        "TIPO_COD_CLI": {
+          "type": "string"
+        },
+        "TIPO_COD_PDC": {
+          "type": "string"
+        },
+        "VECCHIO_COD_CLI": {
+          "type": "string"
+        },
+        "ZONA_CLI": {
+          "type": "string"
+        }
+      }
     }
   }
 }

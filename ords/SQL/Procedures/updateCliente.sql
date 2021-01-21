@@ -22,28 +22,27 @@ create or replace PROCEDURE updateCliente (
 
 AS
 BEGIN
-  UPDATE TB_CLIENTI_TMP
-  SET societa               = p_societa,
-      cod_cli               = p_codicecliente,
-      cod_pdc               = p_codicepdc,
-  	  ragione_sociale_cli   = p_ragionecliente,
-      indirizzo_cli         = p_indirizzocliente,
-      cap_cli               = p_capcliente,
-      citta_cli             = p_cittacliente,
-      provincia_cli         = p_provinciacliente,
-      area_cli              = p_areacliente,
-      zona_cli              = p_zonacliente,
-      telefono_cli          = p_telefonocliente ,
-      fax_cli               = p_faxcliente,
-      cellulare_cli         = p_cellularecliente,
-      telefono2_cli         = p_telefono2cliente,
-      mail_cli              = p_mailcliente,
-      attivo_cli            = p_attivocliente,
-      attivo_pdc            = p_attivopdc,
-      mail2_cli             = p_mail2cliente,
-      cod_cli_esterno       = p_codcliesterno
+    UPDATE TB_CLIENTI_TMP
+  SET ragione_sociale_cli   = NVL(p_ragionecliente, ragione_sociale_cli),
+      indirizzo_cli         = NVL(p_indirizzocliente, indirizzo_cli),
+      cap_cli               = NVL(p_capcliente, cap_cli),
+      citta_cli             = NVL(p_cittacliente, citta_cli),
+      provincia_cli         = NVL(p_provinciacliente, provincia_cli),
+      area_cli              = NVL(p_areacliente, area_cli),
+      zona_cli              = NVL(p_zonacliente, zona_cli),
+      telefono_cli          = NVL(p_telefonocliente, telefono_cli),
+      fax_cli               = NVL(p_faxcliente, fax_cli),
+      cellulare_cli         = NVL(p_cellularecliente, cellulare_cli),
+      telefono2_cli         = NVL(p_telefono2cliente, telefono2_cli),
+      mail_cli              = NVL(p_mailcliente, mail_cli),
+      attivo_cli            = NVL(p_attivocliente, attivo_cli),
+      attivo_pdc            = NVL(p_attivopdc, attivo_pdc),
+      mail2_cli             = NVL(p_mail2cliente, mail2_cli),
+      cod_cli_esterno       = NVL(p_codcliesterno, cod_cli_esterno)
 
   WHERE societa = p_societa AND cod_cli = p_codicecliente AND cod_pdc = p_codicepdc;
+  
+  
 EXCEPTION
   WHEN OTHERS THEN
     HTP.print(SQLERRM);
