@@ -430,7 +430,8 @@
           "type": "string"
         },
         "ATTIVO_CLI": {
-          "type": "integer"
+          "type": "integer",
+          "description": "flag. if =-1 client account is activated. if 0 is deactivated"
         },
         "ATTIVO_PDC": {
           "type": "integer"
@@ -451,12 +452,14 @@
           "type": "string"
         },
         "CELLULARE_CLI": {
+          "description": "Client mobile phone number",
           "type": "string"
         },
         "CESSIONE_CREDITO": {
           "type": "integer"
         },
         "CITTA_CLI": {
+          "description": "Client city",
           "type": "string"
         },
         "COD_AGN2_CLI": {
@@ -484,6 +487,7 @@
           "type": "string"
         },
         "COD_CLI": {
+          "description": "Client code",
           "type": "string"
         },
         "COD_CLI_ESTERNO": {
@@ -502,12 +506,15 @@
           "type": "string"
         },
         "COD_LINGUA_CLI": {
+          "description": "Code that identifies client language",
           "type": "string"
         },
         "COD_NAZIONE_CLI": {
+          "description": "Code that identifies client nation",
           "type": "string"
         },
         "COD_PAGAMENTO_CLI": {
+          "description": "Client payment code",
           "type": "string"
         },
         "COD_PDC": {
@@ -532,21 +539,27 @@
           "type": "string"
         },
         "FAX_CLI": {
+          "description": "Client FAX number",
           "type": "string"
         },
         "INDIRIZZO_CLI": {
+          "description": "Client address",
           "type": "string"
         },
         "LATITUDINE": {
+          "description": "Client latitude",
           "type": "string"
         },
         "LONGITUDINE": {
+          "description": "Client longitude",
           "type": "string"
         },
         "MAIL2_CLI": {
+          "description": "Client second email address",
           "type": "string"
         },
         "MAIL_CLI": {
+          "description": "Client email address",
           "type": "string"
         },
         "MICROAREA": {
@@ -559,6 +572,7 @@
           "type": "string"
         },
         "PARTITA_IVA_CLI": {
+          "description": "Client Partita IVA",
           "type": "string"
         },
         "PROG_AGN2_CLI": {
@@ -574,21 +588,27 @@
           "type": "integer"
         },
         "PROVINCIA_CLI": {
+          "description": "Client province",
           "type": "string"
         },
         "RGS_BREVE_CLI": {
+          "description": "Client business name (short)",
           "type": "string"
         },
         "RGS_CLI": {
+          "description": "Client business name",
           "type": "string"
         },
         "SOCIETA": {
+          "description": "society of the client",
           "type": "string"
         },
         "TELEFONO2_CLI": {
+          "description": "Client second phone number",
           "type": "string"
         },
         "TELEFONO_CLI": {
+          "description": "Client phone number",
           "type": "string"
         },
         "TIPO_AGN2_CLI": {
