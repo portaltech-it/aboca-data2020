@@ -5,8 +5,8 @@
     "title": "Clienti",
     "description": ""
   },
-  "host": "192.168.136.21:8080",
-  "basePath": "/api-c",
+  "host": "tyk4-test.aboca.dom:8080",
+  "basePath": "/token/api-c/",
   "schemes": [
     "http",
     "https"
@@ -18,8 +18,18 @@
     "TokenRequestBasicAuth": {
       "type": "basic",
       "description": "Authentication for the OAuth 2 token request. Use client ID as the username and client secret as the password."
+    },
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
     }
   },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ],
   "paths": {
     "/clienti/oauth/token": {
       "post": {
@@ -143,70 +153,20 @@
             "in": "query",
             "name": "cittacliente",
             "type": "string",
-            "required": true,
+            "required": false,
             "description": "City of the client"
           },
           {
             "in": "query",
             "name": "descrizionegruppocliente",
             "type": "string",
-            "required": true,
+            "required": false,
             "description": "Description of the client's group"
           }
         ]
       }
     },
     "/clienti/{societa}/{codicecliente}/{codicepdc}": {
-      "get": {
-        "tags": [
-          "APIs Clienti"
-        ],
-        "summary": "Returns a record from CLIENTI table given a primary key",
-        "description": "Return a record from CLIENTI table given a primary key",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Record shown",
-            "schema": {
-              "$ref": "#/definitions/Cliente"
-            }
-          },
-          "400": {
-            "description": "Authorization field missing"
-          },
-          "401": {
-            "description": "Authorization issues."
-          },
-          "403": {
-            "description": "Key not authorised"
-          }
-        },
-        "parameters": [
-          {
-            "in": "path",
-            "name": "societa",
-            "type": "string",
-            "required": true,
-            "description": "Society code of client"
-          },
-          {
-            "in": "path",
-            "name": "codicecliente",
-            "type": "string",
-            "required": true,
-            "description": "Client code of client"
-          },
-          {
-            "in": "path",
-            "name": "codicepdc",
-            "type": "string",
-            "required": true,
-            "description": "Client code of client"
-          }
-        ]
-      },
       "delete": {
         "tags": [
           "APIs Clienti"
@@ -380,8 +340,8 @@
           },
           {
             "in": "body",
-            "name": "cliente",
-            "description": "Create a new client",
+            "name": "columens",
+            "description": "Columns to edit",
             "schema": {
               "type": "object",
               "required": [
@@ -409,6 +369,58 @@
                 }
               }
             }
+          }
+        ]
+      }
+    },
+    "/clientiTAB/{societa}/{codicecliente}/{codicepdc}": {
+      "get": {
+        "tags": [
+          "APIs Clienti"
+        ],
+        "summary": "Returns a record from CLIENTI table given a primary key",
+        "description": "Return a record from CLIENTI table given a primary key",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Record shown",
+            "schema": {
+              "$ref": "#/definitions/Cliente"
+            }
+          },
+          "400": {
+            "description": "Authorization field missing"
+          },
+          "401": {
+            "description": "Authorization issues."
+          },
+          "403": {
+            "description": "Key not authorised"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "societa",
+            "type": "string",
+            "required": true,
+            "description": "Society code of client"
+          },
+          {
+            "in": "path",
+            "name": "codicecliente",
+            "type": "string",
+            "required": true,
+            "description": "Client code of client"
+          },
+          {
+            "in": "path",
+            "name": "codicepdc",
+            "type": "string",
+            "required": true,
+            "description": "Client code of client"
           }
         ]
       }
