@@ -6,7 +6,7 @@
     "description": ""
   },
   "host": "tyk4-test.aboca.dom:8080",
-  "basePath": "/token/api-c/",
+  "basePath": "/api-c",
   "schemes": [
     "http",
     "https"
@@ -15,82 +15,18 @@
     "application/json"
   ],
   "securityDefinitions": {
-    "TokenRequestBasicAuth": {
-      "type": "basic",
-      "description": "Authentication for the OAuth 2 token request. Use client ID as the username and client secret as the password."
-    },
-    "Bearer": {
-      "type": "apiKey",
-      "name": "Authorization",
-      "in": "header"
+    "oauth": {
+      "type": "oauth2",
+      "tokenUrl": "http://tyk4-test.aboca.dom:8080/token/api-c/clienti/oauth/token",
+      "flow": "application"
     }
   },
   "security": [
     {
-      "Bearer": []
+      "oauth": []
     }
   ],
   "paths": {
-    "/clienti/oauth/token": {
-      "post": {
-        "tags": [
-          "Token Request"
-        ],
-        "summary": "Request Access Token",
-        "description": "Token request must be authenticated using Basic authentication, with the client ID as the username and client secret as the password. That is, the token request must include the following header:\n\n    Authorization: Basic base64(client_id:client_secret)\n\n**When testing the API call in Swagger UI, click the lock icon to specify the client ID and secret for authentication.**",
-        "security": [
-          {
-            "TokenRequestBasicAuth": []
-          }
-        ],
-        "consumes": [
-          "application/x-www-form-urlencoded"
-        ],
-        "parameters": [
-          {
-            "name": "grant_type",
-            "x-go-name": "grant_type",
-            "format": "base64",
-            "in": "formData",
-            "description": "Value MUST be set to \"client_credentials\"",
-            "required": true,
-            "type": "string",
-            "enum": [
-              "client_credentials"
-            ]
-          },
-          {
-            "name": "client_id",
-            "format": "base64",
-            "x-go-name": "client_id",
-            "in": "formData",
-            "description": "The code received in the query string when redirected from authorization page",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "client_secret",
-            "x-go-name": "ClientSecret",
-            "format": "base64",
-            "in": "formData",
-            "description": "The code received in the query string when redirected from authorization page",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "403": {
-            "description": "Forbidden",
-            "schema": {
-              "$ref": "#/definitions/Cliente"
-            }
-          }
-        }
-      }
-    },
     "/clienti": {
       "get": {
         "tags": [
@@ -117,8 +53,7 @@
           "403": {
             "description": "Key not authorised"
           }
-        },
-        "parameters": []
+        }
       }
     },
     "/clienti/": {
@@ -126,8 +61,8 @@
         "tags": [
           "APIs Clienti"
         ],
-        "summary": "Returns a record from CLIENTI table given few fields",
-        "description": "Returns a record from CLIENTI table given few fields",
+        "summary": "Returns records from CLIENTI table given few fields",
+        "description": "Returns records from CLIENTI table given few fields",
         "produces": [
           "application/json"
         ],
@@ -210,7 +145,7 @@
             "name": "codicepdc",
             "type": "string",
             "required": true,
-            "description": "Client code of client"
+            "description": "Pdc code of client"
           }
         ]
       },
@@ -257,7 +192,7 @@
             "name": "codicepdc",
             "type": "string",
             "required": true,
-            "description": "Client code of client"
+            "description": "Pdc code of client"
           },
           {
             "in": "body",
@@ -336,7 +271,7 @@
             "name": "codicepdc",
             "type": "string",
             "required": true,
-            "description": "Client code of client"
+            "description": "Pdc code of client"
           },
           {
             "in": "body",
@@ -378,8 +313,8 @@
         "tags": [
           "APIs Clienti"
         ],
-        "summary": "Returns a record from CLIENTI table given a primary key",
-        "description": "Return a record from CLIENTI table given a primary key",
+        "summary": "Returns a record from CLIENTI table given the primary key",
+        "description": "Returns a record from CLIENTI table given the primary key",
         "produces": [
           "application/json"
         ],
@@ -420,7 +355,7 @@
             "name": "codicepdc",
             "type": "string",
             "required": true,
-            "description": "Client code of client"
+            "description": "Pdc code of client"
           }
         ]
       }
