@@ -1,9 +1,0 @@
-{{ define "APIKeyQuotaTrigger" }}
-
-The usage of your API key is currently at {{ .UsagePercentage }}% . Please note that the key will keep on working until it
-exceeds its total quota.
-
-The API key is {{ .Key }}
- - The Tyk.io Team
-
-{{ end }}
