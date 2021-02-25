@@ -10,31 +10,38 @@ import org.apache.commons.codec.binary.Base64;
 
 public class HmacChecker
 {
-	public String secret;
-	public String HMAC_ALGORITHM;
-	public String calculated;
+	private String secret;
+	private String HMAC_ALGORITHM;
+	private String calculated;
 	
 	public HmacChecker(String _secret)
 	{
 		this.secret = _secret;
 		this.HMAC_ALGORITHM = "HmacSHA256";
 	}
-	
-	public String calculateHmac(String message) throws NoSuchAlgorithmException, InvalidKeyException {
-        Mac hmac = Mac.getInstance(this.HMAC_ALGORITHM);
-        SecretKeySpec key = new SecretKeySpec(this.secret.getBytes(), this.HMAC_ALGORITHM);
-        hmac.init(key);
-         
-        this.calculated = Base64.encodeBase64String(hmac.doFinal(message.getBytes()));
-        return this.calculated;
-    }
+	 
 
-
-    public boolean checkHmac(String message, String hmac) throws InvalidKeyException, NoSuchAlgorithmException {
-        return hmac.equals(calculateHmac(message));
+    public Boolean verifyWebhook(String headerHmac, String message) throws Exception
+    {
+    	//computing hash
+    	byte[] hmac_hashed = hash_hmac(this.secret.getBytes("UTF-8"), message.getBytes("UTF-8"));
+    	
+    	//encoding
+        this.calculated = Base64.encodeBase64String(hmac_hashed);
         
+        //comparing
+        return headerHmac.equals(calculated); 	
     }
     
-    
+    private byte[] hash_hmac(byte[] secretKey, byte[] message) throws NoSuchAlgorithmException, InvalidKeyException 
+    {
+    	byte[] hmacSha256 = null;
 
+    	Mac mac = Mac.getInstance(this.HMAC_ALGORITHM);
+	    SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey, this.HMAC_ALGORITHM);
+	    mac.init(secretKeySpec);
+	    hmacSha256 = mac.doFinal(message);
+        
+        return hmacSha256;
+    }
 }
