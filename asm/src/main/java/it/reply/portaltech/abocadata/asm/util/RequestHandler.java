@@ -16,11 +16,11 @@ public class RequestHandler
 {
     private static final HttpClient httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_2).build();
 
-    public String getOauth2Token(String tokenURL)
+    public String getOauth2Token(String tokenURL) throws IOException, InterruptedException
     {
-    	String clientID;
-    	String clientSecret;
-    	String encoded ? null;
+    	String clientID = null;
+    	String clientSecret = null;
+    	String encoded = null;
     	
 		Map<Object, Object> body = new HashMap<>();
 		body.put("grant_type", "client_credentials");
