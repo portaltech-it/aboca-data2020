@@ -20,9 +20,7 @@ public class RequestHandler
 
     private static String getOauth2Token(String tokenURL, String clientID, String clientSecret) throws IOException, InterruptedException
     {
-    	System.out.println(clientID+":"+clientSecret);
     	String encodedB64 = Base64.encodeBase64String((clientID+":"+clientSecret).getBytes());
-    	System.out.println("ENCODED = " + encodedB64);
     	
 		Map<Object, Object> body = new HashMap<>();
 		body.put("grant_type", "client_credentials");
@@ -41,7 +39,6 @@ public class RequestHandler
 
 		JSONObject jsonObject = new JSONObject(response.body());
 		String access_token = jsonObject.getString("access_token");
-    	System.out.println("ACCESS TOKEN = " + access_token);
 
 		return access_token;
     }
