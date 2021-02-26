@@ -2,16 +2,11 @@ package it.reply.portaltech.abocadata.asm.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-
-import it.reply.portaltech.abocadata.asm.util.HmacChecker;
-import it.reply.portaltech.abocadata.asm.util.RequestHandler;
 
 @RestController
 @RequestMapping("/asm/as")
@@ -20,6 +15,14 @@ public class AbocaShopController extends SuperController
 	@Value("${key.secret.abocashop}")
 	private String secret;
 
+	
+	@Value("${tyk.api.oauth.abocashop.clientid}")
+	private String clientID;
+
+	@Value("${tyk.api.oauth.abocashop.secret}")
+	private String clientSecret;
+
+	
 	@Value("${shopify.hostname.abocashop}")
 	private String hostname;
 
@@ -34,7 +37,7 @@ public class AbocaShopController extends SuperController
     public boolean handleCreation(HttpServletRequest request)
     {
   	    try {
-			return super.postOrder(request, this.secret, "http://localhost:3030/orders");
+			return super.postOrder(request, this.secret, "http://tyk4-test.aboca.dom/ords/", clientID, clientSecret);
 		} catch (Exception e) {
 			log.debug(e.getStackTrace());
 		}
