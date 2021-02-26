@@ -18,34 +18,50 @@ import it.reply.portaltech.abocadata.asm.util.RequestHandler;
 public class AbocaShopController extends SuperController
 {	
 	@Value("${key.secret.abocashop}")
-	private String secret = "640171b3de3269b45a4b07b72c258f95e5dfe44fdcb8673b6b825cc949ebe13d";
+	private String secret;
 
 	@Value("${shopify.hostname.abocashop}")
 	private String hostname;
+
+	@Value("${shopify.hostname.abocashop}")
+	private String url;
+
 	
     private Logger log = Logger.getLogger(this.hostname + ".log");
 
     
     @PostMapping("/createOrder")
-    public boolean handleCreation(HttpServletRequest request) throws Exception
+    public boolean handleCreation(HttpServletRequest request)
     {
-  	    return super.handleCreation(request, this.secret);
-    	
+  	    try {
+			return super.postOrder(request, this.secret, "http://localhost:3030/orders");
+		} catch (Exception e) {
+			log.debug(e.getStackTrace());
+		}
+    	return false;
     }
     
-//	@PostMapping("/asm/as/deleteOrder")
-//    public void handleDeletion(HttpServletRequest request)
-//    {
-//    	this.verifyWebhook(request);
-//    	//sendDataToDelete()
-//    }
-//    
-//    @PostMapping("/asm/as/updateOrder")
-//    public void handleUpdate(HttpServletRequest request)
-//    {
-//    	this.verifyWebhook(request);
-//    	//sendDataToCreate()
-//    }
+	@PostMapping("/deleteOrder")
+    public boolean handleDeletion(HttpServletRequest request)
+    {
+    	try {
+			return super.deleteOrder(request, this.secret, "http://localhost:3030/orders");
+		} catch (Exception e) {
+			log.debug(e.getStackTrace());
+		}
+    	return false;
+    }
+    
+    @PostMapping("/updateOrder")
+    public boolean handleUpdate(HttpServletRequest request)
+    {
+    	try {
+			return super.updateOrder(request, this.secret, "http://localhost:3030/orders");
+		} catch (Exception e) {
+			log.debug(e.getStackTrace());
+		}
+    	return false;
+    }
     
     
     

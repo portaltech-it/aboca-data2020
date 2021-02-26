@@ -1,5 +1,6 @@
 package it.reply.portaltech.abocadata.asm.util;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
@@ -15,8 +16,81 @@ public class RequestHandler
 {
     private static final HttpClient httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_2).build();
 
-    public static void sendOrderToCreate(String message) throws Exception 
+    public String getOauth2Token(String tokenURL)
+    {
+    	String clientID;
+    	String clientSecret;
+    	String encoded ? null;
+    	
+		Map<Object, Object> body = new HashMap<>();
+		body.put("grant_type", "client_credentials");
+		body.put("client_id", clientID);
+		body.put("client_secret", clientSecret);
+
+		HttpRequest request = HttpRequest.newBuilder()
+		        .POST(buildFormDataFromMap(body))
+		        .uri(URI.create(tokenURL))
+		        .setHeader("User-Agent", "Java 11 HttpClient Bot")
+		        .header("Content-Type", "application/json")
+		        .header("Authentication", "Basic " + encoded)
+		        .build();   
+		
+		HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+		JSONObject jsonObject = new JSONObject(response.body());
+		String access_token = jsonObject.getString("access_token");
+
+		return access_token;
+    }
+    
+    public static void sendOrderToCreate(String message, String url) throws Exception 
     {		
+		Map<Object, Object> data = getDataMap(message);
+		
+		HttpRequest request = HttpRequest.newBuilder()
+		        .POST(buildFormDataFromMap(data))
+		        .uri(URI.create(url))
+		        .setHeader("User-Agent", "Java 11 HttpClient Bot")
+		        .header("Content-Type", "application/json")
+		        //.header("Authentication", authorizationString)
+		        .build();
+		
+		HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+    }
+
+    public static void sendOrderToUpdate(String message, String url) throws Exception 
+    {		
+		Map<Object, Object> data = getDataMap(message);
+		
+		HttpRequest request = HttpRequest.newBuilder()
+		        .PUT(buildFormDataFromMap(data))
+		        .uri(URI.create(url))
+		        .setHeader("User-Agent", "Java 11 HttpClient Bot")
+		        .header("Content-Type", "application/json")
+		        .build();
+		
+		HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+    }
+    
+    public static void sendOrderToDelete(String message, String url) throws IOException, InterruptedException 
+    {
+		Map<Object, Object> data = getDataMap(message);
+		
+		HttpRequest request = HttpRequest.newBuilder()
+		        .DELETE()
+		        .uri(URI.create(url + data.get("id")))
+		        .setHeader("User-Agent", "Java 11 HttpClient Bot")
+		        .header("Content-Type", "application/json")
+		        .build();
+		
+		HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+	}
+
+    
+    
+    
+	private static Map<Object, Object> getDataMap(String message) 
+	{
 		JSONObject jsonObject = new JSONObject(message);
 		long id = jsonObject.getLong("id");
 		String email = jsonObject.getString("email");
@@ -24,23 +98,11 @@ public class RequestHandler
 		Map<Object, Object> data = new HashMap<>();
 		data.put("id", id);
 		data.put("email", email);
-		
-		HttpRequest request = HttpRequest.newBuilder()
-		        .POST(buildFormDataFromMap(data))
-		        .uri(URI.create("http://localhost:3030/orders"))
-		        .setHeader("User-Agent", "Java 11 HttpClient Bot") // add request header
-		        .header("Content-Type", "application/json")
-		        .build();
-		
-		HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-		
-		// print status code
-		System.out.println("STATUS CODE = " + response.statusCode());
-		
-		// print response body
-		System.out.println("RESPONSE BODY = " + response.body());
-    }
+		return data;
+	}
     
+    
+
     private static HttpRequest.BodyPublisher buildFormDataFromMap(Map<Object, Object> data) 
     {
         var builder = new StringBuilder();
@@ -58,4 +120,6 @@ public class RequestHandler
         System.out.println(builder.toString());
         return HttpRequest.BodyPublishers.ofString(builder.toString());
     }
+
+	
 }

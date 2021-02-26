@@ -9,7 +9,7 @@ import it.reply.portaltech.abocadata.asm.util.RequestHandler;
 
 public abstract class SuperController {
         
-    public boolean handleCreation(HttpServletRequest request, String secret) throws Exception
+	public boolean postOrder(HttpServletRequest request, String secret, String url) throws Exception
     {
   	    String headerHmac = request.getHeader("X-Shopify-Hmac-Sha256");
 	    String message = IOUtils.toString(request.getInputStream(), "UTF-8");
@@ -19,11 +19,41 @@ public abstract class SuperController {
     	boolean verified = hc.verifyWebhook(headerHmac, message);
     	
     	if(verified)
-        	RequestHandler.sendOrderToCreate(message);
-
+        	RequestHandler.sendOrderToCreate(message, url);
     	
     	return verified;
-    	
     }
+	
+	public boolean deleteOrder(HttpServletRequest request, String secret, String url) throws Exception
+	{
+		String headerHmac = request.getHeader("X-Shopify-Hmac-Sha256");
+	    String message = IOUtils.toString(request.getInputStream(), "UTF-8");
+	    
+    	HmacChecker hc = new HmacChecker(secret);
+
+    	boolean verified = hc.verifyWebhook(headerHmac, message);
+    	
+    	if(verified)
+        	RequestHandler.sendOrderToDelete(message, url);
+
+    	
+    	return verified; 
+	}
+	
+	public boolean updateOrder(HttpServletRequest request, String secret, String url) throws Exception
+	{
+		String headerHmac = request.getHeader("X-Shopify-Hmac-Sha256");
+	    String message = IOUtils.toString(request.getInputStream(), "UTF-8");
+	    
+    	HmacChecker hc = new HmacChecker(secret);
+
+    	boolean verified = hc.verifyWebhook(headerHmac, message);
+    	
+    	if(verified)
+        	RequestHandler.sendOrderToUpdate(message, url);
+
+    	
+    	return verified; 
+	}
 
 }

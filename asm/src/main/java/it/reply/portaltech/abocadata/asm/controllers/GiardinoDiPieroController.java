@@ -24,10 +24,38 @@ public class GiardinoDiPieroController extends SuperController
 	private String hostname;
 	
     private Logger log = Logger.getLogger(hostname + ".log");
-        
+    
+          
     @PostMapping("/createOrder")
-    public boolean handleCreation(HttpServletRequest request) throws Exception
+    public boolean handleCreation(HttpServletRequest request)
     {
-  	    return super.handleCreation(request, this.secret);	
+  	    try {
+			return super.postOrder(request, this.secret, "http://localhost:3030/orders");
+		} catch (Exception e) {
+			log.debug(e.getStackTrace());
+		}
+    	return false;
+    }
+    
+	@PostMapping("/deleteOrder")
+    public boolean handleDeletion(HttpServletRequest request)
+    {
+    	try {
+			return super.deleteOrder(request, this.secret, "http://localhost:3030/orders");
+		} catch (Exception e) {
+			log.debug(e.getStackTrace());
+		}
+    	return false;
+    }
+    
+    @PostMapping("/updateOrder")
+    public boolean handleUpdate(HttpServletRequest request)
+    {
+    	try {
+			return super.updateOrder(request, this.secret, "http://localhost:3030/orders");
+		} catch (Exception e) {
+			log.debug(e.getStackTrace());
+		}
+    	return false;
     }
 }
