@@ -27,12 +27,13 @@ public class RequestHandler
 		body.put("client_id", clientID);
 		body.put("client_secret", clientSecret);
 
+;
 		HttpRequest request = HttpRequest.newBuilder()
 		        .POST(buildFormDataFromMap(body))
 		        .uri(URI.create(tokenURL))
 		        .setHeader("User-Agent", "Java 11 HttpClient Bot")
 		        .header("Content-Type", "application/json")
-		        .header("Authentication", "Basic " + encodedB64)
+		        .header("Authorization", "Basic " + encodedB64)
 		        .build();   
 		
 		HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
@@ -43,49 +44,58 @@ public class RequestHandler
 		return access_token;
     }
     
-    public static void sendOrderToCreate(String message, String url, String clientID, String clientSecret) throws Exception 
+    public static String sendOrderToCreate(String message, String url, String clientID, String clientSecret) throws Exception 
     {		
     	String accessToken = getOauth2Token(url + "oauth/token", clientID, clientSecret);
-    	System.out.println("ACCESS_TOKEN = " + accessToken);
-    	
+    	System.out.println("TOKEN = " + accessToken);
     	BodyPublisher bp = buildString(message);
 		HttpRequest request = HttpRequest.newBuilder()
 		        .POST(bp)
 		        .uri(URI.create(url))
 		        .setHeader("User-Agent", "Java 11 HttpClient Bot")
 		        .header("Content-Type", "application/json")
-		        //.header("Authentication", authorizationString)
+		        .header("Authorization", "Bearer " + accessToken)
 		        .build();
-		
+				
 		HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+		
+		return response.body();
     }
 
-    public static void sendOrderToUpdate(String message, String url) throws Exception 
+    public static String sendOrderToUpdate(String message, String url, String clientID, String clientSecret) throws Exception 
     {		
+    	String accessToken = getOauth2Token(url + "oauth/token", clientID, clientSecret);
+
     	BodyPublisher bp = buildString(message);
-		
 		HttpRequest request = HttpRequest.newBuilder()
 		        .PUT(bp)
 		        .uri(URI.create(url))
 		        .setHeader("User-Agent", "Java 11 HttpClient Bot")
 		        .header("Content-Type", "application/json")
+		        .header("Authorization", "Bearer " + accessToken)
 		        .build();
-		
+
 		HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+		
+		return response.body();
     }
     
-    public static void sendOrderToDelete(String message, String url) throws IOException, InterruptedException 
+    public static String sendOrderToDelete(String message, String url, String clientID, String clientSecret) throws IOException, InterruptedException 
     {
+    	String accessToken = getOauth2Token(url + "oauth/token", clientID, clientSecret);
+    	
     	BodyPublisher bp = buildString(message);
-		
 		HttpRequest request = HttpRequest.newBuilder()
 		        .PUT(bp)
 		        .uri(URI.create(url))
 		        .setHeader("User-Agent", "Java 11 HttpClient Bot")
 		        .header("Content-Type", "application/json")
+		        .header("Authorization", "Bearer " + accessToken)
 		        .build();
 		
 		HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+		
+		return response.body();
 	}
 
     
@@ -105,13 +115,11 @@ public class RequestHandler
             builder.append("\"" + entry.getValue().toString() + "\"");
         }
         builder.append("}");
-        System.out.println("BUILDER = " + builder.toString());
         return HttpRequest.BodyPublishers.ofString(builder.toString());
     }
 
     private static HttpRequest.BodyPublisher buildString(String data) 
     {
-        System.out.println("BUILDER = " + data);
         return HttpRequest.BodyPublishers.ofString(data);
     }
 

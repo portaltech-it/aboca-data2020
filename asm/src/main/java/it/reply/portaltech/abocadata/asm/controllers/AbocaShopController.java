@@ -13,57 +13,54 @@ import org.springframework.web.bind.annotation.RestController;
 public class AbocaShopController extends SuperController
 {	
 	@Value("${key.secret.abocashop}")
-	private String secret;
-
+	private String shopifySecret;
 	
 	@Value("${tyk.api.oauth.abocashop.clientid}")
 	private String clientID;
 
 	@Value("${tyk.api.oauth.abocashop.secret}")
 	private String clientSecret;
-
 	
 	@Value("${shopify.hostname.abocashop}")
 	private String hostname;
-
-	@Value("${shopify.hostname.abocashop}")
-	private String url;
-
+	
+	@Value("${tyk.api.orders}")
+	private String ordsURL;
 	
     private Logger log = Logger.getLogger(this.hostname + ".log");
 
     
     @PostMapping("/createOrder")
-    public boolean handleCreation(HttpServletRequest request)
+    public String handleCreation(HttpServletRequest request)
     {
   	    try {
-			return super.postOrder(request, this.secret, "http://tyk4-test.aboca.dom/ords/", clientID, clientSecret);
+			return super.postOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret);
 		} catch (Exception e) {
 			log.debug(e.getStackTrace());
 		}
-    	return false;
+    	return "Error";
     }
     
 	@PostMapping("/deleteOrder")
-    public boolean handleDeletion(HttpServletRequest request)
+    public String handleDeletion(HttpServletRequest request)
     {
     	try {
-			return super.deleteOrder(request, this.secret, "http://localhost:3030/orders");
+			return super.deleteOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret);
 		} catch (Exception e) {
 			log.debug(e.getStackTrace());
 		}
-    	return false;
+    	return "Error";
     }
     
     @PostMapping("/updateOrder")
-    public boolean handleUpdate(HttpServletRequest request)
+    public String handleUpdate(HttpServletRequest request)
     {
     	try {
-			return super.updateOrder(request, this.secret, "http://localhost:3030/orders");
+			return super.updateOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret);
 		} catch (Exception e) {
 			log.debug(e.getStackTrace());
 		}
-    	return false;
+    	return "Error";
     }
     
     
