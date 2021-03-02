@@ -8,13 +8,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import it.reply.portaltech.abocadata.asm.customExceptions.NotVerifiedWebHookException;
-import it.reply.portaltech.abocadata.asm.services.ServiceRequests;
+import it.reply.portaltech.abocadata.asm.services.ServiceConsumer;
 import it.reply.portaltech.abocadata.asm.util.HmacChecker;
 
 public abstract class AbstractWebhookController {
 	
 	@Autowired
-	private ServiceRequests rh;   
+	private ServiceConsumer serviceConsumer;   
 
 	private static final Logger LOG = LoggerFactory.getLogger(AbstractWebhookController.class);
 
@@ -30,7 +30,7 @@ public abstract class AbstractWebhookController {
 
     	if(isVerified)
     	{
-        	rh.sendOrderToCreate(message, url, clientID, clientSecret);
+    		serviceConsumer.sendOrderToCreate(message, url, clientID, clientSecret);
         	LOG.debug("Webhook " + order_id + " verificated");
     	}
     	else
@@ -48,7 +48,7 @@ public abstract class AbstractWebhookController {
 
     	if(isVerified)
     	{
-        	rh.sendOrderToDelete(message, url, clientID, clientSecret);
+    		serviceConsumer.sendOrderToDelete(message, url, clientID, clientSecret);
         	LOG.debug("Webhook " + order_id + " verificated");
     	}
     	else
@@ -66,7 +66,7 @@ public abstract class AbstractWebhookController {
     	
     	if(isVerified)
     	{
-        	rh.sendOrderToUpdate(message, url, clientID, clientSecret);
+    		serviceConsumer.sendOrderToUpdate(message, url, clientID, clientSecret);
         	LOG.debug("Webhook " + order_id + " verificated");
     	}
     	else

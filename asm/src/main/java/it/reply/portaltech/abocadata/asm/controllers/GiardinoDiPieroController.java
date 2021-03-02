@@ -38,7 +38,7 @@ public class GiardinoDiPieroController extends AbstractWebhookController
     public void handleCreation(HttpServletRequest request)
     {
   	    try {
-			super.createOrder(request, this.shopifySecret, this.ordsURL,  clientID, clientSecret);
+			createOrder(request, this.shopifySecret, this.ordsURL,  clientID, clientSecret);
 		}
   	    catch (NotVerifiedWebHookException e2)
     	{
@@ -53,7 +53,7 @@ public class GiardinoDiPieroController extends AbstractWebhookController
     public void handleDeletion(HttpServletRequest request)
     {
     	try {
-			super.deleteOrder(request, this.shopifySecret, this.ordsURL,  clientID, clientSecret);
+			deleteOrder(request, this.shopifySecret, this.ordsURL,  clientID, clientSecret);
 		}
     	catch (NotVerifiedWebHookException e2)
     	{
@@ -68,7 +68,7 @@ public class GiardinoDiPieroController extends AbstractWebhookController
     public void handleUpdate(HttpServletRequest request)
     {
     	try {
-			super.updateOrder(request, this.shopifySecret, this.ordsURL,  clientID, clientSecret);
+			updateOrder(request, this.shopifySecret, this.ordsURL,  clientID, clientSecret);
 		}
     	catch (NotVerifiedWebHookException e2)
     	{

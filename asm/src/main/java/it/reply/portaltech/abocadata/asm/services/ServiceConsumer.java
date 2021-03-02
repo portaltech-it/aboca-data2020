@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class ServiceRequests 
+public class ServiceConsumer 
 {
  	@Value("${ords.path.order.create}")
 	private String CREATEPATH;
@@ -29,7 +29,7 @@ public class ServiceRequests
 	private String UPDATEPATH;
 	
 	private static final String TOKENREQUESTPATH =  "/oauth/token";
-	private static final Logger LOG = LoggerFactory.getLogger(ServiceRequests.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ServiceConsumer.class);
 
     private String getOauth2Token(String tokenURL, String clientID, String clientSecret)
     {
