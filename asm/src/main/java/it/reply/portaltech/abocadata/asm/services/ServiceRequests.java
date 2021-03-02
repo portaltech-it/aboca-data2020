@@ -1,10 +1,8 @@
-package it.reply.portaltech.abocadata.asm.util;
+package it.reply.portaltech.abocadata.asm.services;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.annotation.PostConstruct;
 
 import org.apache.commons.codec.binary.Base64;
 import org.json.JSONObject;
@@ -19,35 +17,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class RequestHandler 
+public class ServiceRequests 
 {
-    @PostConstruct
-	public void init(){
-        this.createPath = this._createPath;
-        this.deletePath = this._deletePath;
-        this.updatePath = this._updatePath;
-    }
-
-	@Value("${ords.path.order.create}")
-	private String _createPath;
+ 	@Value("${ords.path.order.create}")
+	private String CREATEPATH;
 
 	@Value("${ords.path.order.delete}")
-	private String _deletePath;
+	private String DELETEPATH;
 	
 	@Value("${ords.path.order.update}")
-	private String _updatePath;
+	private String UPDATEPATH;
 	
-	private static String createPath;
-	private static String updatePath;
-	private static String deletePath;
+	private static final String TOKENREQUESTPATH =  "/oauth/token";
+	private static final Logger LOG = LoggerFactory.getLogger(ServiceRequests.class);
 
-	
-	private static String tokenRequestPath =  "/oauth/token";
-
-	
-	private static final Logger LOG = LoggerFactory.getLogger(RequestHandler.class);
-
-    private static String getOauth2Token(String tokenURL, String clientID, String clientSecret)
+    private String getOauth2Token(String tokenURL, String clientID, String clientSecret)
     {
     	String encodedB64 = Base64.encodeBase64String((clientID+":"+clientSecret).getBytes());
     	String access_token = null;
@@ -72,9 +56,9 @@ public class RequestHandler
 		return access_token;
     }
     
-    public static void sendOrderToCreate(String message, String url, String clientID, String clientSecret) 
+    public void sendOrderToCreate(String message, String url, String clientID, String clientSecret) 
     {		
-    	String accessToken = getOauth2Token(url + tokenRequestPath, clientID, clientSecret);
+    	String accessToken = getOauth2Token(url + TOKENREQUESTPATH, clientID, clientSecret);
     		
     	RestTemplate restTemplate = new RestTemplate();
     	HttpHeaders headers = new HttpHeaders();
@@ -82,12 +66,12 @@ public class RequestHandler
     	headers.setContentType(MediaType.APPLICATION_JSON);
   
     	HttpEntity<String> entity = new HttpEntity<String>(message, headers);
-    	ResponseEntity<String> response = restTemplate.postForEntity(url + createPath, entity, String.class);
+    	ResponseEntity<String> response = restTemplate.postForEntity(url + CREATEPATH, entity, String.class);
     }
 
-    public static void sendOrderToUpdate(String message, String url, String clientID, String clientSecret) 
+    public void sendOrderToUpdate(String message, String url, String clientID, String clientSecret) 
     {		
-    	String accessToken = getOauth2Token(url + tokenRequestPath, clientID, clientSecret);
+    	String accessToken = getOauth2Token(url + TOKENREQUESTPATH, clientID, clientSecret);
 
     	RestTemplate restTemplate = new RestTemplate();
     	HttpHeaders headers = new HttpHeaders();
@@ -95,12 +79,12 @@ public class RequestHandler
     	headers.setContentType(MediaType.APPLICATION_JSON);
   
     	HttpEntity<String> entity = new HttpEntity<String>(message, headers);
-    	ResponseEntity<String> response = restTemplate.postForEntity(url + updatePath, entity, String.class);
+    	ResponseEntity<String> response = restTemplate.postForEntity(url + UPDATEPATH, entity, String.class);
     }
     
-    public static void sendOrderToDelete(String message, String url, String clientID, String clientSecret)  
+    public void sendOrderToDelete(String message, String url, String clientID, String clientSecret)  
     {
-    	String accessToken = getOauth2Token(url + tokenRequestPath, clientID, clientSecret);
+    	String accessToken = getOauth2Token(url + TOKENREQUESTPATH, clientID, clientSecret);
     	
     	RestTemplate restTemplate = new RestTemplate();
     	HttpHeaders headers = new HttpHeaders();
@@ -108,6 +92,6 @@ public class RequestHandler
     	headers.setContentType(MediaType.APPLICATION_JSON);
   
     	HttpEntity<String> entity = new HttpEntity<String>(message, headers);
-    	ResponseEntity<String> response = restTemplate.postForEntity(url + deletePath, entity, String.class);
+    	ResponseEntity<String> response = restTemplate.postForEntity(url + DELETEPATH, entity, String.class);
     }	
 }

@@ -5,16 +5,20 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import it.reply.portaltech.abocadata.asm.customExceptions.NotVerifiedWebHookException;
+import it.reply.portaltech.abocadata.asm.services.ServiceRequests;
 import it.reply.portaltech.abocadata.asm.util.HmacChecker;
-import it.reply.portaltech.abocadata.asm.util.RequestHandler;
 
 public abstract class AbstractWebhookController {
 	
+	@Autowired
+	private ServiceRequests rh;   
+
 	private static final Logger LOG = LoggerFactory.getLogger(AbstractWebhookController.class);
 
-        
+	
 	public void createOrder(HttpServletRequest request, String secret, String url, String clientID, String clientSecret) throws Exception
     {
   	    String headerHmac = request.getHeader("X-Shopify-Hmac-Sha256");
@@ -26,7 +30,7 @@ public abstract class AbstractWebhookController {
 
     	if(isVerified)
     	{
-        	RequestHandler.sendOrderToCreate(message, url, clientID, clientSecret);
+        	rh.sendOrderToCreate(message, url, clientID, clientSecret);
         	LOG.debug("Webhook " + order_id + " verificated");
     	}
     	else
@@ -44,7 +48,7 @@ public abstract class AbstractWebhookController {
 
     	if(isVerified)
     	{
-        	RequestHandler.sendOrderToDelete(message, url, clientID, clientSecret);
+        	rh.sendOrderToDelete(message, url, clientID, clientSecret);
         	LOG.debug("Webhook " + order_id + " verificated");
     	}
     	else
@@ -62,7 +66,7 @@ public abstract class AbstractWebhookController {
     	
     	if(isVerified)
     	{
-        	RequestHandler.sendOrderToUpdate(message, url, clientID, clientSecret);
+        	rh.sendOrderToUpdate(message, url, clientID, clientSecret);
         	LOG.debug("Webhook " + order_id + " verificated");
     	}
     	else
