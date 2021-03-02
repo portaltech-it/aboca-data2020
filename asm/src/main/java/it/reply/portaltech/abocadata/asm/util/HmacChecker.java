@@ -10,13 +10,13 @@ import org.apache.commons.codec.binary.Base64;
 
 public class HmacChecker
 {
-	private String secret;
+	private String SECRET;
 	private String HMAC_ALGORITHM;
 	private String calculated;
 	
-	public HmacChecker(String _secret)
+	public HmacChecker(String secret)
 	{
-		this.secret = _secret;
+		this.SECRET = secret;
 		this.HMAC_ALGORITHM = "HmacSHA256";
 	}
 	 
@@ -24,7 +24,7 @@ public class HmacChecker
     public Boolean verifyWebhook(String headerHmac, String message) throws Exception
     {
     	//computing hash
-    	byte[] hmac_hashed = hash_hmac(this.secret.getBytes("UTF-8"), message.getBytes("UTF-8"));
+    	byte[] hmac_hashed = hash_hmac(this.SECRET.getBytes("UTF-8"), message.getBytes("UTF-8"));
     	
     	//encoding
         this.calculated = Base64.encodeBase64String(hmac_hashed);

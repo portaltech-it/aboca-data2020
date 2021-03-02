@@ -69,7 +69,6 @@ public class RequestHandler
     	JSONObject jsonObject = new JSONObject(response.getBody());
 		access_token = jsonObject.getString("access_token");
 
-		LOG.debug("Access Token = " + access_token);
 		return access_token;
     }
     
