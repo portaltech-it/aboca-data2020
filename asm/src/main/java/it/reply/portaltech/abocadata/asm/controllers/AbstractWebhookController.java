@@ -12,64 +12,57 @@ import it.reply.portaltech.abocadata.asm.services.ServiceConsumer;
 import it.reply.portaltech.abocadata.asm.util.HmacChecker;
 
 public abstract class AbstractWebhookController {
-	
+
 	@Autowired
-	private ServiceConsumer serviceConsumer;   
+	private ServiceConsumer serviceConsumer;
 
 	private static final Logger LOG = LoggerFactory.getLogger(AbstractWebhookController.class);
 
-	
-	public void createOrder(HttpServletRequest request, String secret, String url, String clientID, String clientSecret) throws Exception
-    {
-  	    String headerHmac = request.getHeader("X-Shopify-Hmac-Sha256");
-  	    String order_id = request.getHeader("X-Shopify-Webhook-Id");
-	    String message = IOUtils.toString(request.getInputStream(), "UTF-8");
-
-    	HmacChecker hc = new HmacChecker(secret);
-    	boolean isVerified = hc.verifyWebhook(headerHmac, message);
-
-    	if(isVerified)
-    	{
-    		serviceConsumer.sendOrderToCreate(message, url, clientID, clientSecret);
-        	LOG.debug("Webhook " + order_id + " verificated");
-    	}
-    	else
-    		throw new NotVerifiedWebHookException("Exception - WebHook " + order_id + " not verified");
-    }
-	
-	public void deleteOrder(HttpServletRequest request, String secret, String url, String clientID, String clientSecret) throws Exception
-	{
+	public void createOrder(HttpServletRequest request, String secret, String url, String clientID, String clientSecret)
+			throws Exception {
 		String headerHmac = request.getHeader("X-Shopify-Hmac-Sha256");
 		String order_id = request.getHeader("X-Shopify-Webhook-Id");
-		String message = IOUtils.toString(request.getInputStream(), "UTF-8");    
-	    
-    	HmacChecker hc = new HmacChecker(secret);
-    	boolean isVerified = hc.verifyWebhook(headerHmac, message);
+		String message = IOUtils.toString(request.getInputStream(), "UTF-8");
 
-    	if(isVerified)
-    	{
-    		serviceConsumer.sendOrderToDelete(message, url, clientID, clientSecret);
-        	LOG.debug("Webhook " + order_id + " verificated");
-    	}
-    	else
-    		throw new NotVerifiedWebHookException("Exception - WebHook " + order_id + " not verified");
+		HmacChecker hc = new HmacChecker(secret);
+		boolean isVerified = hc.verifyWebhook(headerHmac, message);
+
+		if (isVerified) {
+			serviceConsumer.sendOrderToCreate(message, url, clientID, clientSecret);
+			LOG.debug("Webhook " + order_id + " verificated");
+		} else
+			throw new NotVerifiedWebHookException("Exception - WebHook " + order_id + " not verified");
 	}
-	
-	public void updateOrder(HttpServletRequest request, String secret, String url, String clientID, String clientSecret) throws Exception
-	{
+
+	public void deleteOrder(HttpServletRequest request, String secret, String url, String clientID, String clientSecret)
+			throws Exception {
 		String headerHmac = request.getHeader("X-Shopify-Hmac-Sha256");
 		String order_id = request.getHeader("X-Shopify-Webhook-Id");
-	    String message = IOUtils.toString(request.getInputStream(), "UTF-8");
-	    
-    	HmacChecker hc = new HmacChecker(secret);
-    	boolean isVerified = hc.verifyWebhook(headerHmac, message);
-    	
-    	if(isVerified)
-    	{
-    		serviceConsumer.sendOrderToUpdate(message, url, clientID, clientSecret);
-        	LOG.debug("Webhook " + order_id + " verificated");
-    	}
-    	else
-    		throw new NotVerifiedWebHookException("Exception - WebHook " + order_id + " not verified");
+		String message = IOUtils.toString(request.getInputStream(), "UTF-8");
+
+		HmacChecker hc = new HmacChecker(secret);
+		boolean isVerified = hc.verifyWebhook(headerHmac, message);
+
+		if (isVerified) {
+			serviceConsumer.sendOrderToDelete(message, url, clientID, clientSecret);
+			LOG.debug("Webhook " + order_id + " verificated");
+		} else
+			throw new NotVerifiedWebHookException("Exception - WebHook " + order_id + " not verified");
+	}
+
+	public void updateOrder(HttpServletRequest request, String secret, String url, String clientID, String clientSecret)
+			throws Exception {
+		String headerHmac = request.getHeader("X-Shopify-Hmac-Sha256");
+		String order_id = request.getHeader("X-Shopify-Webhook-Id");
+		String message = IOUtils.toString(request.getInputStream(), "UTF-8");
+
+		HmacChecker hc = new HmacChecker(secret);
+		boolean isVerified = hc.verifyWebhook(headerHmac, message);
+
+		if (isVerified) {
+			serviceConsumer.sendOrderToUpdate(message, url, clientID, clientSecret);
+			LOG.debug("Webhook " + order_id + " verificated");
+		} else
+			throw new NotVerifiedWebHookException("Exception - WebHook " + order_id + " not verified");
 	}
 }

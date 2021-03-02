@@ -14,68 +14,54 @@ import it.reply.portaltech.abocadata.asm.customExceptions.NotVerifiedWebHookExce
 
 @RestController
 @RequestMapping("/asm/as")
-public class AbocaShopController extends AbstractWebhookController
-{	
+public class AbocaShopController extends AbstractWebhookController {
 	@Value("${key.secret.abocashop}")
 	private String shopifySecret;
-	
+
 	@Value("${tyk.api.oauth.abocashop.clientid}")
 	private String clientID;
 
 	@Value("${tyk.api.oauth.abocashop.secret}")
 	private String clientSecret;
-	
+
 	@Value("${shopify.hostname.abocashop}")
 	private String hostname;
-	
+
 	@Value("${tyk.api.orders}")
 	private String ordsURL;
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(AbocaShopController.class);
 
-    
-    @PostMapping("/createOrder")
-    public void handleCreation(HttpServletRequest request)
-    {
-  	    try {
+	@PostMapping("/createOrder")
+	public void handleCreation(HttpServletRequest request) {
+		try {
 			createOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret);
-		}
-    	catch (NotVerifiedWebHookException e2)
-    	{
-    		LOG.error("", e2);
-    	}
-  	    catch (Exception e) {
+		} catch (NotVerifiedWebHookException e2) {
+			LOG.error("", e2);
+		} catch (Exception e) {
 			LOG.error("", e);
 		}
-    }
-    
+	}
+
 	@PostMapping("/deleteOrder")
-    public void handleDeletion(HttpServletRequest request)
-    {
-    	try {
+	public void handleDeletion(HttpServletRequest request) {
+		try {
 			deleteOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret);
-		}
-    	catch (NotVerifiedWebHookException e2)
-    	{
-    		LOG.error("", e2);
-    	}
-  	    catch (Exception e) {
+		} catch (NotVerifiedWebHookException e2) {
+			LOG.error("", e2);
+		} catch (Exception e) {
 			LOG.error("", e);
 		}
-    }
-    
-    @PostMapping("/updateOrder")
-    public void handleUpdate(HttpServletRequest request)
-    {
-    	try {
+	}
+
+	@PostMapping("/updateOrder")
+	public void handleUpdate(HttpServletRequest request) {
+		try {
 			updateOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret);
-		}
-    	catch (NotVerifiedWebHookException e2)
-    	{
-    		LOG.error("", e2);
-    	}
-  	    catch (Exception e) {
+		} catch (NotVerifiedWebHookException e2) {
+			LOG.error("", e2);
+		} catch (Exception e) {
 			LOG.error("", e);
 		}
-    }   
+	}
 }

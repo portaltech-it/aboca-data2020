@@ -14,8 +14,7 @@ import org.slf4j.LoggerFactory;
 
 @RestController
 @RequestMapping("/asm/gdp")
-public class GiardinoDiPieroController extends AbstractWebhookController
-{	
+public class GiardinoDiPieroController extends AbstractWebhookController {
 	@Value("${key.secret.giardinidipiero}")
 	private String shopifySecret;
 
@@ -24,58 +23,45 @@ public class GiardinoDiPieroController extends AbstractWebhookController
 
 	@Value("${tyk.api.oauth.abocashop.secret}")
 	private String clientSecret;
-	
+
 	@Value("${shopify.hostname.giardinidipiero}")
 	private String hostname;
-		
+
 	@Value("${tyk.api.orders}")
 	private String ordsURL;
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(GiardinoDiPieroController.class);
-    
-          
-    @PostMapping("/createOrder")
-    public void handleCreation(HttpServletRequest request)
-    {
-  	    try {
-			createOrder(request, this.shopifySecret, this.ordsURL,  clientID, clientSecret);
-		}
-  	    catch (NotVerifiedWebHookException e2)
-    	{
-    		LOG.error("", e2);
-    	}
-  	    catch (Exception e) {
+
+	@PostMapping("/createOrder")
+	public void handleCreation(HttpServletRequest request) {
+		try {
+			createOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret);
+		} catch (NotVerifiedWebHookException e2) {
+			LOG.error("", e2);
+		} catch (Exception e) {
 			LOG.error("", e);
 		}
-    }
-    
+	}
+
 	@PostMapping("/deleteOrder")
-    public void handleDeletion(HttpServletRequest request)
-    {
-    	try {
-			deleteOrder(request, this.shopifySecret, this.ordsURL,  clientID, clientSecret);
-		}
-    	catch (NotVerifiedWebHookException e2)
-    	{
-    		LOG.error("", e2);
-    	}
-  	    catch (Exception e) {
+	public void handleDeletion(HttpServletRequest request) {
+		try {
+			deleteOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret);
+		} catch (NotVerifiedWebHookException e2) {
+			LOG.error("", e2);
+		} catch (Exception e) {
 			LOG.error("", e);
 		}
-    }
-    
-    @PostMapping("/updateOrder")
-    public void handleUpdate(HttpServletRequest request)
-    {
-    	try {
-			updateOrder(request, this.shopifySecret, this.ordsURL,  clientID, clientSecret);
-		}
-    	catch (NotVerifiedWebHookException e2)
-    	{
-    		LOG.error("", e2);
-    	}
-  	    catch (Exception e) {
+	}
+
+	@PostMapping("/updateOrder")
+	public void handleUpdate(HttpServletRequest request) {
+		try {
+			updateOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret);
+		} catch (NotVerifiedWebHookException e2) {
+			LOG.error("", e2);
+		} catch (Exception e) {
 			LOG.error("", e);
 		}
-    }
+	}
 }
