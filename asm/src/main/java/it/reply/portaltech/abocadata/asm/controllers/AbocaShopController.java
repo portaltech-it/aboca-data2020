@@ -2,15 +2,19 @@ package it.reply.portaltech.abocadata.asm.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.reply.portaltech.abocadata.asm.customExceptions.NotVerifiedWebHookException;
+
 @RestController
 @RequestMapping("/asm/as")
-public class AbocaShopController extends SuperController
+public class AbocaShopController extends AbstractWebhookController
 {	
 	@Value("${key.secret.abocashop}")
 	private String shopifySecret;
@@ -27,42 +31,51 @@ public class AbocaShopController extends SuperController
 	@Value("${tyk.api.orders}")
 	private String ordsURL;
 	
-    private Logger log = Logger.getLogger(this.hostname + ".log");
+	private static final Logger LOG = LoggerFactory.getLogger(AbocaShopController.class);
 
     
     @PostMapping("/createOrder")
-    public String handleCreation(HttpServletRequest request)
+    public void handleCreation(HttpServletRequest request)
     {
   	    try {
-			return super.postOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret);
-		} catch (Exception e) {
-			log.debug(e.getStackTrace());
+			super.createOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret);
 		}
-    	return "Error";
+    	catch (NotVerifiedWebHookException e2)
+    	{
+    		LOG.error("", e2);
+    	}
+  	    catch (Exception e) {
+			LOG.error("", e);
+		}
     }
     
 	@PostMapping("/deleteOrder")
-    public String handleDeletion(HttpServletRequest request)
+    public void handleDeletion(HttpServletRequest request)
     {
     	try {
-			return super.deleteOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret);
-		} catch (Exception e) {
-			log.debug(e.getStackTrace());
+			super.deleteOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret);
 		}
-    	return "Error";
+    	catch (NotVerifiedWebHookException e2)
+    	{
+    		LOG.error("", e2);
+    	}
+  	    catch (Exception e) {
+			LOG.error("", e);
+		}
     }
     
     @PostMapping("/updateOrder")
-    public String handleUpdate(HttpServletRequest request)
+    public void handleUpdate(HttpServletRequest request)
     {
     	try {
-			return super.updateOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret);
-		} catch (Exception e) {
-			log.debug(e.getStackTrace());
+			super.updateOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret);
 		}
-    	return "Error";
-    }
-    
-    
-    
+    	catch (NotVerifiedWebHookException e2)
+    	{
+    		LOG.error("", e2);
+    	}
+  	    catch (Exception e) {
+			LOG.error("", e);
+		}
+    }   
 }

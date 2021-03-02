@@ -1,127 +1,114 @@
 package it.reply.portaltech.abocadata.asm.util;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.URLEncoder;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpRequest.BodyPublisher;
-import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.codec.binary.Base64;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+@Service
 public class RequestHandler 
 {
-    private static final HttpClient httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_2).build();
+    @PostConstruct
+	public void init(){
+        this.createPath = this._createPath;
+        this.deletePath = this._deletePath;
+        this.updatePath = this._updatePath;
+    }
 
-    private static String getOauth2Token(String tokenURL, String clientID, String clientSecret) throws IOException, InterruptedException
+	@Value("${ords.path.order.create}")
+	private String _createPath;
+
+	@Value("${ords.path.order.delete}")
+	private String _deletePath;
+	
+	@Value("${ords.path.order.update}")
+	private String _updatePath;
+	
+	private static String createPath;
+	private static String updatePath;
+	private static String deletePath;
+
+	
+	private static String tokenRequestPath =  "/oauth/token";
+
+	
+	private static final Logger LOG = LoggerFactory.getLogger(RequestHandler.class);
+
+    private static String getOauth2Token(String tokenURL, String clientID, String clientSecret)
     {
     	String encodedB64 = Base64.encodeBase64String((clientID+":"+clientSecret).getBytes());
-    	
-		Map<Object, Object> body = new HashMap<>();
+    	String access_token = null;
+
+		Map<String, Object> body = new HashMap<>();
 		body.put("grant_type", "client_credentials");
 		body.put("client_id", clientID);
 		body.put("client_secret", clientSecret);
 
-;
-		HttpRequest request = HttpRequest.newBuilder()
-		        .POST(buildFormDataFromMap(body))
-		        .uri(URI.create(tokenURL))
-		        .setHeader("User-Agent", "Java 11 HttpClient Bot")
-		        .header("Content-Type", "application/json")
-		        .header("Authorization", "Basic " + encodedB64)
-		        .build();   
-		
-		HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+    	RestTemplate restTemplate = new RestTemplate();
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.add("Authorization", "Basic " + encodedB64);
+    	headers.setContentType(MediaType.APPLICATION_JSON);
+    	headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
-		JSONObject jsonObject = new JSONObject(response.body());
-		String access_token = jsonObject.getString("access_token");
+    	HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
+    	ResponseEntity<String> response = restTemplate.postForEntity(tokenURL, entity, String.class);
+	
+    	JSONObject jsonObject = new JSONObject(response.getBody());
+		access_token = jsonObject.getString("access_token");
 
+		LOG.debug("Access Token = " + access_token);
 		return access_token;
     }
     
-    public static String sendOrderToCreate(String message, String url, String clientID, String clientSecret) throws Exception 
+    public static void sendOrderToCreate(String message, String url, String clientID, String clientSecret) 
     {		
-    	String accessToken = getOauth2Token(url + "oauth/token", clientID, clientSecret);
-    	System.out.println("TOKEN = " + accessToken);
-    	BodyPublisher bp = buildString(message);
-		HttpRequest request = HttpRequest.newBuilder()
-		        .POST(bp)
-		        .uri(URI.create(url))
-		        .setHeader("User-Agent", "Java 11 HttpClient Bot")
-		        .header("Content-Type", "application/json")
-		        .header("Authorization", "Bearer " + accessToken)
-		        .build();
-				
-		HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-		
-		return response.body();
+    	String accessToken = getOauth2Token(url + tokenRequestPath, clientID, clientSecret);
+    		
+    	RestTemplate restTemplate = new RestTemplate();
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.add("Authorization", "Bearer " + accessToken);
+    	headers.setContentType(MediaType.APPLICATION_JSON);
+  
+    	HttpEntity<String> entity = new HttpEntity<String>(message, headers);
+    	ResponseEntity<String> response = restTemplate.postForEntity(url + createPath, entity, String.class);
     }
 
-    public static String sendOrderToUpdate(String message, String url, String clientID, String clientSecret) throws Exception 
+    public static void sendOrderToUpdate(String message, String url, String clientID, String clientSecret) 
     {		
-    	String accessToken = getOauth2Token(url + "oauth/token", clientID, clientSecret);
+    	String accessToken = getOauth2Token(url + tokenRequestPath, clientID, clientSecret);
 
-    	BodyPublisher bp = buildString(message);
-		HttpRequest request = HttpRequest.newBuilder()
-		        .PUT(bp)
-		        .uri(URI.create(url))
-		        .setHeader("User-Agent", "Java 11 HttpClient Bot")
-		        .header("Content-Type", "application/json")
-		        .header("Authorization", "Bearer " + accessToken)
-		        .build();
-
-		HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-		
-		return response.body();
+    	RestTemplate restTemplate = new RestTemplate();
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.add("Authorization", "Bearer " + accessToken);
+    	headers.setContentType(MediaType.APPLICATION_JSON);
+  
+    	HttpEntity<String> entity = new HttpEntity<String>(message, headers);
+    	ResponseEntity<String> response = restTemplate.postForEntity(url + updatePath, entity, String.class);
     }
     
-    public static String sendOrderToDelete(String message, String url, String clientID, String clientSecret) throws IOException, InterruptedException 
+    public static void sendOrderToDelete(String message, String url, String clientID, String clientSecret)  
     {
-    	String accessToken = getOauth2Token(url + "oauth/token", clientID, clientSecret);
+    	String accessToken = getOauth2Token(url + tokenRequestPath, clientID, clientSecret);
     	
-    	BodyPublisher bp = buildString(message);
-		HttpRequest request = HttpRequest.newBuilder()
-		        .PUT(bp)
-		        .uri(URI.create(url))
-		        .setHeader("User-Agent", "Java 11 HttpClient Bot")
-		        .header("Content-Type", "application/json")
-		        .header("Authorization", "Bearer " + accessToken)
-		        .build();
-		
-		HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-		
-		return response.body();
-	}
-
-    
-    
-
-    private static HttpRequest.BodyPublisher buildFormDataFromMap(Map<Object, Object> data) 
-    {
-        var builder = new StringBuilder();
-        builder.append("{");
-        for (Map.Entry<Object, Object> entry : data.entrySet()) 
-        {
-            if (builder.length() > 1) {
-                builder.append(", ");
-            }
-            builder.append("\"" + URLEncoder.encode(entry.getKey().toString(), StandardCharsets.UTF_8) + "\"");
-            builder.append(" : ");
-            builder.append("\"" + entry.getValue().toString() + "\"");
-        }
-        builder.append("}");
-        return HttpRequest.BodyPublishers.ofString(builder.toString());
-    }
-
-    private static HttpRequest.BodyPublisher buildString(String data) 
-    {
-        return HttpRequest.BodyPublishers.ofString(data);
-    }
-
-	
+    	RestTemplate restTemplate = new RestTemplate();
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.add("Authorization", "Bearer " + accessToken);
+    	headers.setContentType(MediaType.APPLICATION_JSON);
+  
+    	HttpEntity<String> entity = new HttpEntity<String>(message, headers);
+    	ResponseEntity<String> response = restTemplate.postForEntity(url + deletePath, entity, String.class);
+    }	
 }
