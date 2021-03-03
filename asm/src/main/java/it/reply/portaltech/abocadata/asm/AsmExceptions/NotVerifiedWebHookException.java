@@ -1,4 +1,4 @@
-package it.reply.portaltech.abocadata.asm.customExceptions;
+package it.reply.portaltech.abocadata.asm.AsmExceptions;
 
 public class NotVerifiedWebHookException extends Exception {
 	public NotVerifiedWebHookException(String error) {

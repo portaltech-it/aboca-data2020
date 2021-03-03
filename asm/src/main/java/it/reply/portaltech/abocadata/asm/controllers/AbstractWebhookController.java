@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import it.reply.portaltech.abocadata.asm.customExceptions.NotVerifiedWebHookException;
+import it.reply.portaltech.abocadata.asm.AsmExceptions.NotVerifiedWebHookException;
 import it.reply.portaltech.abocadata.asm.services.ServiceConsumer;
 import it.reply.portaltech.abocadata.asm.util.HmacChecker;
 
