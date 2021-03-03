@@ -30,7 +30,7 @@ public class ServiceConsumer {
 	private static final String TOKENREQUESTPATH = "/oauth/token";
 	private static final Logger LOG = LoggerFactory.getLogger(ServiceConsumer.class);
 
-	private String getOauth2Token(String tokenURL, String clientID, String clientSecret) {
+	private String getOauth2Token(String tokenURL, String clientID, String clientSecret, String head) {
 		String encodedB64 = Base64.encodeBase64String((clientID + ":" + clientSecret).getBytes());
 		String access_token = null;
 
@@ -38,6 +38,8 @@ public class ServiceConsumer {
 		body.put("grant_type", "client_credentials");
 		body.put("client_id", clientID);
 		body.put("client_secret", clientSecret);
+
+		LOG.info(head + "Requesting access token for client = " + clientID);
 
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
@@ -47,15 +49,21 @@ public class ServiceConsumer {
 
 		HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
 		ResponseEntity<String> response = restTemplate.postForEntity(tokenURL, entity, String.class);
-
+		
 		JSONObject jsonObject = new JSONObject(response.getBody());
 		access_token = jsonObject.getString("access_token");
+		
+		LOG.info(head + response.getStatusCodeValue() + "_" + response.getBody());
 
 		return access_token;
 	}
 
-	public void sendOrderToCreate(String message, String url, String clientID, String clientSecret) {
-		String accessToken = getOauth2Token(url + TOKENREQUESTPATH, clientID, clientSecret);
+	public void sendOrderToCreate(String message, String url, String clientID, String clientSecret, String head) {
+		String accessToken = getOauth2Token(url + TOKENREQUESTPATH, clientID, clientSecret, head);
+
+		LOG.info(head + "Sending order data to ORDS");
+		
+		message = adjustBody(message);
 
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
@@ -64,10 +72,14 @@ public class ServiceConsumer {
 
 		HttpEntity<String> entity = new HttpEntity<String>(message, headers);
 		ResponseEntity<String> response = restTemplate.postForEntity(url + CREATEPATH, entity, String.class);
+		
+		LOG.info(head + response.getStatusCodeValue() + "_" + response.getBody());
 	}
 
-	public void sendOrderToUpdate(String message, String url, String clientID, String clientSecret) {
-		String accessToken = getOauth2Token(url + TOKENREQUESTPATH, clientID, clientSecret);
+	public void sendOrderToUpdate(String message, String url, String clientID, String clientSecret, String head) {
+		String accessToken = getOauth2Token(url + TOKENREQUESTPATH, clientID, clientSecret, head);
+
+		LOG.info(head + "Sending order data to ORDS");
 
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
@@ -76,10 +88,14 @@ public class ServiceConsumer {
 
 		HttpEntity<String> entity = new HttpEntity<String>(message, headers);
 		ResponseEntity<String> response = restTemplate.postForEntity(url + UPDATEPATH, entity, String.class);
+		
+		LOG.info(head + response.getStatusCodeValue() + "_" + response.getBody());
 	}
 
-	public void sendOrderToDelete(String message, String url, String clientID, String clientSecret) {
-		String accessToken = getOauth2Token(url + TOKENREQUESTPATH, clientID, clientSecret);
+	public void sendOrderToDelete(String message, String url, String clientID, String clientSecret, String head) {
+		String accessToken = getOauth2Token(url + TOKENREQUESTPATH, clientID, clientSecret, head);
+
+		LOG.info(head + "Sending order data to ORDS");
 
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
@@ -88,5 +104,16 @@ public class ServiceConsumer {
 
 		HttpEntity<String> entity = new HttpEntity<String>(message, headers);
 		ResponseEntity<String> response = restTemplate.postForEntity(url + DELETEPATH, entity, String.class);
+		
+		LOG.info(head + response.getStatusCodeValue() + "_" + response.getBody());
+	}
+	
+	public String adjustBody(String body)
+	{
+		JSONObject jsonObject = new JSONObject(body);
+		Object payment_gateway_names = jsonObject.get("payment_gateway_names");
+		jsonObject.remove("payment_gateway_names");
+		jsonObject.put("payment_gateway_names", payment_gateway_names.toString());
+		return body;
 	}
 }

@@ -29,7 +29,7 @@ public class GiardinoDiPieroController extends AbstractWebhookController {
 
 	@Value("${tyk.api.orders}")
 	private String ordsURL;
-
+	
 	private static final Logger LOG = LoggerFactory.getLogger(GiardinoDiPieroController.class);
 
 	@PostMapping("/createOrder")
@@ -37,9 +37,9 @@ public class GiardinoDiPieroController extends AbstractWebhookController {
 		try {
 			createOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret);
 		} catch (NotVerifiedWebHookException e2) {
-			LOG.error("", e2);
+			LOG.warn("", e2);
 		} catch (Exception e) {
-			LOG.error("", e);
+			LOG.warn("", e);
 		}
 	}
 
@@ -48,9 +48,9 @@ public class GiardinoDiPieroController extends AbstractWebhookController {
 		try {
 			deleteOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret);
 		} catch (NotVerifiedWebHookException e2) {
-			LOG.error("", e2);
+			LOG.warn("", e2);
 		} catch (Exception e) {
-			LOG.error("", e);
+			LOG.warn("", e);
 		}
 	}
 
@@ -59,9 +59,9 @@ public class GiardinoDiPieroController extends AbstractWebhookController {
 		try {
 			updateOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret);
 		} catch (NotVerifiedWebHookException e2) {
-			LOG.error("", e2);
+			LOG.warn("", e2);
 		} catch (Exception e) {
-			LOG.error("", e);
+			LOG.warn("", e);
 		}
 	}
 }
