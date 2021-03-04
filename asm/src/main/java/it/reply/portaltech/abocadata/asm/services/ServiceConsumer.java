@@ -63,7 +63,7 @@ public class ServiceConsumer {
 
 		LOG.info(head + "Sending order data to ORDS");
 		
-		message = adjustBody(message);
+		message = updatePaymentGatewayNames(message);
 
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
@@ -81,6 +81,8 @@ public class ServiceConsumer {
 
 		LOG.info(head + "Sending order data to ORDS");
 
+		message = updatePaymentGatewayNames(message);
+		
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Bearer " + accessToken);
@@ -97,6 +99,8 @@ public class ServiceConsumer {
 
 		LOG.info(head + "Sending order data to ORDS");
 
+		message = updatePaymentGatewayNames(message);
+
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Bearer " + accessToken);
@@ -108,7 +112,7 @@ public class ServiceConsumer {
 		LOG.info(head + response.getStatusCodeValue() + "_" + response.getBody());
 	}
 	
-	public String adjustBody(String body)
+	private String updatePaymentGatewayNames(String body)
 	{
 		JSONObject jsonObject = new JSONObject(body);
 		Object payment_gateway_names = jsonObject.get("payment_gateway_names");

@@ -27,6 +27,9 @@ public class AbocaShopController extends AbstractWebhookController {
 	@Value("${shopify.hostname.abocashop}")
 	private String hostname;
 
+	@Value("${tyk.webhook.abocashop.url}")
+	private String shopSuffix;
+	
 	@Value("${tyk.api.orders}")
 	private String ordsURL;
 
@@ -35,7 +38,7 @@ public class AbocaShopController extends AbstractWebhookController {
 	@PostMapping("/createOrder")
 	public void handleCreation(HttpServletRequest request) {
 		try {
-			createOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret);
+			createOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret, shopSuffix);
 		} catch (NotVerifiedWebHookException e2) {
 			LOG.warn("", e2);
 		} catch (Exception e) {
@@ -46,7 +49,7 @@ public class AbocaShopController extends AbstractWebhookController {
 	@PostMapping("/deleteOrder")
 	public void handleDeletion(HttpServletRequest request) {
 		try {
-			deleteOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret);
+			deleteOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret, shopSuffix);
 		} catch (NotVerifiedWebHookException e2) {
 			LOG.warn("", e2);
 		} catch (Exception e) {
@@ -57,7 +60,7 @@ public class AbocaShopController extends AbstractWebhookController {
 	@PostMapping("/updateOrder")
 	public void handleUpdate(HttpServletRequest request) {
 		try {
-			updateOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret);
+			updateOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret, shopSuffix);
 		} catch (NotVerifiedWebHookException e2) {
 			LOG.warn("", e2);
 		} catch (Exception e) {

@@ -3,6 +3,7 @@ package it.reply.portaltech.abocadata.asm.controllers;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,17 +20,17 @@ public abstract class AbstractWebhookController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(AbstractWebhookController.class);
 
-	public void createOrder(HttpServletRequest request, String secret, String url, String clientID, String clientSecret)
+	public void createOrder(HttpServletRequest request, String secret, String url, String clientID, String clientSecret, String shop)
 			throws Exception {
 		String headerHmac = request.getHeader("X-Shopify-Hmac-Sha256");
 		String webhook_id = request.getHeader("X-Shopify-Webhook-Id");
 		String message = IOUtils.toString(request.getInputStream(), "UTF-8");
 		
-		String head = buildHead(request, message, webhook_id);
+		String head = calculateHead(request, message, webhook_id, shop);
 
 		HmacChecker hc = new HmacChecker(secret);
 		boolean isVerified = hc.verifyWebhook(headerHmac, message);
-
+		
 		if (isVerified) {
 			LOG.info(head + "Signature valid");
 			serviceConsumer.sendOrderToCreate(message, url, clientID, clientSecret, head);
@@ -39,13 +40,13 @@ public abstract class AbstractWebhookController {
 		}
 	}
 
-	public void deleteOrder(HttpServletRequest request, String secret, String url, String clientID, String clientSecret)
+	public void deleteOrder(HttpServletRequest request, String secret, String url, String clientID, String clientSecret, String shop)
 			throws Exception {
 		String headerHmac = request.getHeader("X-Shopify-Hmac-Sha256");
 		String webhook_id = request.getHeader("X-Shopify-Webhook-Id");
 		String message = IOUtils.toString(request.getInputStream(), "UTF-8");
 		
-		String head = buildHead(request, message, webhook_id);
+		String head = calculateHead(request, message, webhook_id, shop);
 		
 		HmacChecker hc = new HmacChecker(secret);
 		boolean isVerified = hc.verifyWebhook(headerHmac, message);
@@ -59,13 +60,13 @@ public abstract class AbstractWebhookController {
 		}
 	}
 
-	public void updateOrder(HttpServletRequest request, String secret, String url, String clientID, String clientSecret)
+	public void updateOrder(HttpServletRequest request, String secret, String url, String clientID, String clientSecret, String shop)
 			throws Exception {
 		String headerHmac = request.getHeader("X-Shopify-Hmac-Sha256");
 		String webhook_id = request.getHeader("X-Shopify-Webhook-Id");
 		String message = IOUtils.toString(request.getInputStream(), "UTF-8");
 		
-		String head = buildHead(request, message, webhook_id);
+		String head = calculateHead(request, message, webhook_id, shop);
 		
 		HmacChecker hc = new HmacChecker(secret);
 		boolean isVerified = hc.verifyWebhook(headerHmac, message);
@@ -79,26 +80,36 @@ public abstract class AbstractWebhookController {
 		}
 	}
 	
-	private String buildHead(HttpServletRequest request, String message, String webhook_id)
+	private String calculateHead(HttpServletRequest request, String message, String webhook_id, String shop)
 	{
 		String webhook_type = request.getHeader("X-Shopify-Topic");
 		String order_id = getOrderID(message);
-		String shop = request.getHeader("X-Shopify-Shop-Domain");
-		String shopShort = "";
 		
-		if(shop.equals("abocashop.myshopify.com"))
-			shopShort = "as";
-		else
-			shopShort = "gdp";
+		String shopShort = shop.substring(shop.lastIndexOf("/") + 1, shop.length());
 		
-		return webhook_id + "_" + webhook_type + "_" + order_id + "_" + shopShort + " : ";
+		String head = webhook_id + "_" + webhook_type + "_" + order_id + "_" + shopShort + " : ";
+		
+		if(order_id == null) {
+			LOG.warn(head + "Order Id missing");
+		}
+			
+		return head;
 	}
 	
 	private String getOrderID(String message)
 	{
 		JSONObject jsonObject = new JSONObject(message);
-		Long id = jsonObject.getLong("id");
-		return Long.toString(id);
+		String id = null;
+		Long id_long;
 		
+		try {
+			id_long = jsonObject.getLong("id");
+			id = Long.toString(id_long);
+		}
+		catch(JSONException e){
+			LOG.warn("", e);
+		}
+				
+		return id;
 	}
 }
