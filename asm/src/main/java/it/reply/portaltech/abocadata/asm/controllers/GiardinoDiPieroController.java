@@ -26,42 +26,45 @@ public class GiardinoDiPieroController extends AbstractWebhookController {
 
 	@Value("${shopify.hostname.giardinidipiero}")
 	private String hostname;
+	
+	@Value("${tyk.webhook.giardinidipiero.url}")
+	private String shopSuffix;
 
 	@Value("${tyk.api.orders}")
 	private String ordsURL;
-
+	
 	private static final Logger LOG = LoggerFactory.getLogger(GiardinoDiPieroController.class);
 
 	@PostMapping("/createOrder")
 	public void handleCreation(HttpServletRequest request) {
 		try {
-			createOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret);
+			createOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret, shopSuffix);
 		} catch (NotVerifiedWebHookException e2) {
-			LOG.error("", e2);
+			LOG.warn("", e2);
 		} catch (Exception e) {
-			LOG.error("", e);
+			LOG.warn("", e);
 		}
 	}
 
 	@PostMapping("/deleteOrder")
 	public void handleDeletion(HttpServletRequest request) {
 		try {
-			deleteOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret);
+			deleteOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret, shopSuffix);
 		} catch (NotVerifiedWebHookException e2) {
-			LOG.error("", e2);
+			LOG.warn("", e2);
 		} catch (Exception e) {
-			LOG.error("", e);
+			LOG.warn("", e);
 		}
 	}
 
 	@PostMapping("/updateOrder")
 	public void handleUpdate(HttpServletRequest request) {
 		try {
-			updateOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret);
+			updateOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret, shopSuffix);
 		} catch (NotVerifiedWebHookException e2) {
-			LOG.error("", e2);
+			LOG.warn("", e2);
 		} catch (Exception e) {
-			LOG.error("", e);
+			LOG.warn("", e);
 		}
 	}
 }
