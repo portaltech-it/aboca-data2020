@@ -26,17 +26,27 @@ public abstract class AbstractWebhookController {
 		String webhook_id = request.getHeader("X-Shopify-Webhook-Id");
 		String message = IOUtils.toString(request.getInputStream(), "UTF-8");
 		
-		String head = calculateHead(request, message, webhook_id, shop);
-
+		boolean isBodyValid = false;
+		String head = null;
+		try {
+			head = calculateHead(request, message, webhook_id, shop);
+			isBodyValid = true;
+		}
+		catch(JSONException e){
+			LOG.warn("Exception - WebHook " + webhook_id + " : Order Id missing");
+		}
+		
 		HmacChecker hc = new HmacChecker(secret);
 		boolean isVerified = hc.verifyWebhook(headerHmac, message);
 		
-		if (isVerified) {
-			LOG.info(head + "Signature valid");
-			serviceConsumer.sendOrderToCreate(message, url, clientID, clientSecret, head);
-		} else {
-			LOG.warn(head + "Signature not valid");
-			throw new NotVerifiedWebHookException("Exception - WebHook " + webhook_id + ": signature not valid");
+		if(isBodyValid) {
+			if (isVerified) {
+				LOG.info(head + "Signature valid");
+				serviceConsumer.sendOrderToCreate(message, url, clientID, clientSecret, head);
+			} else {
+				LOG.warn(head + "Signature not valid");
+				throw new NotVerifiedWebHookException("Exception - WebHook " + webhook_id + ": signature not valid");
+			}
 		}
 	}
 
@@ -46,17 +56,27 @@ public abstract class AbstractWebhookController {
 		String webhook_id = request.getHeader("X-Shopify-Webhook-Id");
 		String message = IOUtils.toString(request.getInputStream(), "UTF-8");
 		
-		String head = calculateHead(request, message, webhook_id, shop);
+		boolean isBodyValid = false;
+		String head = null;
+		try {
+			head = calculateHead(request, message, webhook_id, shop);
+			isBodyValid = true;
+		}
+		catch(JSONException e){
+			LOG.warn("Exception - WebHook " + webhook_id + " : Order Id missing");
+		}
 		
-		HmacChecker hc = new HmacChecker(secret);
-		boolean isVerified = hc.verifyWebhook(headerHmac, message);
+		if(isBodyValid) {
+			HmacChecker hc = new HmacChecker(secret);
+			boolean isVerified = hc.verifyWebhook(headerHmac, message);
 
-		if (isVerified) {
-			LOG.info(head + "Signature valid");
-			serviceConsumer.sendOrderToDelete(message, url, clientID, clientSecret, head);
-		} else {
-			LOG.warn(head + "Signature not valid");
-			throw new NotVerifiedWebHookException("Exception - WebHook " + webhook_id + ": signature not valid");
+			if (isVerified) {
+				LOG.info(head + "Signature valid");
+				serviceConsumer.sendOrderToDelete(message, url, clientID, clientSecret, head);
+			} else {
+				LOG.warn(head + "Signature not valid");
+				throw new NotVerifiedWebHookException("Exception - WebHook " + webhook_id + ": signature not valid");
+			}
 		}
 	}
 
@@ -66,17 +86,27 @@ public abstract class AbstractWebhookController {
 		String webhook_id = request.getHeader("X-Shopify-Webhook-Id");
 		String message = IOUtils.toString(request.getInputStream(), "UTF-8");
 		
-		String head = calculateHead(request, message, webhook_id, shop);
+		boolean isBodyValid = false;
+		String head = null;
+		try {
+			head = calculateHead(request, message, webhook_id, shop);
+			isBodyValid = true;
+		}
+		catch(JSONException e){
+			LOG.warn("Exception - WebHook " + webhook_id + " : Order Id missing");
+		}
 		
-		HmacChecker hc = new HmacChecker(secret);
-		boolean isVerified = hc.verifyWebhook(headerHmac, message);
-
-		if (isVerified) {
-			LOG.info(head + "Signature valid");
-			serviceConsumer.sendOrderToUpdate(message, url, clientID, clientSecret, head);
-		} else {
-			LOG.warn(head + "Signature not valid");
-			throw new NotVerifiedWebHookException("Exception - WebHook " + webhook_id + ": signature not valid");
+		if(isBodyValid) {
+			HmacChecker hc = new HmacChecker(secret);
+			boolean isVerified = hc.verifyWebhook(headerHmac, message);
+		
+			if (isVerified) {
+				LOG.info(head + "Signature valid");
+				serviceConsumer.sendOrderToUpdate(message, url, clientID, clientSecret, head);
+			} else {
+				LOG.warn(head + "Signature not valid");
+				throw new NotVerifiedWebHookException("Exception - WebHook " + webhook_id + ": signature not valid");
+			}
 		}
 	}
 	
@@ -86,13 +116,9 @@ public abstract class AbstractWebhookController {
 		String order_id = getOrderID(message);
 		
 		String shopShort = shop.substring(shop.lastIndexOf("/") + 1, shop.length());
-		
+
 		String head = webhook_id + "_" + webhook_type + "_" + order_id + "_" + shopShort + " : ";
-		
-		if(order_id == null) {
-			LOG.warn(head + "Order Id missing");
-		}
-			
+
 		return head;
 	}
 	
@@ -102,13 +128,8 @@ public abstract class AbstractWebhookController {
 		String id = null;
 		Long id_long;
 		
-		try {
-			id_long = jsonObject.getLong("id");
-			id = Long.toString(id_long);
-		}
-		catch(JSONException e){
-			LOG.warn("", e);
-		}
+		id_long = jsonObject.getLong("id");
+		id = Long.toString(id_long);
 				
 		return id;
 	}
