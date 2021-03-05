@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>it.reply.portaltech.abocadata</groupId>
 	<artifactId>asm</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>asm</name>
 	<description>Aboca Service Manager</description>
 	
