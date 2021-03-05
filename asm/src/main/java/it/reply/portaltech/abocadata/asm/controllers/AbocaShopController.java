@@ -4,13 +4,14 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.reply.portaltech.abocadata.asm.AsmExceptions.NotVerifiedWebHookException;
+import it.reply.portaltech.abocadata.asm.asmExceptions.NoOrderIdWebHookException;
+import it.reply.portaltech.abocadata.asm.asmExceptions.NotVerifiedWebHookException;
+
 
 @RestController
 @RequestMapping("/asm/as")
@@ -28,7 +29,7 @@ public class AbocaShopController extends AbstractWebhookController {
 	private String hostname;
 
 	@Value("${tyk.webhook.abocashop.url}")
-	private String shopSuffix;
+	private String asURL;
 	
 	@Value("${tyk.api.orders}")
 	private String ordsURL;
@@ -38,9 +39,7 @@ public class AbocaShopController extends AbstractWebhookController {
 	@PostMapping("/createOrder")
 	public void handleCreation(HttpServletRequest request) {
 		try {
-			createOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret, shopSuffix);
-		} catch (NotVerifiedWebHookException e2) {
-			LOG.warn("", e2);
+			createOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret, asURL);
 		} catch (Exception e) {
 			LOG.warn("", e);
 		}
@@ -49,9 +48,7 @@ public class AbocaShopController extends AbstractWebhookController {
 	@PostMapping("/deleteOrder")
 	public void handleDeletion(HttpServletRequest request) {
 		try {
-			deleteOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret, shopSuffix);
-		} catch (NotVerifiedWebHookException e2) {
-			LOG.warn("", e2);
+			deleteOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret, asURL);
 		} catch (Exception e) {
 			LOG.warn("", e);
 		}
@@ -60,9 +57,7 @@ public class AbocaShopController extends AbstractWebhookController {
 	@PostMapping("/updateOrder")
 	public void handleUpdate(HttpServletRequest request) {
 		try {
-			updateOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret, shopSuffix);
-		} catch (NotVerifiedWebHookException e2) {
-			LOG.warn("", e2);
+			updateOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret, asURL);
 		} catch (Exception e) {
 			LOG.warn("", e);
 		}
