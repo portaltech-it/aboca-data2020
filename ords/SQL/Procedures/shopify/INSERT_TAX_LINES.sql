@@ -3,19 +3,13 @@
 --------------------------------------------------------
 set define off;
 
-  CREATE OR REPLACE EDITIONABLE PROCEDURE "MW_ECOMMERCE"."INSERT_TAX_LINES" 
+  CREATE OR REPLACE EDITIONABLE PROCEDURE "INSERT_TAX_LINES" 
 (
-  P_BODY_TEXT IN CLOB 
+  P_ID IN NUMBER ,
+  P_BODY_TEXT in CLOB
 ) AS 
 BEGIN
-  INSERT INTO sp_tax_lines (order_id)
-SELECT *
-  FROM
-    json_table(p_body_text, '$'
-        columns(
-            "order_id" NUMBER PATH '$.id'
-            )
-        );
+  INSERT INTO sp_tax_lines (order_id) VALUES(p_id);
 END INSERT_TAX_LINES;
 
 /

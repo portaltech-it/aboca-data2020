@@ -1,17 +1,17 @@
 --------------------------------------------------------
---  DDL for Procedure INSERT_LINE_ITEMS_DISCOUNT_ALLLOCATIONS
+--  DDL for Procedure UPDATE_LINE_ITEMS_DISCOUNT_ALLLOCATIONS
 --------------------------------------------------------
 set define off;
 
-  CREATE OR REPLACE EDITIONABLE PROCEDURE "INSERT_LINE_ITEMS_DISCOUNT_ALLLOCATIONS" 
+  CREATE OR REPLACE EDITIONABLE PROCEDURE "UPDATE_LINE_ITEMS_DISCOUNT_ALLLOCATIONS" 
 (
   P_ID IN NUMBER,
   P_BODY_TEXT IN CLOB 
 ) AS 
 BEGIN
-INSERT INTO sp_line_items_discount_allocations
-(order_id, line_item_id, amount, discount_application_index, amount_set_shop_money_amount, amount_set_shop_money_currency_code, amount_set_presentment_money_amount, amount_set_presentment_money_currency_code) 
-SELECT p_id, jt.*
+UPDATE sp_line_items_discount_allocations it
+SET (line_item_id, amount, discount_application_index, amount_set_shop_money_amount, amount_set_shop_money_currency_code, amount_set_presentment_money_amount, amount_set_presentment_money_currency_code) 
+= (SELECT *
   FROM
     json_table(p_body_text, '$'
         columns(
@@ -25,8 +25,9 @@ SELECT p_id, jt.*
                     AMOUNT_SET_PRESENTMENT_MONEY_AMOUNT               VARCHAR2(100)   PATH '$.discount_allocations[*].amount_set.presentment_money.amount',
                     AMOUNT_SET_PRESENTMENT_MONEY_CURRENCY_CODE        VARCHAR2(50)    PATH '$.discount_allocations[*].amount_set.presentment_money.currency_code'
                 )
-        )
-    ) as jt;
-END INSERT_LINE_ITEMS_DISCOUNT_ALLLOCATIONS;
+            )
+        )  jt WHERE it.order_id = p_id AND it.line_item_id = jt.LINE_ITEM_ID
+    );
+END UPDATE_LINE_ITEMS_DISCOUNT_ALLLOCATIONS;
 
 /

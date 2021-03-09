@@ -1,17 +1,17 @@
 --------------------------------------------------------
---  DDL for Procedure INSERT_LINE_ITEMS
+--  DDL for Procedure UPDATE_LINE_ITEMS
 --------------------------------------------------------
 set define off;
 
-  CREATE OR REPLACE EDITIONABLE PROCEDURE "INSERT_LINE_ITEMS" 
+  CREATE OR REPLACE EDITIONABLE PROCEDURE "UPDATE_LINE_ITEMS" 
 (
   P_ID IN NUMBER,
   P_BODY_TEXT IN CLOB 
 ) AS 
 BEGIN
-INSERT INTO sp_line_items
-(order_id, id, variant_id, title, quantity, sku, variant_title, vendor, fulfillment_service, product_id, requires_shipping, taxable, gift_card, "NAME", variant_inventory_management, properties, product_exists, fulfillable_quantity, grams, price, total_discount, fulfillment_status, price_set_shop_money_amount, price_set_shop_money_currency_code, price_set_presentment_money_amount, price_set_presentment_money_currency_code, total_discount_set_shop_money_amount, total_discount_set_shop_money_currency_code, total_discount_set_presentment_money_amount, total_discount_set_presentment_money_currency_code, admin_graphql_api_id) 
-SELECT p_id, jt.*
+UPDATE sp_line_items it
+SET (id, variant_id, title, quantity, sku, variant_title, vendor, fulfillment_service, product_id, requires_shipping, taxable, gift_card, "NAME", variant_inventory_management, properties, product_exists, fulfillable_quantity, grams, price, total_discount, fulfillment_status, price_set_shop_money_amount, price_set_shop_money_currency_code, price_set_presentment_money_amount, price_set_presentment_money_currency_code, total_discount_set_shop_money_amount, total_discount_set_shop_money_currency_code, total_discount_set_presentment_money_amount, total_discount_set_presentment_money_currency_code, admin_graphql_api_id) 
+= (SELECT *
   FROM
     json_table(p_body_text, '$'
         columns(
@@ -48,8 +48,9 @@ SELECT p_id, jt.*
                     TOTAL_DISCOUNT_SET_PRESENTMENT_MONEY_CURRENCY_CODE      VARCHAR2(10)    PATH '$.total_discount_set.presentment_money.currency_code',
                     ADMIN_GRAPHQL_API_ID                                    VARCHAR2(50)    PATH '$.admin_graphql_api_id'
                 )
-        )
-    ) as jt;
-END INSERT_LINE_ITEMS;
+            )
+        ) jt WHERE it.order_id = p_ID AND it.id = jt.ID
+);
+END UPDATE_LINE_ITEMS;
 
 /

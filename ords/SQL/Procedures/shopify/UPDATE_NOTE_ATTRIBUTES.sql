@@ -1,16 +1,16 @@
 --------------------------------------------------------
---  DDL for Procedure INSERT_NOTE_ATTRIBUTES
+--  DDL for Procedure UPDATE_NOTE_ATTRIBUTES
 --------------------------------------------------------
 set define off;
 
-  CREATE OR REPLACE EDITIONABLE PROCEDURE "INSERT_NOTE_ATTRIBUTES" 
+  CREATE OR REPLACE EDITIONABLE PROCEDURE "UPDATE_NOTE_ATTRIBUTES" 
 (
   P_ID IN NUMBER,
   P_BODY_TEXT IN CLOB 
 ) AS 
 BEGIN
-INSERT INTO sp_note_attributes (order_id, "NAME", "VALUE")
-SELECT p_id, jt.*
+UPDATE sp_note_attributes na SET ("NAME", "VALUE")
+= (SELECT *
   FROM
     json_table(p_body_text, '$'
         columns(
@@ -19,8 +19,9 @@ SELECT p_id, jt.*
 	        	    "NAME" VARCHAR2(50) PATH '$.name',
                     "VALUE" VARCHAR2(50) PATH '$.value'
                 )
-        )
-    ) as jt;
-END INSERT_NOTE_ATTRIBUTES;
+            )
+        ) jt WHERE na.order_id = p_id
+    );
+END UPDATE_NOTE_ATTRIBUTES;
 
 /

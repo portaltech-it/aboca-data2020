@@ -1,16 +1,16 @@
 --------------------------------------------------------
---  DDL for Procedure INSERT_DISCOUNT_CODES
+--  DDL for Procedure UPDATE_DISCOUNT_CODES
 --------------------------------------------------------
 set define off;
 
-  CREATE OR REPLACE EDITIONABLE PROCEDURE "INSERT_DISCOUNT_CODES" 
+  CREATE OR REPLACE EDITIONABLE PROCEDURE "UPDATE_DISCOUNT_CODES" 
 (
   P_ID IN NUMBER,
   P_BODY_TEXT IN CLOB 
 ) AS 
 BEGIN
-INSERT INTO sp_discount_codes (order_id, code, amount, "TYPE")
-SELECT p_id, jt.*
+UPDATE sp_discount_codes dc SET (code, amount, "TYPE")
+= (SELECT *
   FROM
     json_table(p_body_text, '$'
         columns(
@@ -18,10 +18,12 @@ SELECT p_id, jt.*
                 columns(
                     code VARCHAR2(50) PATH '$.code',
     		        amount NUMBER PATH '$.amount',
-   	        	    "TYPE" VARCHAR2(50) PATH '$.type'
+                    "TYPE" VARCHAR2(50) PATH '$.type'
+
                 )
-        )
-    ) as jt;
-END INSERT_DISCOUNT_CODES;
+            )
+        ) as jt WHERE dc.order_id = p_id  
+    );
+END UPDATE_DISCOUNT_CODES;
 
 /

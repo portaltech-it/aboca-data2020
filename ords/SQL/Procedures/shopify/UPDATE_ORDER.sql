@@ -1,18 +1,18 @@
 --------------------------------------------------------
---  DDL for Procedure INSERT_ORDER
+--  DDL for Procedure UPDATE_ORDER
 --------------------------------------------------------
 set define off;
 
-  CREATE OR REPLACE EDITIONABLE PROCEDURE "INSERT_ORDER" (p_id IN NUMBER, p_body_text IN CLOB)
+  CREATE OR REPLACE EDITIONABLE PROCEDURE "UPDATE_ORDER" (p_id IN NUMBER, p_body_text IN CLOB, p_deletedFlag IN VARCHAR2)
 AS 
 BEGIN
-INSERT INTO sp_orders
-(id, email, closed_at, created_at, updated_at, "NUMBER", note, token, gateway, test, total_price, subtotal_price, total_weight, total_tax, taxes_included, currency, 
+UPDATE sp_orders ord
+SET (email, closed_at, created_at, updated_at, "NUMBER", note, token, gateway, test, total_price, subtotal_price, total_weight, total_tax, taxes_included, currency, 
     financial_status, confirmed, total_discounts, total_line_items_price, cart_token, buyer_accepts_marketing, "NAME", referring_site, landing_site, cancelled_at, 
     cancel_reason, total_price_usd, checkout_token, "REFERENCE", user_id, location_id, source_identifier, source_url, processed_at, device_id, phone, customer_locale, 
     app_id, browser_ip, landing_site_ref, order_number, processing_method, checkout_id, source_name, fulfillment_status, tags, contact_email, order_status_url, 
     presentment_currency, total_tip_received, original_total_duties_set, current_total_duties_set, admin_graphql_api_id, payment_gateway_names, deleted) 
-SELECT p_id, jt.*, 'false'
+= (SELECT jt.*, p_deletedFlag
   FROM
     json_table(p_body_text, '$'
         columns(
@@ -71,8 +71,9 @@ SELECT p_id, jt.*, 'false'
             "admin_graphql_api_id"  VARCHAR2(50)                    PATH    '$.admin_graphql_api_id',
             "payments_gateway_names"    VARCHAR2(128)                   PATH    '$.payment_gateway_names'
         )
-    ) as jt;
+    )  jt WHERE ord.id = p_id
+);
 COMMIT;
-END INSERT_ORDER;
+END UPDATE_ORDER;
 
 /

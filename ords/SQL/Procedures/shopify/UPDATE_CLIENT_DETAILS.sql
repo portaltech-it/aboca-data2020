@@ -1,13 +1,13 @@
 --------------------------------------------------------
---  DDL for Procedure INSERT_CLIENT_DETAILS
+--  DDL for Procedure UPDATE_CLIENT_DETAILS
 --------------------------------------------------------
 set define off;
 
-  CREATE OR REPLACE EDITIONABLE PROCEDURE "INSERT_CLIENT_DETAILS" (p_id IN NUMBER, p_body_text IN CLOB) AS 
+  CREATE OR REPLACE EDITIONABLE PROCEDURE "UPDATE_CLIENT_DETAILS" (p_id IN NUMBER, p_body_text IN CLOB) AS 
 BEGIN
-INSERT INTO sp_client_details
-(order_id, accept_language, browser_height, browser_ip, browser_width, session_hash, user_agent) 
-SELECT p_id, jt.*
+UPDATE sp_client_details cd
+SET (accept_language, browser_height, browser_ip, browser_width, session_hash, user_agent) 
+= (SELECT *
   FROM
     json_table(p_body_text, '$'
         columns(
@@ -20,8 +20,9 @@ SELECT p_id, jt.*
                     session_hash VARCHAR2(100) PATH '$.session_hash',
     		        user_agent VARCHAR2(500) PATH '$.user_agent'
                 )
-        )
-    ) as jt;
-END INSERT_CLIENT_DETAILS;
+            )
+        )  as jt WHERE cd.order_id = p_ID
+    );
+END UPDATE_CLIENT_DETAILS;
 
 /

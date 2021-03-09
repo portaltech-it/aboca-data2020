@@ -1,17 +1,17 @@
 --------------------------------------------------------
---  DDL for Procedure INSERT_SHIPPING_ADDRESS
+--  DDL for Procedure UPDATE_SHIPPING_ADDRESS
 --------------------------------------------------------
 set define off;
 
-  CREATE OR REPLACE EDITIONABLE PROCEDURE "INSERT_SHIPPING_ADDRESS" 
+  CREATE OR REPLACE EDITIONABLE PROCEDURE "UPDATE_SHIPPING_ADDRESS" 
 (
   P_ID IN NUMBER,
   P_BODY_TEXT IN CLOB 
 ) AS 
 BEGIN
-INSERT INTO sp_shipping_address
-(order_id, first_name, address1, phone, city, zip, province, country, last_name, address2, company, latitude, longitude, "NAME", country_code, province_code) 
-SELECT p_id, jt.*
+UPDATE sp_shipping_address sa
+SET (first_name, address1, phone, city, zip, province, country, last_name, address2, company, latitude, longitude, "NAME", country_code, province_code) 
+= (SELECT *
   FROM
     json_table(p_body_text, '$'
         columns(
@@ -33,8 +33,9 @@ SELECT p_id, jt.*
                     country_code       VARCHAR2(50) PATH '$.country_code',
                     province_code       VARCHAR2(50) PATH '$.province_code'
                 )
-        )
-    ) as jt;
-END INSERT_SHIPPING_ADDRESS;
+            )
+        ) jt WHERE sa.order_id = p_id
+    );
+END UPDATE_SHIPPING_ADDRESS;
 
 /

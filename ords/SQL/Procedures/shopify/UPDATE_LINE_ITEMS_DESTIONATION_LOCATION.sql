@@ -1,17 +1,17 @@
 --------------------------------------------------------
---  DDL for Procedure INSERT_LINE_ITEMS_DESTIONATION_LOCATION
+--  DDL for Procedure UPDATE_LINE_ITEMS_DESTIONATION_LOCATION
 --------------------------------------------------------
 set define off;
 
-  CREATE OR REPLACE EDITIONABLE PROCEDURE "INSERT_LINE_ITEMS_DESTIONATION_LOCATION" 
+  CREATE OR REPLACE EDITIONABLE PROCEDURE "UPDATE_LINE_ITEMS_DESTIONATION_LOCATION" 
 (
   P_ID IN NUMBER,
   P_BODY_TEXT IN CLOB 
 ) AS 
 BEGIN
-INSERT INTO sp_line_items_destination_location
-(order_id, line_item_id, country_code, province_code, "NAME", address1, address2, city, zip) 
-SELECT p_id, jt.*
+UPDATE sp_line_items_destination_location it
+SET (line_item_id, country_code, province_code, "NAME", address1, address2, city, zip) 
+= (SELECT *
   FROM
     json_table(p_body_text, '$'
         columns(
@@ -26,8 +26,9 @@ SELECT p_id, jt.*
                     CITY                      VARCHAR2(50)    PATH '$.destination_location[*].city',
                     ZIP                       VARCHAR2(10)    PATH '$.destination_location[*].zip'
                 )
-        )
-    ) as jt;
-END INSERT_LINE_ITEMS_DESTIONATION_LOCATION;
+            )
+        )  jt WHERE it.order_id = p_id AND it.line_item_id = jt.LINE_ITEM_ID
+    );
+END UPDATE_LINE_ITEMS_DESTIONATION_LOCATION;
 
 /

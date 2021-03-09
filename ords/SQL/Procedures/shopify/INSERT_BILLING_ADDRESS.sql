@@ -3,16 +3,14 @@
 --------------------------------------------------------
 set define off;
 
-  CREATE OR REPLACE EDITIONABLE PROCEDURE "MW_ECOMMERCE"."INSERT_BILLING_ADDRESS" (p_body_text IN CLOB) 
+  CREATE OR REPLACE EDITIONABLE PROCEDURE "INSERT_BILLING_ADDRESS" (p_id IN NUMBER, p_body_text IN CLOB) 
 AS 
 BEGIN
-INSERT INTO sp_billing_address
-(order_id, first_name, address1, phone, city, zip, province, country, last_name, address2, company, latitude, longitude, "NAME", country_code, province_code) 
-SELECT *
+INSERT INTO sp_billing_address (order_id, first_name, address1, phone, city, zip, province, country, last_name, address2, company, latitude, longitude, "NAME", country_code, province_code) 
+SELECT p_id, jt.*
   FROM
     json_table(p_body_text, '$'
         columns(
-            "order_id" NUMBER PATH '$.id',
             nested PATH '$.billing_address[*]'
                 columns(
                     first_name       VARCHAR2(50) PATH '$.first_name',
@@ -32,7 +30,7 @@ SELECT *
                     province_code       VARCHAR2(50) PATH '$.province_code'
                 )
         )
-    );
+    )  as jt;
 COMMIT;
 END INSERT_BILLING_ADDRESS;
 

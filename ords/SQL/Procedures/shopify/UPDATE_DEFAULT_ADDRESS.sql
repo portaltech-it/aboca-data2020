@@ -1,13 +1,13 @@
 --------------------------------------------------------
---  DDL for Procedure INSERT_DEFAULT_ADDRESS
+--  DDL for Procedure UPDATE_DEFAULT_ADDRESS
 --------------------------------------------------------
 set define off;
 
-  CREATE OR REPLACE EDITIONABLE PROCEDURE "INSERT_DEFAULT_ADDRESS" (p_body_text IN CLOB) AS 
+  CREATE OR REPLACE EDITIONABLE PROCEDURE "UPDATE_DEFAULT_ADDRESS" (p_body_text IN CLOB) AS 
 BEGIN
-INSERT INTO sp_default_address
-(id, customer_id, first_name, last_name, company, address1, address2, city, province, country, zip, phone, "NAME", province_code, country_code, country_name, "DEFAULT") 
-SELECT *
+UPDATE sp_default_address da
+SET (id, customer_id, first_name, last_name, company, address1, address2, city, province, country, zip, phone, "NAME", province_code, country_code, country_name, "DEFAULT") 
+= (SELECT *
   FROM
     json_table(p_body_text, '$'
         columns(
@@ -31,8 +31,9 @@ SELECT *
                     COUNTRY_NAME       VARCHAR2(50)     PATH '$.country_name',
                     "DEFAULT"       VARCHAR2(20)          PATH '$.default'
                 )
-        )
+            )
+        ) as jt WHERE da.id = jt.id
     );
-END INSERT_DEFAULT_ADDRESS;
+END UPDATE_DEFAULT_ADDRESS;
 
 /

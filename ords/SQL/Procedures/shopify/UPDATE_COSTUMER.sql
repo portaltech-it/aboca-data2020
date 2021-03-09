@@ -1,13 +1,13 @@
 --------------------------------------------------------
---  DDL for Procedure INSERT_COSTUMER
+--  DDL for Procedure UPDATE_COSTUMER
 --------------------------------------------------------
 set define off;
 
-  CREATE OR REPLACE EDITIONABLE PROCEDURE "INSERT_COSTUMER" (p_id IN NUMBER, p_body_text IN CLOB) AS 
+  CREATE OR REPLACE EDITIONABLE PROCEDURE "UPDATE_COSTUMER" (p_id IN NUMBER, p_body_text IN CLOB) AS 
 BEGIN
-INSERT INTO sp_customer
-(order_id, id, email, accepts_marketing, created_at, updated_at, first_name, last_name, orders_count, state, total_spent, last_order_id, note, verified_email, multipass_identifier, tax_exempt, phone, tags, last_order_name, currency, accepts_marketing_updated_at, marketing_opt_in_level, admin_graphql_api_id) 
-SELECT p_id, jt.*
+UPDATE sp_customer c
+SET (id, email, accepts_marketing, created_at, updated_at, first_name, last_name, orders_count, state, total_spent, last_order_id, note, verified_email, multipass_identifier, tax_exempt, phone, tags, last_order_name, currency, accepts_marketing_updated_at, marketing_opt_in_level, admin_graphql_api_id) 
+= (SELECT *
   FROM
     json_table(p_body_text, '$'
         columns(
@@ -36,8 +36,9 @@ SELECT p_id, jt.*
                     MARKETING_OPT_IN_LEVEL          VARCHAR2(50) PATH     '$.marketing_opt_in_level',
                     ADMIN_GRAPHQL_API_ID            VARCHAR2(100) PATH    '$.admin_graphql_api_id'
                 )
-        )
-    ) as jt;
-END INSERT_COSTUMER;
+            )
+        ) as jt WHERE c.order_id = p_id AND c.id = jt.id
+    );
+END UPDATE_COSTUMER;
 
 /

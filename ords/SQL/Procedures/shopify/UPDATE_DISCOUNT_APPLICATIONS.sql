@@ -1,13 +1,13 @@
 --------------------------------------------------------
---  DDL for Procedure INSERT_DISCOUNT_APPLICATIONS
+--  DDL for Procedure UPDATE_DISCOUNT_APPLICATIONS
 --------------------------------------------------------
 set define off;
 
-  CREATE OR REPLACE EDITIONABLE PROCEDURE "INSERT_DISCOUNT_APPLICATIONS" (p_id IN NUMBER, p_body_text IN CLOB) AS 
+  CREATE OR REPLACE EDITIONABLE PROCEDURE "UPDATE_DISCOUNT_APPLICATIONS" (p_id IN NUMBER, p_body_text IN CLOB) AS 
 BEGIN
-INSERT INTO sp_discount_applications
-(order_id, "TYPE", "VALUE", value_type, allocation_method, target_selection, target_type, code)
-SELECT p_id, jt.*
+UPDATE sp_discount_applications da
+SET ("TYPE", "VALUE", value_type, allocation_method, target_selection, target_type, code)
+= (SELECT *
   FROM
     json_table(p_body_text, '$'
         columns(
@@ -21,8 +21,9 @@ SELECT p_id, jt.*
     		        target_type VARCHAR2(50) PATH '$.target_type',
                     code VARCHAR2(50) PATH '$.code'
                 )
-        )
-    ) as jt;
-END INSERT_DISCOUNT_APPLICATIONS;
+            )
+        ) as jt WHERE da.order_id = p_id
+    );
+END UPDATE_DISCOUNT_APPLICATIONS;
 
 /
