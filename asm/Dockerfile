@@ -7,6 +7,8 @@ COPY /asm ./
 # package our application code
 RUN mvn clean package -DskipTests
 
+FROM openjdk:11-jre-slim
+
 # copy only the artifacts we need from the first stage and discard the rest
 COPY --from=build /target/*.jar /asm.jar
 
