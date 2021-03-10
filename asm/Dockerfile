@@ -1,5 +1,5 @@
 # the first stage of our build will use a maven 3.6.1 parent image
-FROM maven:3.6.3-openjdk-11-slim AS MAVEN_BUILD
+FROM maven:3.6.3-openjdk-11-slim AS build
 
 # copy the pom and src code to the container
 COPY /asm ./
@@ -8,7 +8,7 @@ COPY /asm ./
 RUN mvn clean package -DskipTests
 
 # copy only the artifacts we need from the first stage and discard the rest
-COPY --from=MAVEN_BUILD /target/*.jar /asm.jar
+COPY --from=build /target/*.jar /asm.jar
 
 # define entrypoint
 ENTRYPOINT ["java","-jar","/asm.jar"]
