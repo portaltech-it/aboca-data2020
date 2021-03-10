@@ -21,8 +21,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Service
 public class ServiceConsumer {
 	
-	@Value("${ords.path.order.suffix}")
-	private String SUFFIXPATH;
+	@Value("${ords.path.models}")
+	private String ORDSMODELSPATH;
 
 	private static final String TOKENREQUESTPATH = "/oauth/token";
 	private static final Logger LOG = LoggerFactory.getLogger(ServiceConsumer.class);
@@ -55,7 +55,7 @@ public class ServiceConsumer {
 		return access_token;
 	}
 
-	public void sendOrderToCreate(String message, String url, String clientID, String clientSecret, String head, String order_id) {
+	public void sendPOST(String message, String url, String clientID, String clientSecret, String head, String order_id) {
 		String accessToken = getOauth2Token(url + TOKENREQUESTPATH, clientID, clientSecret, head);
 
 		LOG.info(head + "Sending order data to ORDS");
@@ -68,12 +68,12 @@ public class ServiceConsumer {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
 		HttpEntity<String> entity = new HttpEntity<String>(message, headers);
-		ResponseEntity<String> response = restTemplate.postForEntity(url + SUFFIXPATH + "/" + order_id, entity, String.class);
+		ResponseEntity<String> response = restTemplate.postForEntity(url + ORDSMODELSPATH + "/" + order_id, entity, String.class);
 		
-		LOG.info(head + response.getStatusCodeValue());
+		LOG.info(head + "Order created");
 	}
 
-	public void sendOrderToUpdate(String message, String url, String clientID, String clientSecret, String head, String order_id) {
+	public void sendPUT(String message, String url, String clientID, String clientSecret, String head, String order_id, int deletion) {
 		String accessToken = getOauth2Token(url + TOKENREQUESTPATH, clientID, clientSecret, head);
 
 		LOG.info(head + "Sending order data to ORDS");
@@ -88,37 +88,16 @@ public class ServiceConsumer {
 		Map<String, Object> pathParam = new HashMap<>();
 		pathParam.put("order_id", order_id);
 
-		String urlRequest = url + SUFFIXPATH + "/{order_id}";
-		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(urlRequest).queryParam("deletion", 0);
+		String urlRequest = url + ORDSMODELSPATH + "/{order_id}";
+		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(urlRequest).queryParam("deletion", deletion);
 
 		HttpEntity<String> entity = new HttpEntity<String>(message, headers);
 		ResponseEntity<String> response = restTemplate.exchange(builder.buildAndExpand(pathParam).toUri(), HttpMethod.PUT, entity, String.class);
 
-		LOG.info(head + response.getStatusCodeValue());
-	}
-
-	public void sendOrderToDelete(String message, String url, String clientID, String clientSecret, String head, String order_id) {
-		String accessToken = getOauth2Token(url + TOKENREQUESTPATH, clientID, clientSecret, head);
-
-		LOG.info(head + "Sending order data to ORDS");
-
-		message = updatePaymentGatewayNames(message);
-
-		RestTemplate restTemplate = new RestTemplate();
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", "Bearer " + accessToken);
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		
-		Map<String, Object> pathParam = new HashMap<>();
-		pathParam.put("order_id", order_id);
-
-		String urlRequest = url + SUFFIXPATH + "/{order_id}";
-		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(urlRequest).queryParam("deletion", 1);
-		
-		HttpEntity<String> entity = new HttpEntity<String>(message, headers);
-		ResponseEntity<String> response = restTemplate.exchange(builder.buildAndExpand(pathParam).toUri(), HttpMethod.PUT, entity, String.class);
-		
-		LOG.info(head + response.getStatusCodeValue());
+		if(deletion == 0)
+			LOG.info(head + "Order updated");
+		else if(deletion == 1)
+			LOG.info(head + "Order deleted");
 	}
 	
 	private String updatePaymentGatewayNames(String body)
