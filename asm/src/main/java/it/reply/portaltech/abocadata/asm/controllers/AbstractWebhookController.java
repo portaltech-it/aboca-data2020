@@ -19,7 +19,11 @@ public abstract class AbstractWebhookController {
 	public static final String X_SHOPIFY_TOPIC = "X-Shopify-Topic";
 	public static final String UTF_8 = "UTF-8";
 	
+	
 	private static final Logger LOG = LoggerFactory.getLogger(AbstractWebhookController.class);
+	
+	private static int OPE_UPDATE = 0;
+	private static int OPE_DELETE = 1;
 	
 	@Autowired
 	private ServiceConsumer serviceConsumer;
@@ -62,7 +66,7 @@ public abstract class AbstractWebhookController {
 
 		if (isVerified) {
 			LOG.info(head + "Signature valid");
-			serviceConsumer.sendPUT(message, url, clientID, clientSecret, head, order_id, 1);
+			serviceConsumer.sendPUT(message, url, clientID, clientSecret, head, order_id, OPE_DELETE);
 		} else {
 			LOG.warn(head + "Signature not valid");
 			throw new NotVerifiedWebHookException("WebHook " + webhook_id + ": signature not valid");
@@ -84,7 +88,7 @@ public abstract class AbstractWebhookController {
 	
 		if (isVerified) {
 			LOG.info(head + "Signature valid");
-			serviceConsumer.sendPUT(message, url, clientID, clientSecret, head, order_id, 0);
+			serviceConsumer.sendPUT(message, url, clientID, clientSecret, head, order_id, OPE_UPDATE);
 		} else {
 			LOG.warn(head + "Signature not valid");
 			throw new NotVerifiedWebHookException("WebHook " + webhook_id + ": signature not valid");
