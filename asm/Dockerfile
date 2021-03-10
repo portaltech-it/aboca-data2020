@@ -2,7 +2,7 @@
 FROM maven:3.6.3-openjdk-11-slim AS MAVEN_BUILD
 
 # copy the pom and src code to the container
-COPY ./ ./
+COPY /asm ./
 
 # package our application code
 RUN mvn clean package -DskipTests
