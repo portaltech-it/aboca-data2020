@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.reply.portaltech.abocadata.asm.asmExceptions.NoOrderIdWebHookException;
-import it.reply.portaltech.abocadata.asm.asmExceptions.NotVerifiedWebHookException;
-
 
 @RestController
 @RequestMapping("/asm/as")
