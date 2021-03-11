@@ -13,17 +13,16 @@ import it.reply.portaltech.abocadata.asm.util.HmacChecker;
 
 public abstract class AbstractWebhookController {
 
-	private static final String X_SHOPIFY_ORDER_ID = "X-Shopify-Order-Id";
+	public static final String X_SHOPIFY_ORDER_ID = "X-Shopify-Order-Id";
 	public static final String X_SHOPIFY_HMAC_SHA256 = "X-Shopify-Hmac-Sha256";
 	public static final String X_SHOPIFY_WEBHOOK_ID = "X-Shopify-Webhook-Id";
 	public static final String X_SHOPIFY_TOPIC = "X-Shopify-Topic";
 	public static final String UTF_8 = "UTF-8";
 	
-	
 	private static final Logger LOG = LoggerFactory.getLogger(AbstractWebhookController.class);
 	
-	private static int OPE_UPDATE = 0;
-	private static int OPE_DELETE = 1;
+	private static final int OPE_UPDATE = 0;
+	private static final int OPE_DELETE = 1;
 	
 	@Autowired
 	private ServiceConsumer serviceConsumer;

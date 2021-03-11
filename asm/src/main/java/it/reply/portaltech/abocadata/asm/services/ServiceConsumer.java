@@ -76,7 +76,7 @@ public class ServiceConsumer {
 	public void sendPUT(String message, String url, String clientID, String clientSecret, String head, String order_id, int deletion) {
 		String accessToken = getOauth2Token(url + TOKENREQUESTPATH, clientID, clientSecret, head);
 
-		LOG.info(head + "Sending order data to ORDS");
+		LOG.info(head + "Sending order data to ORDS with deletion: "+ deletion);
 
 		message = updatePaymentGatewayNames(message);
 		

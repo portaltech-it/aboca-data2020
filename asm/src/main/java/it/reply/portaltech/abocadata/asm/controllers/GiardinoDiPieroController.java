@@ -36,7 +36,7 @@ public class GiardinoDiPieroController extends AbstractWebhookController {
 	@PostMapping("/createOrder")
 	public void handleCreation(HttpServletRequest request) {
 		try {
-			createOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret, gdpURL);
+			createOrder(request, shopifySecret, ordsURL, clientID, clientSecret, gdpURL);
 		} catch (Exception e) {
 			LOG.warn("", e);
 		}
@@ -45,7 +45,7 @@ public class GiardinoDiPieroController extends AbstractWebhookController {
 	@PostMapping("/deleteOrder")
 	public void handleDeletion(HttpServletRequest request) {
 		try {
-			deleteOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret, gdpURL);
+			deleteOrder(request, shopifySecret, ordsURL, clientID, clientSecret, gdpURL);
 		} catch (Exception e) {
 			LOG.warn("", e);
 		}
@@ -54,7 +54,7 @@ public class GiardinoDiPieroController extends AbstractWebhookController {
 	@PostMapping("/updateOrder")
 	public void handleUpdate(HttpServletRequest request) {
 		try {
-			updateOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret, gdpURL);
+			updateOrder(request, shopifySecret, ordsURL, clientID, clientSecret, gdpURL);
 		} catch (Exception e) {
 			LOG.warn("", e);
 		}
