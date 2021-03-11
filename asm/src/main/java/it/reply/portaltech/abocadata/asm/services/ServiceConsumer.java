@@ -94,10 +94,7 @@ public class ServiceConsumer {
 		HttpEntity<String> entity = new HttpEntity<String>(message, headers);
 		ResponseEntity<String> response = restTemplate.exchange(builder.buildAndExpand(pathParam).toUri(), HttpMethod.PUT, entity, String.class);
 
-		if(deletion == 0)
-			LOG.info(head + response.getStatusCode());
-		else if(deletion == 1)
-			LOG.info(head + response.getStatusCode());
+		LOG.info(head + response.getStatusCode());
 	}
 	
 	private String updatePaymentGatewayNames(String body)
