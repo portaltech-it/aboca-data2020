@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.reply.portaltech.abocadata.asm.asmExceptions.NoOrderIdWebHookException;
-import it.reply.portaltech.abocadata.asm.asmExceptions.NotVerifiedWebHookException;
-
 
 @RestController
 @RequestMapping("/asm/as")
@@ -39,7 +36,7 @@ public class AbocaShopController extends AbstractWebhookController {
 	@PostMapping("/createOrder")
 	public void handleCreation(HttpServletRequest request) {
 		try {
-			createOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret, asURL);
+			createOrder(request, shopifySecret, ordsURL, clientID, clientSecret, asURL);
 		} catch (Exception e) {
 			LOG.warn("", e);
 		}
@@ -48,7 +45,7 @@ public class AbocaShopController extends AbstractWebhookController {
 	@PostMapping("/deleteOrder")
 	public void handleDeletion(HttpServletRequest request) {
 		try {
-			deleteOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret, asURL);
+			deleteOrder(request, shopifySecret, ordsURL, clientID, clientSecret, asURL);
 		} catch (Exception e) {
 			LOG.warn("", e);
 		}
@@ -57,7 +54,7 @@ public class AbocaShopController extends AbstractWebhookController {
 	@PostMapping("/updateOrder")
 	public void handleUpdate(HttpServletRequest request) {
 		try {
-			updateOrder(request, this.shopifySecret, this.ordsURL, clientID, clientSecret, asURL);
+			updateOrder(request, shopifySecret, ordsURL, clientID, clientSecret, asURL);
 		} catch (Exception e) {
 			LOG.warn("", e);
 		}

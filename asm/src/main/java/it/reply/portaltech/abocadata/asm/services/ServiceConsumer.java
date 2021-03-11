@@ -11,21 +11,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
 public class ServiceConsumer {
-	@Value("${ords.path.order.create}")
-	private String CREATEPATH;
-
-	@Value("${ords.path.order.delete}")
-	private String DELETEPATH;
-
-	@Value("${ords.path.order.update}")
-	private String UPDATEPATH;
+	
+	@Value("${ords.path.models}")
+	private String ORDSMODELSPATH;
 
 	private static final String TOKENREQUESTPATH = "/oauth/token";
 	private static final Logger LOG = LoggerFactory.getLogger(ServiceConsumer.class);
@@ -58,7 +55,7 @@ public class ServiceConsumer {
 		return access_token;
 	}
 
-	public void sendOrderToCreate(String message, String url, String clientID, String clientSecret, String head) {
+	public void sendPOST(String message, String url, String clientID, String clientSecret, String head, String order_id) {
 		String accessToken = getOauth2Token(url + TOKENREQUESTPATH, clientID, clientSecret, head);
 
 		LOG.info(head + "Sending order data to ORDS");
@@ -71,15 +68,15 @@ public class ServiceConsumer {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
 		HttpEntity<String> entity = new HttpEntity<String>(message, headers);
-		ResponseEntity<String> response = restTemplate.postForEntity(url + CREATEPATH, entity, String.class);
+		ResponseEntity<String> response = restTemplate.postForEntity(url + ORDSMODELSPATH + "/" + order_id, entity, String.class);
 		
-		LOG.info(head + response.getStatusCodeValue() + "_" + response.getBody());
+		LOG.info(head + response.getStatusCode());
 	}
 
-	public void sendOrderToUpdate(String message, String url, String clientID, String clientSecret, String head) {
+	public void sendPUT(String message, String url, String clientID, String clientSecret, String head, String order_id, int deletion) {
 		String accessToken = getOauth2Token(url + TOKENREQUESTPATH, clientID, clientSecret, head);
 
-		LOG.info(head + "Sending order data to ORDS");
+		LOG.info(head + "Sending order data to ORDS with deletion: "+ deletion);
 
 		message = updatePaymentGatewayNames(message);
 		
@@ -88,28 +85,16 @@ public class ServiceConsumer {
 		headers.add("Authorization", "Bearer " + accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
-		HttpEntity<String> entity = new HttpEntity<String>(message, headers);
-		ResponseEntity<String> response = restTemplate.postForEntity(url + UPDATEPATH, entity, String.class);
-		
-		LOG.info(head + response.getStatusCodeValue() + "_" + response.getBody());
-	}
+		Map<String, Object> pathParam = new HashMap<>();
+		pathParam.put("order_id", order_id);
 
-	public void sendOrderToDelete(String message, String url, String clientID, String clientSecret, String head) {
-		String accessToken = getOauth2Token(url + TOKENREQUESTPATH, clientID, clientSecret, head);
-
-		LOG.info(head + "Sending order data to ORDS");
-
-		message = updatePaymentGatewayNames(message);
-
-		RestTemplate restTemplate = new RestTemplate();
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", "Bearer " + accessToken);
-		headers.setContentType(MediaType.APPLICATION_JSON);
+		String urlRequest = url + ORDSMODELSPATH + "/{order_id}";
+		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(urlRequest).queryParam("deletion", deletion);
 
 		HttpEntity<String> entity = new HttpEntity<String>(message, headers);
-		ResponseEntity<String> response = restTemplate.postForEntity(url + DELETEPATH, entity, String.class);
-		
-		LOG.info(head + response.getStatusCodeValue() + "_" + response.getBody());
+		ResponseEntity<String> response = restTemplate.exchange(builder.buildAndExpand(pathParam).toUri(), HttpMethod.PUT, entity, String.class);
+
+		LOG.info(head + response.getStatusCode());
 	}
 	
 	private String updatePaymentGatewayNames(String body)
