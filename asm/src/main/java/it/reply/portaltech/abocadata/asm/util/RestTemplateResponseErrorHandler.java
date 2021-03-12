@@ -39,10 +39,10 @@ public class RestTemplateResponseErrorHandler
     public void handleError(ClientHttpResponse httpResponse) throws IOException, RuntimeException {
 
     	try {
-	        if (httpResponse.getStatusCode().series() == HttpStatus.Series.SERVER_ERROR) {
+	        if (httpResponse.getStatusCode().series() == HttpStatus.Series.CLIENT_ERROR) {
 	            throw new HttpClientErrorException(httpResponse.getStatusCode());
 	        }
-	        else if (httpResponse.getStatusCode().series() == HttpStatus.Series.CLIENT_ERROR) {
+	        else if (httpResponse.getStatusCode().series() == HttpStatus.Series.SERVER_ERROR) {
 	            	throw new HttpServerErrorException(httpResponse.getStatusCode());
 	        }
     	}
