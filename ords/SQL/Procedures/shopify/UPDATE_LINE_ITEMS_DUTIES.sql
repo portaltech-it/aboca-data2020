@@ -20,8 +20,8 @@ SET (line_item_id)
                     line_item_id NUMBER(18) PATH '$.id'
                 )
             )
-        )  jt WHERE it.order_id = p_id AND it.line_item_id = jt.line_item_id
-    );
+        )  jt WHERE it.line_item_id = jt.line_item_id
+    ) WHERE it.order_id = p_id;
 END UPDATE_LINE_ITEMS_DUTIES;
 
 /

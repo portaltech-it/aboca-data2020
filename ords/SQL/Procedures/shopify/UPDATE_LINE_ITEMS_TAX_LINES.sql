@@ -27,8 +27,8 @@ SET (line_item_id, title, rate, price, price_set_shop_money_amount, price_set_sh
                     PRICE_SET_PRESENTMENT_MONEY_CURRENCY_CODE                   VARCHAR2(10)  PATH '$.tax_lines.price_set.presentment_money.currency_code'                
                 )
             )
-        )  jt WHERE it.order_id = p_id AND it.line_item_id = jt.LINE_ITEM_ID
-    );
+        )  jt WHERE it.line_item_id = jt.LINE_ITEM_ID
+    ) WHERE it.order_id = p_id;
 END UPDATE_LINE_ITEMS_TAX_LINES;
 
 /

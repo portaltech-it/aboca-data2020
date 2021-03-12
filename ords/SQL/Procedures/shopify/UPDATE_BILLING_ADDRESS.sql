@@ -29,8 +29,8 @@ SET (first_name, address1, phone, city, zip, province, country, last_name, addre
                 province_code       VARCHAR2(50) PATH '$.province_code'
             )
         ) 
-    ) as jt WHERE ba.order_id = p_ID
-);
+    )
+) WHERE ba.order_id = p_ID;
 COMMIT;
 END UPDATE_BILLING_ADDRESS;
 

@@ -38,8 +38,8 @@ discounted_price_set_shop_money_amount, discounted_price_set_shop_money_currency
                     DISCOUNTED_PRICE_SET_PRESENTMENT_MONEY_CURRENCY_CODE        VARCHAR2(10)  PATH '$.discounted_price_set.presentment_money.currency_code'
                 )
             )
-        )  jt WHERE sl.order_id = p_ID AND sl.id = jt.id
-    );
+        )  jt WHERE sl.id = jt.id
+    ) WHERE sl.order_id = p_ID ;
 END UPDATE_SHIPPING_LINES;
 
 /

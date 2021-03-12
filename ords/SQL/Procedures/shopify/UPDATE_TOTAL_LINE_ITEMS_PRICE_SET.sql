@@ -23,8 +23,8 @@ SET (shop_money_amount, shop_money_currency_code, presentment_money_amount, pres
     		        presentment_money_currency_code VARCHAR2(10) PATH '$.presentment_money.currency_code'
                 )
             )
-        ) jt WHERE ps.order_id = p_id
-    );
+        )
+    )  WHERE ps.order_id = p_id;
 END UPDATE_TOTAL_LINE_ITEMS_PRICE_SET;
 
 /

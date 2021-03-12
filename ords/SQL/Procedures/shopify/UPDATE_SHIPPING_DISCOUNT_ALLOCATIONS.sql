@@ -20,8 +20,8 @@ SET (shipping_line_id)
                     ID NUMBER(18)    PATH '$.id'
             )
         )
-    ) jt WHERE sda.order_id = p_id AND shipping_line_id = jt.id
-);
+    ) jt WHERE shipping_line_id = jt.id
+) WHERE sda.order_id = p_id ;
 END UPDATE_SHIPPING_DISCOUNT_ALLOCATIONS;
 
 /

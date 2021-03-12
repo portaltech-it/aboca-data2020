@@ -27,8 +27,8 @@ SET (line_item_id, country_code, province_code, "NAME", address1, address2, city
                     ZIP                       VARCHAR2(10)    PATH '$.origin_location[*].zip'
                 )
             )
-        )   jt WHERE it.order_id = p_id AND it.line_item_id = jt.LINE_ITEM_ID
-    );
+        )   jt WHERE it.line_item_id = jt.LINE_ITEM_ID
+    ) WHERE it.order_id = p_id;
 END UPDATE_LINE_ITEMS_ORIGINAL_LOCATION;
 
 /

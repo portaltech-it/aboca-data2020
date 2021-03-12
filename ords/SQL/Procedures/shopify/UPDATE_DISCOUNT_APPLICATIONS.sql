@@ -22,8 +22,8 @@ SET ("TYPE", "VALUE", value_type, allocation_method, target_selection, target_ty
                     code VARCHAR2(50) PATH '$.code'
                 )
             )
-        ) as jt WHERE da.order_id = p_id
-    );
+        ) as jt
+    )  WHERE da.order_id = p_id;
 END UPDATE_DISCOUNT_APPLICATIONS;
 
 /

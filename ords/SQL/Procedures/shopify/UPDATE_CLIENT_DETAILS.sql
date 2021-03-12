@@ -21,8 +21,8 @@ SET (accept_language, browser_height, browser_ip, browser_width, session_hash, u
     		        user_agent VARCHAR2(500) PATH '$.user_agent'
                 )
             )
-        )  as jt WHERE cd.order_id = p_ID
-    );
+        )
+    ) WHERE cd.order_id = p_ID;
 END UPDATE_CLIENT_DETAILS;
 
 /

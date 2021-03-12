@@ -49,8 +49,8 @@ SET (id, variant_id, title, quantity, sku, variant_title, vendor, fulfillment_se
                     ADMIN_GRAPHQL_API_ID                                    VARCHAR2(50)    PATH '$.admin_graphql_api_id'
                 )
             )
-        ) jt WHERE it.order_id = p_ID AND it.id = jt.ID
-);
+        ) jt WHERE it.id = jt.ID
+) WHERE it.order_id = p_ID;
 END UPDATE_LINE_ITEMS;
 
 /

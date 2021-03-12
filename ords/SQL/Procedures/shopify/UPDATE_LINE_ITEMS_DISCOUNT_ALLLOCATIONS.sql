@@ -26,8 +26,8 @@ SET (line_item_id, amount, discount_application_index, amount_set_shop_money_amo
                     AMOUNT_SET_PRESENTMENT_MONEY_CURRENCY_CODE        VARCHAR2(50)    PATH '$.discount_allocations[*].amount_set.presentment_money.currency_code'
                 )
             )
-        )  jt WHERE it.order_id = p_id AND it.line_item_id = jt.LINE_ITEM_ID
-    );
+        )  jt WHERE it.line_item_id = jt.LINE_ITEM_ID
+    ) WHERE it.order_id = p_id;
 END UPDATE_LINE_ITEMS_DISCOUNT_ALLLOCATIONS;
 
 /

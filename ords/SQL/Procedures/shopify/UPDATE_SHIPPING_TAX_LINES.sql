@@ -27,8 +27,8 @@ SET (shipping_line_id, title, rate, price, price_set_shop_money_amount, price_se
                     PRICE_SET_PRESENTMENT_MONEY_CURRENCY_CODE                   VARCHAR2(10)  PATH '$.tax_lines[*].price_set.presentment_money.currency_code'
                 )
             )
-        ) jt WHERE stl.order_id = p_id AND stl.shipping_line_id = jt.shipping_line_id
-    );
+        ) jt WHERE stl.shipping_line_id = jt.shipping_line_id
+    ) WHERE stl.order_id = p_ID ;
 END UPDATE_SHIPPING_TAX_LINES;
 
 /

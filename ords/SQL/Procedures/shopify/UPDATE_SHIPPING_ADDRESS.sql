@@ -34,8 +34,8 @@ SET (first_name, address1, phone, city, zip, province, country, last_name, addre
                     province_code       VARCHAR2(50) PATH '$.province_code'
                 )
             )
-        ) jt WHERE sa.order_id = p_id
-    );
+        )
+    ) WHERE sa.order_id = p_id;
 END UPDATE_SHIPPING_ADDRESS;
 
 /

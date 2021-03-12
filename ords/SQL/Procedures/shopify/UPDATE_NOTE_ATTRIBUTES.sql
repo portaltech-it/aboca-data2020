@@ -17,11 +17,11 @@ UPDATE sp_note_attributes na SET ("NAME", "VALUE")
             nested PATH '$.note_attributes[*]'
                 columns(
 	        	    "NAME" VARCHAR2(50) PATH '$.name',
-                    "VALUE" VARCHAR2(50) PATH '$.value'
+                    "VALUE" VARCHAR2(100) PATH '$.value'
                 )
             )
-        ) jt WHERE na.order_id = p_id
-    );
+        ) jt WHERE jt."NAME" = na."NAME"
+    )  WHERE na.order_id = p_id ;
 END UPDATE_NOTE_ATTRIBUTES;
 
 /

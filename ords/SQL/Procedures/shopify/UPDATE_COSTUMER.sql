@@ -37,8 +37,8 @@ SET (id, email, accepts_marketing, created_at, updated_at, first_name, last_name
                     ADMIN_GRAPHQL_API_ID            VARCHAR2(100) PATH    '$.admin_graphql_api_id'
                 )
             )
-        ) as jt WHERE c.order_id = p_id AND c.id = jt.id
-    );
+        ) as jt WHERE c.id = jt.id
+    ) WHERE c.order_id = p_id;
 END UPDATE_COSTUMER;
 
 /
