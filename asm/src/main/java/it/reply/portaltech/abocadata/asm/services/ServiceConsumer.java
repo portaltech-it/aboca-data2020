@@ -8,7 +8,9 @@ import org.apache.commons.codec.binary.Base64;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -18,8 +20,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import it.reply.portaltech.abocadata.asm.util.RestTemplateResponseErrorHandler;
+
 @Service
 public class ServiceConsumer {
+	
+    @Autowired 
+    private RestTemplateBuilder builder;
 	
 	@Value("${ords.path.models}")
 	private String ORDSMODELSPATH;
@@ -38,7 +45,7 @@ public class ServiceConsumer {
 
 		LOG.info(head + "Requesting access token for client = " + clientID);
 
-		RestTemplate restTemplate = new RestTemplate();
+		RestTemplate restTemplate = builder.errorHandler(new RestTemplateResponseErrorHandler()).build();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Basic " + encodedB64);
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -62,7 +69,7 @@ public class ServiceConsumer {
 		
 		message = updatePaymentGatewayNames(message);
 
-		RestTemplate restTemplate = new RestTemplate();
+		RestTemplate restTemplate =  builder.errorHandler(new RestTemplateResponseErrorHandler()).build();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Bearer " + accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -80,7 +87,7 @@ public class ServiceConsumer {
 
 		message = updatePaymentGatewayNames(message);
 		
-		RestTemplate restTemplate = new RestTemplate();
+		RestTemplate restTemplate =  builder.errorHandler(new RestTemplateResponseErrorHandler()).build();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Bearer " + accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);
