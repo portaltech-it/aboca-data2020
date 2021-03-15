@@ -24,21 +24,26 @@ def send_orders():
 		send_order(item)
 	
 def send_order(order):
-	order_id = order['Id']
+	order_id = order['id']
 	url = 'https://data.aboca.com/ords/shopify/orders/' + order_id
-	authorization = {'Authorization': 'Basic ' + access_token}
+	authorization = {'Authorization': 'Bearer ' + access_token}
+
+	if(not order_id):
+		order_id = 'no_id'
 
 	response = requests.post(url, data = order, headers = authorization)
 
+	print(url)
+	print(response.status_code)
 	if(response.status_code == 403):
 		global access_token
 		access_token = request_token()
 		send_order(order)
-	elif(response.status_code == 200):
+	elif(response.status_code == 200 and response.status_code != 'no_id'):
 		print('Order ' + order_id + ' registered')
 	else:
 		items_error.append(order)
-		print('Order ' + order_id + ' registered')
+		print('Order ' + order_id + ' not registered')
 
 def request_token():
 	print('Requesting token')
@@ -62,9 +67,6 @@ def request_token():
 
 
 def save_items_error():
-	#items_error_json = open(errorItemsPath, "w")
-	#items_error_json.write(json.dumps(itemError, indent=4))
-
 	items_error_file = open('items_error', "w")
 	items_error_file.write(json.dumps(items_error, indent=4))
 
