@@ -3,24 +3,32 @@ package it.reply.portaltech.abocadata.asm.services;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.codec.binary.Base64;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
 public class ServiceConsumer {
-	
+
+	@Autowired
+	private RestTemplateBuilder builder;
+
 	@Value("${ords.path.models}")
 	private String ORDSMODELSPATH;
 
@@ -38,7 +46,7 @@ public class ServiceConsumer {
 
 		LOG.info(head + "Requesting access token for client = " + clientID);
 
-		RestTemplate restTemplate = new RestTemplate();
+		RestTemplate restTemplate = builder.errorHandler(new RestTemplateResponseErrorHandler()).build();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Basic " + encodedB64);
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -46,41 +54,48 @@ public class ServiceConsumer {
 
 		HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
 		ResponseEntity<String> response = restTemplate.postForEntity(tokenURL, entity, String.class);
-		
+
 		JSONObject jsonObject = new JSONObject(response.getBody());
 		access_token = jsonObject.getString("access_token");
-		
+
 		LOG.info(head + response.getStatusCodeValue() + "_" + response.getBody());
 
 		return access_token;
 	}
 
-	public void sendPOST(String message, String url, String clientID, String clientSecret, String head, String order_id) {
+	public void sendPOST(String message, String url, String clientID, String clientSecret, String head,
+			String order_id) {
 		String accessToken = getOauth2Token(url + TOKENREQUESTPATH, clientID, clientSecret, head);
 
 		LOG.info(head + "Sending order data to ORDS");
-		
+
 		message = updatePaymentGatewayNames(message);
 
-		RestTemplate restTemplate = new RestTemplate();
+		RestTemplate restTemplate = builder.errorHandler(new RestTemplateResponseErrorHandler()).build();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Bearer " + accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
 		HttpEntity<String> entity = new HttpEntity<String>(message, headers);
-		ResponseEntity<String> response = restTemplate.postForEntity(url + ORDSMODELSPATH + "/" + order_id, entity, String.class);
-		
-		LOG.info(head + response.getStatusCode());
+		try {
+			ResponseEntity<String> response = restTemplate.postForEntity(url + ORDSMODELSPATH + "/" + order_id, entity,
+					String.class);
+			LOG.info(head + response.getStatusCode());
+		} catch (RestClientResponseException e) {
+			String errorMessage = handleErrorFromORDS(e);
+			LOG.error(head + "Problem to write in ORDS - Cause: " + errorMessage);
+		}
 	}
 
-	public void sendPUT(String message, String url, String clientID, String clientSecret, String head, String order_id, int deletion) {
+	public void sendPUT(String message, String url, String clientID, String clientSecret, String head, String order_id,
+			int deletion) {
 		String accessToken = getOauth2Token(url + TOKENREQUESTPATH, clientID, clientSecret, head);
 
-		LOG.info(head + "Sending order data to ORDS with deletion: "+ deletion);
+		LOG.info(head + "Sending order data to ORDS with deletion: " + deletion);
 
 		message = updatePaymentGatewayNames(message);
-		
-		RestTemplate restTemplate = new RestTemplate();
+
+		RestTemplate restTemplate = builder.errorHandler(new RestTemplateResponseErrorHandler()).build();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Bearer " + accessToken);
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -92,13 +107,30 @@ public class ServiceConsumer {
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(urlRequest).queryParam("deletion", deletion);
 
 		HttpEntity<String> entity = new HttpEntity<String>(message, headers);
-		ResponseEntity<String> response = restTemplate.exchange(builder.buildAndExpand(pathParam).toUri(), HttpMethod.PUT, entity, String.class);
+		try {
+			ResponseEntity<String> response = restTemplate.exchange(builder.buildAndExpand(pathParam).toUri(),
+					HttpMethod.PUT, entity, String.class);
+			LOG.info(head + response.getStatusCode());
+		} catch (RestClientResponseException e) {
+			String errorMessage = handleErrorFromORDS(e);
+			LOG.error(head + "Problem to write in ORDS - Cause: " + errorMessage);
+		}
 
-		LOG.info(head + response.getStatusCode());
 	}
-	
-	private String updatePaymentGatewayNames(String body)
-	{
+
+	private String handleErrorFromORDS(RestClientResponseException e) {
+		// get default error message
+		String errorReason = e.getMessage();
+		if (Objects.nonNull(e.getResponseHeaders())) {
+			if (!CollectionUtils.isEmpty(e.getResponseHeaders().get("error-reason"))) {
+				// get cause error from ORDS
+				errorReason = e.getResponseHeaders().get("error-reason").get(0);
+			}
+		}
+		return errorReason;
+	}
+
+	private String updatePaymentGatewayNames(String body) {
 		JSONObject jsonObject = new JSONObject(body);
 		Object payment_gateway_names = jsonObject.get("payment_gateway_names");
 		jsonObject.remove("payment_gateway_names");
