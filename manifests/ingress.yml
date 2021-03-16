@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+    name: "dropaks-3fa0"
+    labels:
+        app: "dropaks-3fa0"
+    annotations:
+        kubernetes.io/ingress.class: addon-http-application-routing
+spec:
+    rules:
+        - host: default-dropaks-3fa0.75f5bb5aef404c858817.uksouth.aksapp.io
+          http:
+            paths:
+            - path: /
+              backend:
+                serviceName: "dropaks-3fa0"
+                servicePort: 80
