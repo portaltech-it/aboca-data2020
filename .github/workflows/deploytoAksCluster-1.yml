@@ -1,0 +1,51 @@
+on: [push]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    
+    - uses: azure/docker-login@v1
+      with:
+        login-server: mwsdrop.azurecr.io
+        username: ${{ secrets.acr_mwsdrop_username }}
+        password: ${{ secrets.acr_mwsdrop_password }}
+    
+    - name: Build and push image to ACR
+      id: build-image
+      run: |
+        docker build "$GITHUB_WORKSPACE/asm" -f  "asm/Dockerfile" -t mwsdrop.azurecr.io/dropaks:${{ github.sha }} --label dockerfile-path=asm/Dockerfile
+        docker push mwsdrop.azurecr.io/dropaks:${{ github.sha }}
+    
+    - uses: azure/k8s-set-context@v1
+      with:
+         kubeconfig: ${{ secrets.aks_dropaks_kubeConfig }}
+      id: login
+    
+    - name: Create namespace
+      run: |
+        namespacePresent=`kubectl get namespace | grep deploy-pipeline | wc -l`
+        if [ $namespacePresent -eq 0 ]
+        then
+            echo `kubectl create namespace deploy-pipeline`
+        fi
+
+    - uses: azure/k8s-create-secret@v1
+      with:
+        namespace: deploy-pipeline
+        container-registry-url: mwsdrop.azurecr.io
+        container-registry-username: ${{ secrets.acr_mwsdrop_username }}
+        container-registry-password: ${{ secrets.acr_mwsdrop_password }}
+        secret-name: dropaksdockerauth
+       
+    - uses: azure/k8s-deploy@v1.2
+      with:
+        namespace: deploy-pipeline
+        manifests: |
+          manifests/deployment-1.yml
+          manifests/service-1.yml
+          manifests/ingress-1.yml
+        images: |
+          mwsdrop.azurecr.io/dropaks:${{ github.sha }}
+        imagepullsecrets: |
+          dropaksdockerauth
