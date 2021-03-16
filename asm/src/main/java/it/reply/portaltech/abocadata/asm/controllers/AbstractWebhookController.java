@@ -36,16 +36,16 @@ public abstract class AbstractWebhookController {
 		String message = IOUtils.toString(request.getInputStream(), UTF_8);
 		String order_id = request.getHeader(X_SHOPIFY_ORDER_ID);
 		
-		order_id = addShopPrefix(order_id, shop);
+		String shop_order_id = addShopPrefix(order_id, shop);
 
-		String head = calculateHead(message, webhook_id, webhook_type, order_id, shop);
+		String head = calculateHead(message, webhook_id, webhook_type, shop_order_id, shop);
 		
 		HmacChecker hc = new HmacChecker(secret);
 		boolean isVerified = hc.verifyWebhook(headerHmac, message);
 
 		if (isVerified) {
 			LOG.info(head + "Signature valid");
-			serviceConsumer.sendPOST(message, url, clientID, clientSecret, head, order_id);
+			serviceConsumer.sendPOST(message, url, clientID, clientSecret, head, shop_order_id);
 		} else {
 			LOG.warn(head + "Signature not valid");
 			throw new NotVerifiedWebHookException("Exception - WebHook " + webhook_id + ": signature not valid");
@@ -60,16 +60,16 @@ public abstract class AbstractWebhookController {
 		String message = IOUtils.toString(request.getInputStream(), UTF_8);
 		String order_id = request.getHeader(X_SHOPIFY_ORDER_ID);
 
-		order_id = addShopPrefix(order_id, shop);
+		String shop_order_id = addShopPrefix(order_id, shop);
 		
-		String head = calculateHead(message, webhook_id, webhook_type, order_id,shop);
+		String head = calculateHead(message, webhook_id, webhook_type, shop_order_id,shop);
 
 		HmacChecker hc = new HmacChecker(secret);
 		boolean isVerified = hc.verifyWebhook(headerHmac, message);
 
 		if (isVerified) {
 			LOG.info(head + "Signature valid");
-			serviceConsumer.sendPUT(message, url, clientID, clientSecret, head, order_id, OPE_DELETE);
+			serviceConsumer.sendPUT(message, url, clientID, clientSecret, head, shop_order_id, OPE_DELETE);
 		} else {
 			LOG.warn(head + "Signature not valid");
 			throw new NotVerifiedWebHookException("WebHook " + webhook_id + ": signature not valid");
@@ -84,16 +84,16 @@ public abstract class AbstractWebhookController {
 		String message = IOUtils.toString(request.getInputStream(), UTF_8);
 		String order_id = request.getHeader(X_SHOPIFY_ORDER_ID);
 
-		order_id = addShopPrefix(order_id, shop);
+		String shop_order_id = addShopPrefix(order_id, shop);
 
-		String head = calculateHead(message, webhook_id, webhook_type, order_id, shop);
+		String head = calculateHead(message, webhook_id, webhook_type, shop_order_id, shop);
 		
 		HmacChecker hc = new HmacChecker(secret);
 		boolean isVerified = hc.verifyWebhook(headerHmac, message);
 	
 		if (isVerified) {
 			LOG.info(head + "Signature valid");
-			serviceConsumer.sendPUT(message, url, clientID, clientSecret, head, order_id, OPE_UPDATE);
+			serviceConsumer.sendPUT(message, url, clientID, clientSecret, head, shop_order_id, OPE_UPDATE);
 		} else {
 			LOG.warn(head + "Signature not valid");
 			throw new NotVerifiedWebHookException("WebHook " + webhook_id + ": signature not valid");
