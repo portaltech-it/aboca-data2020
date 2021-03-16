@@ -38,7 +38,7 @@ public abstract class AbstractWebhookController {
 		
 		String shop_order_id = addShopPrefix(order_id, shop);
 
-		String head = calculateHead(message, webhook_id, webhook_type, shop_order_id, shop);
+		String head = calculateHead(message, webhook_id, webhook_type, order_id, shop);
 		
 		HmacChecker hc = new HmacChecker(secret);
 		boolean isVerified = hc.verifyWebhook(headerHmac, message);
@@ -62,7 +62,7 @@ public abstract class AbstractWebhookController {
 
 		String shop_order_id = addShopPrefix(order_id, shop);
 		
-		String head = calculateHead(message, webhook_id, webhook_type, shop_order_id,shop);
+		String head = calculateHead(message, webhook_id, webhook_type, order_id,shop);
 
 		HmacChecker hc = new HmacChecker(secret);
 		boolean isVerified = hc.verifyWebhook(headerHmac, message);
@@ -93,7 +93,7 @@ public abstract class AbstractWebhookController {
 	
 		if (isVerified) {
 			LOG.info(head + "Signature valid");
-			serviceConsumer.sendPUT(message, url, clientID, clientSecret, head, shop_order_id, OPE_UPDATE);
+			serviceConsumer.sendPUT(message, url, clientID, clientSecret, head, order_id, OPE_UPDATE);
 		} else {
 			LOG.warn(head + "Signature not valid");
 			throw new NotVerifiedWebHookException("WebHook " + webhook_id + ": signature not valid");
