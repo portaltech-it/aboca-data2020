@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "dropaks-2a90"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "dropaks-2a90"
+  template:
+    metadata:
+      labels:
+        app: "dropaks-2a90"
+    spec:
+      containers:
+        - name: "dropaks-2a90"
+          image: "mwsdrop.azurecr.io/dropaks"
+          ports:
+          - containerPort: 80
