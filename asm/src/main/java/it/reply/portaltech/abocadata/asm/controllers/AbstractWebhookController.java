@@ -35,6 +35,8 @@ public abstract class AbstractWebhookController {
 		String webhook_type = request.getHeader(X_SHOPIFY_TOPIC);		
 		String message = IOUtils.toString(request.getInputStream(), UTF_8);
 		String order_id = request.getHeader(X_SHOPIFY_ORDER_ID);
+		
+		order_id = addShopPrefix(order_id, shop);
 
 		String head = calculateHead(message, webhook_id, webhook_type, order_id, shop);
 		
@@ -58,6 +60,8 @@ public abstract class AbstractWebhookController {
 		String message = IOUtils.toString(request.getInputStream(), UTF_8);
 		String order_id = request.getHeader(X_SHOPIFY_ORDER_ID);
 
+		order_id = addShopPrefix(order_id, shop);
+		
 		String head = calculateHead(message, webhook_id, webhook_type, order_id,shop);
 
 		HmacChecker hc = new HmacChecker(secret);
@@ -80,6 +84,8 @@ public abstract class AbstractWebhookController {
 		String message = IOUtils.toString(request.getInputStream(), UTF_8);
 		String order_id = request.getHeader(X_SHOPIFY_ORDER_ID);
 
+		order_id = addShopPrefix(order_id, shop);
+
 		String head = calculateHead(message, webhook_id, webhook_type, order_id, shop);
 		
 		HmacChecker hc = new HmacChecker(secret);
@@ -100,5 +106,13 @@ public abstract class AbstractWebhookController {
 		String head = webhook_id + "_" + webhook_type + "_" + order_id + "_" + shopShort + " : ";
 		return head;
 	}
+	
+	private String addShopPrefix(String order_id, String shop) {
+
+		String prefix = shop.substring(5);
+		order_id = prefix +"_"+ order_id;
+		return order_id;
+	}
+	
 }
 
