@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+    name: "dropaks-2a90"
+    labels:
+        app: "dropaks-2a90"
+    annotations:
+        kubernetes.io/ingress.class: addon-http-application-routing
+spec:
+    rules:
+        - host: deploy-pipeline-dropaks-2a90.75f5bb5aef404c858817.uksouth.aksapp.io
+          http:
+            paths:
+            - path: /
+              backend:
+                serviceName: "dropaks-2a90"
+                servicePort: 80
